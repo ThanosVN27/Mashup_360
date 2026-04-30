@@ -1,0 +1,22 @@
+<!-- Barre de recherche partagée — utilisée depuis NavigationComponent -->
+<div class="search-bar">
+
+  <div class="field">
+    <label for="itno-input" class="label">Code article (ITNO)</label>
+    <input
+      soho-input
+      id="itno-input"
+      type="text"
+      placeholder="Ex : 23454"
+      [(ngModel)]="itno"
+      (keyup.enter)="lancer()" />
+  </div>
+
+  <button soho-button="primary" (click)="lancer()">
+    <svg class="btn-icon" viewBox="0 0 16 16" aria-hidden="true">
+      <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398l3.85 3.85a1 1 0 0 0 1.415-1.415l-3.868-3.833zm-5.242 1.156a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11z"/>
+    </svg>
+    Rechercher
+  </button>
+
+</div>

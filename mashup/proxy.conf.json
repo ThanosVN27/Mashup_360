@@ -1,0 +1,20 @@
+{
+   "/m3api-rest": {
+      "target": "https://be-dev.escal.local:32008",
+      "secure": false,
+      "changeOrigin": true,
+      "logLevel": "debug"
+   },
+   "/mne": {
+      "target": "https://be-dev.escal.local:32008",
+      "secure": false,
+      "changeOrigin": true,
+      "logLevel": "debug"
+   },
+   "/ca": {
+      "target": "https://be-dev.escal.local:32008",
+      "secure": false,
+      "changeOrigin": true,
+      "logLevel": "debug"
+   }
+}

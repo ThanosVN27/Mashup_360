@@ -1,5 +1,5 @@
 {
-   "projectName": "mashup akca",
+   "projectName": "mashup-gestion-stocks",
    "proxy": {
       "/m3api-rest": {
          "target": "https://be-dev.escal.local:32008",

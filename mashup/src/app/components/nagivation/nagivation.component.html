@@ -1,0 +1,13 @@
+<!-- ======================================================================
+     NavigationComponent — Point d'entrée de l'application Stock 360
+     La recherche est partagée : visible depuis tous les onglets de stock
+     ====================================================================== -->
+<div class="page-layout">
+
+  <!-- Barre de recherche fixe en haut, commune à tous les onglets -->
+  <app-search (recherche)="onRecherche($event)"></app-search>
+
+  <!-- Résultats : en-tête article + onglets (Synthèse, OF/POF, Achats, …) -->
+  <app-stock [itno]="itnoActuel"></app-stock>
+
+</div>

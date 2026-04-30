@@ -1,0 +1,92 @@
+<div class="stock-container">
+
+  <!-- Chargement -->
+  <div *ngIf="loading" class="loading-bar">
+    <span soho-busy-indicator displayDelay="0"></span>
+  </div>
+
+  <!-- Erreur -->
+  <div *ngIf="erreur" class="error-banner">
+    <svg class="error-icon" viewBox="0 0 16 16" aria-hidden="true">
+      <path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm.75 10.5h-1.5v-1.5h1.5v1.5zm0-3h-1.5v-4h1.5v4z"/>
+    </svg>
+    {{ erreur }}
+  </div>
+
+  <!-- État d'accueil -->
+  <div *ngIf="!article && !loading && !erreur" class="welcome-state">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/>
+    </svg>
+    <p>Saisissez un code article pour afficher les stocks.</p>
+  </div>
+
+  <!-- Résultats -->
+  <ng-container *ngIf="article">
+
+    <!-- En-tête article -->
+    <div class="article-header">
+      <div class="article-code">
+        <span class="article-code__label">Code P.F.</span>
+        <strong class="article-code__value">{{ article.itno }}</strong>
+      </div>
+      <div class="article-libelle">{{ article.itds }}</div>
+      <span class="article-tag">{{ article.unms }}</span>
+      <div class="article-poids">
+        Poids net : <strong>{{ article.poidsNet }} kg</strong>
+      </div>
+    </div>
+
+    <!-- Onglets -->
+    <div class="tabs-wrapper">
+
+      <!-- Barre de navigation -->
+      <nav class="tab-nav">
+        <button
+          *ngFor="let tab of tabs"
+          class="tab-btn"
+          [class.tab-btn--active]="activeTab === tab.id"
+          (click)="setTab(tab.id)">
+          {{ tab.label }}
+          <span *ngIf="tab.badge" class="tab-count">{{ badgeFor(tab.id) }}</span>
+        </button>
+      </nav>
+
+      <!-- Panneaux -->
+      <div class="tab-panel">
+
+        <ng-container [ngSwitch]="activeTab">
+
+          <app-tab-synthese
+            *ngSwitchCase="'synthese'"
+            [article]="article">
+          </app-tab-synthese>
+
+          <app-tab-ofpof
+            *ngSwitchCase="'ofpof'"
+            [lignes]="ofpofLignes">
+          </app-tab-ofpof>
+
+          <app-tab-achats
+            *ngSwitchCase="'achats'"
+            [lignes]="achatsLignes">
+          </app-tab-achats>
+
+          <app-tab-reservations
+            *ngSwitchCase="'reservations'"
+            [lignes]="reservationsLignes">
+          </app-tab-reservations>
+
+          <app-tab-actions
+            *ngSwitchCase="'actions'"
+            [lignes]="actionsLignes">
+          </app-tab-actions>
+
+        </ng-container>
+
+      </div>
+    </div>
+
+  </ng-container>
+
+</div>

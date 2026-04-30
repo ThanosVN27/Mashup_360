@@ -1,0 +1,80 @@
+<div class="synth-grid">
+
+  <!-- ── Stocks actuels ── -->
+  <div class="synth-card">
+    <h3 class="synth-card__title">Stocks actuels</h3>
+    <div class="synth-card__body">
+
+      <div class="synth-row">
+        <span class="synth-row__label">Stock disponible</span>
+        <span class="synth-row__value">{{ article.stqt }} <em>{{ article.unms }}</em></span>
+      </div>
+
+      <div class="synth-row synth-row--warning">
+        <span class="synth-row__label">
+          Resa vente
+          <small>STQT − AVAL</small>
+        </span>
+        <span class="synth-row__value">{{ article.resaVente }} <em>{{ article.unms }}</em></span>
+      </div>
+
+      <div class="synth-row">
+        <span class="synth-row__label">Stock affectable</span>
+        <span class="synth-row__value">{{ article.aval }} <em>{{ article.unms }}</em></span>
+      </div>
+
+      <div class="synth-row">
+        <span class="synth-row__label">Stock sous contrôle</span>
+        <span class="synth-row__value">{{ article.quqt }} <em>{{ article.unms }}</em></span>
+      </div>
+
+      <div class="synth-row synth-row--danger">
+        <span class="synth-row__label">Stock non conforme</span>
+        <span class="synth-row__value">{{ article.rjqt }} <em>{{ article.unms }}</em></span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── Flux à venir ── -->
+  <div class="synth-card">
+    <h3 class="synth-card__title">Flux à venir</h3>
+    <div class="synth-card__body">
+
+      <div class="synth-row">
+        <span class="synth-row__label">Total POF confirmées</span>
+        <span class="synth-row__value">{{ article.totalPof }} <em>{{ article.unms }}</em></span>
+      </div>
+
+      <div class="synth-row">
+        <span class="synth-row__label">Total OF lancés</span>
+        <span class="synth-row__value">{{ article.totalOf }} <em>{{ article.unms }}</em></span>
+      </div>
+
+      <div class="synth-row">
+        <span class="synth-row__label">Total achats</span>
+        <span class="synth-row__value">{{ article.totalAchats }} <em>{{ article.unms }}</em></span>
+      </div>
+
+      <div class="synth-row">
+        <span class="synth-row__label">Total actions</span>
+        <span class="synth-row__value">{{ article.totalActions }} <em>{{ article.unms }}</em></span>
+      </div>
+
+      <div class="synth-row synth-row--check">
+        <span class="synth-row__label">
+          Total réservations (311)
+          <small>doit égaler resa vente</small>
+        </span>
+        <span class="synth-row__value synth-row__value--with-badge">
+          {{ article.totalReservations }} <em>{{ article.unms }}</em>
+          <span soho-tag [attr.color]="resaVerifiee ? 'success' : 'error'">
+            {{ resaVerifiee ? '= Resa vente ✓' : 'Écart détecté !' }}
+          </span>
+        </span>
+      </div>
+
+    </div>
+  </div>
+
+</div>

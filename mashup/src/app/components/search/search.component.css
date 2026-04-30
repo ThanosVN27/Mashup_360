@@ -1,0 +1,32 @@
+.search-bar {
+  display:       flex;
+  align-items:   flex-end;
+  gap:           12px;
+  padding:       14px 24px;
+  background:    #fff;
+  border-bottom: 1px solid #dde1e7;
+  box-shadow:    0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.field {
+  display:        flex;
+  flex-direction: column;
+  gap:            4px;
+}
+
+.label {
+  font-size:      11px;
+  font-weight:    600;
+  color:          #555;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+.btn-icon {
+  width:        14px;
+  height:       14px;
+  fill:         currentColor;
+  margin-right: 6px;
+  vertical-align: middle;
+  flex-shrink:  0;
+}
