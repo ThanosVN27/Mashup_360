@@ -44,19 +44,18 @@ export class StockComponent {
     }
   }
 
-  get ofpofLignes(): StockMouvement[] {
-    return this.mouvements.filter(
-      m => (m.orca === '100' && m.stat !== '10') || m.orca === '101'
-    );
+  get ofpofLignes() {
+    return this.mouvements.filter(m => (m.orca === '100' && m.stat !== '10') || m.orca === '101');
+  }
+
+  get reservationsLignes() {
+    return this.mouvements.filter(m => m.orca === '311');
   }
 
   get achatsLignes(): StockMouvement[] {
     return this.mouvements.filter(m => m.orca === '251');
   }
 
-  get reservationsLignes(): StockMouvement[] {
-    return this.mouvements.filter(m => m.orca === '311');
-  }
 
   get actionsLignes(): StockMouvement[] {
     return this.mouvements.filter(m => m.orca === '030');

@@ -6,10 +6,12 @@
 </div>
 
 <soho-datagrid
-  *ngIf="lignes.length > 0"
-  [columns]="colonnes"
-  [dataset]="lignes"
-  rowHeight="medium"
-  [pagination]="true"
-  [pagesize]="20">
-</soho-datagrid>
+    *ngIf="lignes.length > 0"
+    [columns]="colonnes"
+    [dataset]="lignes"
+    [selectable]="false"
+    [filterable]="true"
+    [pagination]="true"
+    [pagesize]="10"
+    rowHeight="short">
+  </soho-datagrid>
