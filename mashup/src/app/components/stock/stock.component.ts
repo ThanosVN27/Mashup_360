@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { forkJoin } from 'rxjs';
+import { lastValueFrom } from 'rxjs';
 import { StockService } from '../../services/stock.service';
 import { StockArticle } from '../../models/stock-article.model';
 import { StockMouvement } from '../../models/stock-mouvement.model';
@@ -61,44 +61,45 @@ export class StockComponent {
     return this.mouvements.filter(m => m.orca === '030');
   }
 
-  private charger(code: string): void {
-    this.loading    = true;
-    this.erreur     = null;
-    this.article    = null;
-    this.mouvements = [];
+  private async charger(code: string): Promise<void> {
+    this.loading = true;
+    this.erreur = null;
+    this.article = null;
 
-    forkJoin({
-      produit:    this.stockService.getArticleInfo(code),
-      poids:      this.stockService.getPoidsNet(code),
-      stocks:     this.stockService.getStocksAgreges(code),
-      mouvements: this.stockService.getMouvements(code),
-    }).subscribe({
-      next: ({ produit, poids, stocks, mouvements }) => {
-        this.mouvements = mouvements;
-        this.article = {
-          itno:              code,
-          itds:              produit.itds,
-          unms:              produit.unms,
-          poidsNet:          poids,
-          stqt:              stocks.stqt,
-          aval:              stocks.aval,
-          quqt:              stocks.quqt,
-          rjqt:              stocks.rjqt,
-          resaVente:         stocks.stqt - stocks.aval,
-          totalPof:          this.somme(mouvements.filter(m => m.orca === '100' && m.stat !== '10')),
-          totalOf:           this.somme(mouvements.filter(m => m.orca === '101')),
-          totalAchats:       this.somme(mouvements.filter(m => m.orca === '251')),
-          totalReservations: this.somme(mouvements.filter(m => m.orca === '311')),
-          totalActions:      this.somme(mouvements.filter(m => m.orca === '030')),
-        };
-        this.loading = false;
-      },
-      error: (err) => {
-        console.error('[Stock360] Erreur chargement article', err);
-        this.erreur  = `Impossible de charger les données pour l'article "${code}". Vérifiez le code et réessayez.`;
-        this.loading = false;
-      },
-    });
+    try {
+      const produit  = await lastValueFrom(this.stockService.getArticleInfo(code));
+      const poids    = await lastValueFrom(this.stockService.getPoidsNet(code));
+      const stocks   = await lastValueFrom(this.stockService.getStocksAgreges(code));
+      const movs     = await lastValueFrom(this.stockService.getMouvements(code));
+
+      this.mouvements = movs;
+
+      // 2. On remplit l'objet article avec les données reçues
+      this.article = {
+        itno: code,
+        itds: produit.itds,
+        unms: produit.unms,
+        poidsNet: poids,
+        stqt: stocks.stqt,
+        aval: stocks.aval,
+        quqt: stocks.quqt,
+        rjqt: stocks.rjqt,
+        resaVente: stocks.stqt - stocks.aval,
+
+        // Calcul des totaux pour l'onglet Synthèse
+        totalPof:          this.somme(movs.filter(m => m.orca === '100' && m.stat !== '10')),
+        totalOf:           this.somme(movs.filter(m => m.orca === '101')),
+        totalAchats:       this.somme(movs.filter(m => m.orca === '251')),
+        totalReservations: this.somme(movs.filter(m => m.orca === '311')),
+        totalActions:      this.somme(movs.filter(m => m.orca === '030')),
+      };
+
+    } catch (err) {
+      console.error('[Stock360] Erreur:', err);
+      this.erreur = `Erreur sur l'article "${code}".`;
+    } finally {
+      this.loading = false;
+    }
   }
 
   private somme(lignes: StockMouvement[]): number {

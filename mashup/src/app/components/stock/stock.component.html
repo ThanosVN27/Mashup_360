@@ -25,7 +25,7 @@
         <strong class="article-code__value">{{ article.itno }}</strong>
       </div>
       <div class="article-libelle">{{ article.itds }}</div>
-      <span soho-tag="info">{{ article.unms }}</span>
+      <span class="article-unit">{{ article.unms }}</span>
       <div class="article-poids">
         Poids net : <strong>{{ article.poidsNet }} kg</strong> <!-- Source CUSEXTMI -->
       </div>
@@ -45,12 +45,12 @@
       </nav>
 
       <!-- Contenu des onglets -->
-      <div class="tab-content">
-        <app-tab-synthese *ngIf="activeTab === 'synthese'" [article]="article"></app-tab-synthese>
-        <app-tab-ofpof *ngIf="activeTab === 'ofpof'" [lignes]="ofpofLignes"></app-tab-ofpof>
-        <app-tab-achats *ngIf="activeTab === 'achats'" [lignes]="achatsLignes"></app-tab-achats>
+      <div class="tab-panel">
+        <app-tab-synthese     *ngIf="activeTab === 'synthese'"     [article]="article"></app-tab-synthese>
+        <app-tab-ofpof        *ngIf="activeTab === 'ofpof'"        [lignes]="ofpofLignes"></app-tab-ofpof>
+        <app-tab-achats       *ngIf="activeTab === 'achats'"       [lignes]="achatsLignes"></app-tab-achats>
         <app-tab-reservations *ngIf="activeTab === 'reservations'" [lignes]="reservationsLignes"></app-tab-reservations>
-        <app-tab-actions *ngIf="activeTab === 'actions'" [lignes]="actionsLignes"></app-tab-actions>
+        <app-tab-actions      *ngIf="activeTab === 'actions'"      [lignes]="actionsLignes"></app-tab-actions>
       </div>
     </div>
 

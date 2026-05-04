@@ -7,12 +7,14 @@ import { StockMouvement } from '../../../../models/stock-mouvement.model';
   styleUrls:   ['./achats.component.css'],
 })
 export class AchatsComponent {
-
   @Input() lignes: StockMouvement[] = [];
 
-  readonly colonnes: SohoDataGridColumn[] = [
-    { id: 'ridn', name: 'N° commande',    field: 'ridn', sortable: true },
-    { id: 'trqt', name: 'Quantité',       field: 'trqt', sortable: true },
-    { id: 'codt', name: 'Date livraison', field: 'codt', sortable: true },
+  colonnes:any[] = [
+    { id: 'ridn', label: 'Référence' },
+    { id: 'trqt', label: 'Quantité' },
+    { id: 'pldt', label: 'Date' },
+    { id: 'codt', label: 'Code' },
+    { id: 'rftx', label: 'Libellé' },
+    { id: 'stat', label: 'Statut' },
   ];
 }

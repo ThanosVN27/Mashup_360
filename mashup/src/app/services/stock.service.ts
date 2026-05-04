@@ -43,7 +43,7 @@ export class StockService {
     const req: IMIRequest = {
       program:      'MMS200MI',
       transaction:  'GetAggWhsGrp',
-      record:       { ITNO: itno, WHGR: 'GD1' ,CONO: 100},
+      record:       { ITNO: itno, WHGR: 'ESCAL_GP' ,CONO: 100},
       outputFields: ['STQT', 'AVAL', 'QUQT', 'RJQT'],
 
     };
@@ -62,7 +62,7 @@ export class StockService {
     const req: IMIRequest = {
       program:            'MMS080MI',
       transaction:        'SelMtrlTrans',
-      record:             { ITNO: itno, WHLO: 'E01', WHGR: 'GD1' },
+      record:             { ITNO: itno, WHLO: 'E01', WHGR: 'ESCAL_GP',CONO: 100 },
       outputFields:       ['ORCA', 'RIDN', 'TRQT', 'PLDT', 'CODT', 'RFTX', 'STAT'],
       maxReturnedRecords: 999,
 

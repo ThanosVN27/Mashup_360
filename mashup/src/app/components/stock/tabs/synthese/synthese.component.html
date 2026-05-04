@@ -64,11 +64,10 @@
       <div class="synth-row synth-row--check">
         <span class="synth-row__label">
           Total réservations (311)
-          <small>doit égaler resa vente</small>
         </span>
         <span class="synth-row__value synth-row__value--with-badge">
           {{ article.totalReservations }} <em>{{ article.unms }}</em>
-          <span soho-tag [attr.color]="resaVerifiee ? 'success' : 'error'">
+          <span [class]="resaVerifiee ? 'tag tag-ok' : 'tag tag-err'">
             {{ resaVerifiee ? '= Resa vente ✓' : 'Écart détecté !' }}
           </span>
         </span>

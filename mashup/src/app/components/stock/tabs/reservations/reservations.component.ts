@@ -22,7 +22,7 @@ export class ReservationsComponent {
     },
     {
       id: 'trqt',
-      name: 'Total réservé', // Libellé exact du cahier des charges[cite: 8]
+      name: 'Total réservé',
       field: 'trqt',
       filterType: 'decimal',
       sortable: true,

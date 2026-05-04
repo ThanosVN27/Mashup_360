@@ -1,16 +1,22 @@
-<div *ngIf="lignes.length === 0" class="empty-state">
-  <svg viewBox="0 0 24 24" aria-hidden="true">
-    <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2"/>
-  </svg>
-  Aucun ordre de fabrication pour cet article.
-</div>
+<p *ngIf="lignes.length === 0" class="empty-msg">Aucun ordre de fabrication pour cet article.</p>
 
-
-<soho-datagrid
-  *ngIf="lignes.length > 0"
-  [columns]="colonnes"
-  [dataset]="lignes"
-  rowHeight="medium"
-  [pagination]="true"
-  [pagesize]="20">
-</soho-datagrid>
+<table *ngIf="lignes.length > 0" class="ids-table">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Numéro</th>
+      <th>Statut</th>
+      <th>Quantité</th>
+      <th>Date planifiée</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let m of lignes">
+      <td><span class="tag" [class.tag-pof]="m.orca === '100'" [class.tag-of]="m.orca === '101'">{{ m.orca === '100' ? 'POF' : 'OF' }}</span></td>
+      <td>{{ m.ridn }}</td>
+      <td>{{ m.stat }}</td>
+      <td class="num">{{ m.trqt }}</td>
+      <td>{{ m.pldt }}</td>
+    </tr>
+  </tbody>
+</table>

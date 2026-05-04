@@ -1,15 +1,18 @@
-<div *ngIf="lignes.length === 0" class="empty-state">
-  <svg viewBox="0 0 24 24" aria-hidden="true">
-    <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-8 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
-  </svg>
-  Aucun ordre d'achat pour cet article.
-</div>
+<p *ngIf="lignes.length === 0" class="empty-msg">Aucun ordre d'achat pour cet article.</p>
 
-<soho-datagrid
-  *ngIf="lignes.length > 0"
-  [columns]="colonnes"
-  [dataset]="lignes"
-  rowHeight="medium"
-  [pagination]="true"
-  [pagesize]="20">
-</soho-datagrid>
+<table *ngIf="lignes.length > 0" class="ids-table">
+  <thead>
+    <tr>
+      <th>N° commande</th>
+      <th>Quantité</th>
+      <th>Date livraison</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let m of lignes">
+      <td>{{ m.ridn }}</td>
+      <td class="num">{{ m.trqt }}</td>
+      <td>{{ m.codt }}</td>
+    </tr>
+  </tbody>
+</table>
