@@ -1,38 +1,43 @@
 <div class="stock-container">
 
-  <!-- Indicateur de chargement Soho -->
+  <!-- Chargement -->
   <div *ngIf="loading" class="loading-bar">
-    <div soho-busyindicator [active]="true" displayDelay="0"></div>
+    <span soho-busy-indicator displayDelay="0"></span>
   </div>
 
   <!-- Erreur -->
   <div *ngIf="erreur" class="error-banner">
-    <svg soho-icon icon="error" class="error-icon"></svg>
+    <svg class="error-icon" viewBox="0 0 16 16" aria-hidden="true">
+      <path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm.75 10.5h-1.5v-1.5h1.5v1.5zm0-3h-1.5v-4h1.5v4z"/>
+    </svg>
     {{ erreur }}
   </div>
 
-  <!-- État d'accueil -->
+  <!-- Accueil -->
   <div *ngIf="!article && !loading && !erreur" class="welcome-state">
-    <svg soho-icon icon="search" class="welcome-icon"></svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/>
+    </svg>
     <p>Saisissez un code article pour afficher les stocks.</p>
   </div>
 
   <!-- Résultats -->
-  <ng-container *ngIf="article">
+  <div *ngIf="article">
+
+    <!-- En-tête article -->
     <div class="article-header">
       <div class="article-code">
         <span class="article-code__label">Code P.F.</span>
         <strong class="article-code__value">{{ article.itno }}</strong>
       </div>
       <div class="article-libelle">{{ article.itds }}</div>
-      <span class="article-unit">{{ article.unms }}</span>
-      <div class="article-poids">
-        Poids net : <strong>{{ article.poidsNet }} kg</strong> <!-- Source CUSEXTMI -->
-      </div>
+      <span class="article-tag">{{ article.unms }}</span>
+      <div class="article-poids">Poids net : <strong>{{ article.poidsNet }} kg</strong></div>
     </div>
 
     <!-- Onglets -->
     <div class="tabs-wrapper">
+
       <nav class="tab-nav">
         <button
           *ngFor="let tab of tabs"
@@ -42,18 +47,19 @@
           {{ tab.label }}
           <span *ngIf="tab.badge" class="tab-count">{{ badgeFor(tab.id) }}</span>
         </button>
+
+
       </nav>
 
       <!-- Contenu des onglets -->
-      <div class="tab-panel">
-        <app-tab-synthese     *ngIf="activeTab === 'synthese'"     [article]="article"></app-tab-synthese>
-        <app-tab-ofpof        *ngIf="activeTab === 'ofpof'"        [lignes]="ofpofLignes"></app-tab-ofpof>
-        <app-tab-achats       *ngIf="activeTab === 'achats'"       [lignes]="achatsLignes"></app-tab-achats>
+      <div class="tab-content">
+        <app-tab-synthese *ngIf="activeTab === 'synthese'" [article]="article"></app-tab-synthese>
+        <app-tab-ofpof *ngIf="activeTab === 'ofpof'" [lignes]="ofpofLignes"></app-tab-ofpof>
+        <app-tab-achats *ngIf="activeTab === 'achats'" [lignes]="achatsLignes"></app-tab-achats>
         <app-tab-reservations *ngIf="activeTab === 'reservations'" [lignes]="reservationsLignes"></app-tab-reservations>
-        <app-tab-actions      *ngIf="activeTab === 'actions'"      [lignes]="actionsLignes"></app-tab-actions>
+        <app-tab-actions *ngIf="activeTab === 'actions'" [lignes]="actionsLignes"></app-tab-actions>
       </div>
     </div>
-
-  </ng-container>
+  </div>
 
 </div>

@@ -1,1 +1,24 @@
-:host { display: block; }
+.datagrid {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Source Sans Pro', sans-serif;
+  margin-top: 10px;
+}
+
+.datagrid th {
+  background-color: #f0f0f0;
+  text-align: left;
+  padding: 8px;
+  border-bottom: 2px solid #ccc;
+  font-weight: 600;
+}
+
+.datagrid td {
+  padding: 8px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.text-right { text-align: right; }
+
+.badge-of { color: #2d8948; font-weight: bold; }
+.badge-pof { color: #0072ed; font-weight: bold; }

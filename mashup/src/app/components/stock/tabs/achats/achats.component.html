@@ -1,18 +1,12 @@
-<p *ngIf="lignes.length === 0" class="empty-msg">Aucun ordre d'achat pour cet article.</p>
+<div *ngIf="lignes.length === 0" class="empty-msg">
+  Aucun ordre d'achat pour cet article.
+</div>
 
-<table *ngIf="lignes.length > 0" class="ids-table">
-  <thead>
-    <tr>
-      <th>N° commande</th>
-      <th>Quantité</th>
-      <th>Date livraison</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let m of lignes">
-      <td>{{ m.ridn }}</td>
-      <td class="num">{{ m.trqt }}</td>
-      <td>{{ m.codt }}</td>
-    </tr>
-  </tbody>
-</table>
+<soho-datagrid
+  *ngIf="lignes.length > 0"
+  [columns]="colonnes"
+  [dataset]="lignes"
+  rowHeight="medium"
+  [pagination]="true"
+  [pagesize]="20">
+</soho-datagrid>

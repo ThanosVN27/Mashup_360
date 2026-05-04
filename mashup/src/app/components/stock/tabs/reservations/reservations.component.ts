@@ -1,41 +1,47 @@
 import { Component, Input } from '@angular/core';
 import { StockMouvement } from '../../../../models/stock-mouvement.model';
+import { SharedModule } from '../../../../shared/shared.module';
 
 @Component({
   selector:    'app-tab-reservations',
   templateUrl: './reservations.component.html',
   styleUrls:   ['./reservations.component.css'],
+  //standalone:  true,
+  //imports:     [SharedModule],
 })
 export class ReservationsComponent {
-  // Entrée des données filtrées pour l'ORCA 311 uniquement
   @Input() lignes: StockMouvement[] = [];
 
-  // Configuration des colonnes alignée sur le cahier des charges[cite: 8]
+  // Définition des colonnes pour les réservations (ORCA 311)[cite: 1, 4]
   readonly colonnes: SohoDataGridColumn[] = [
     {
       id: 'ridn',
-      name: 'N° commande',
+      name: 'N° Commande',
       field: 'ridn',
-      filterType: 'text',
       sortable: true,
-      width: 150
+      filterType: 'text'
     },
     {
       id: 'trqt',
-      name: 'Total réservé',
+      name: 'Qté Réservée',
       field: 'trqt',
-      filterType: 'decimal',
       sortable: true,
-      align: 'right'
+      align: 'right',
+      formatter: Soho.Formatters.Integer // Quantité sans décimales[cite: 3]
     },
     {
       id: 'pldt',
-      name: 'Date planifiée',
+      name: 'Date de Besoin',
       field: 'pldt',
-      filterType: 'date',
       sortable: true,
-      formatter: Soho.Formatters.Date, // Formatteur de date Soho
-      dateFormat: 'yyyyMMdd'
+      formatter: Soho.Formatters.Date,
+      dateFormat: 'dd/MM/yyyy'
     },
+    {
+      id: 'stat',
+      name: 'Statut',
+      field: 'stat',
+      width: 80
+    }
   ];
 }

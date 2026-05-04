@@ -11,11 +11,11 @@ import { SearchComponent } from './components/search/search.component';
 import { HeaderComponent } from './components/header/header.component';
 import { NagivationComponent } from './components/nagivation/nagivation.component';
 import { SyntheseComponent } from './components/stock/tabs/synthese/synthese.component';
-import { OfPofComponent } from './components/stock/tabs/ofpof/ofpof.component';
 import { AchatsComponent } from './components/stock/tabs/achats/achats.component';
 import { ReservationsComponent } from './components/stock/tabs/reservations/reservations.component';
 import { ActionsComponent } from './components/stock/tabs/actions/actions.component';
-
+import { SohoDataGridModule } from 'ids-enterprise-ng';
+import {OfPofComponent} from './components/stock/tabs/ofpof/ofpof.component';
 @NgModule({
    declarations: [
       AppComponent,
@@ -24,17 +24,19 @@ import { ActionsComponent } from './components/stock/tabs/actions/actions.compon
       HeaderComponent,
       NagivationComponent,
       SyntheseComponent,
-      OfPofComponent,
       AchatsComponent,
       ReservationsComponent,
       ActionsComponent,
+      OfPofComponent
+
    ],
    imports: [
       BrowserModule,
       CommonModule,
       FormsModule,
       SohoComponentsModule,
-      M3OdinModule
+      SohoDataGridModule,
+      M3OdinModule,
    ],
    schemas: [CUSTOM_ELEMENTS_SCHEMA],
    providers: [

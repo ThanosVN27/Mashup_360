@@ -1,16 +1,26 @@
-<div *ngIf="lignes.length === 0" class="empty-state">
-  <!-- <svg viewBox="0 0 24 24" aria-hidden="true">
-    <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2z"/>
-  </svg> -->
-  Aucune réservation client pour cet article.
-</div>
+<div class="tab-content">
+  <!-- Message si aucune donnée -->
+  <div *ngIf="lignes.length === 0" class="empty-msg">
+    Aucune réservation client pour cet article.
+  </div>
 
-<soho-datagrid
-  [columns]="colonnes"
-  [data]="lignes"
-  [selectable]="false"
-  [filterable]="true"
-  [pagination]="true"
-  [pagesize]="10"
-  rowHeight="short">
-</soho-datagrid>
+  <!-- Tableau HTML Classique -->
+  <table *ngIf="lignes.length > 0" class="simple-table">
+    <thead>
+    <tr>
+      <th>N° Commande</th>
+      <th class="text-right">Quantité</th>
+      <th>Date de Besoin</th>
+      <th>Statut</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let m of lignes">
+      <td>{{ m.ridn }}</td>
+      <td class="text-right">{{ m.trqt }}</td>
+      <td>{{ m.pldt | date:'dd/MM/yyyy' }}</td>
+      <td>{{ m.stat }}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

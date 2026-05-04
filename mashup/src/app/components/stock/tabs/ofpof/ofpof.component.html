@@ -1,22 +1,32 @@
-<p *ngIf="lignes.length === 0" class="empty-msg">Aucun ordre de fabrication pour cet article.</p>
+<div class="tab-content">
+  <!-- Message si vide -->
+  <div *ngIf="lignes.length === 0" class="empty-msg">
+    Aucun mouvement trouvé pour cet article.
+  </div>
 
-<table *ngIf="lignes.length > 0" class="ids-table">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Numéro</th>
-      <th>Statut</th>
-      <th>Quantité</th>
-      <th>Date planifiée</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let m of lignes">
-      <td><span class="tag" [class.tag-pof]="m.orca === '100'" [class.tag-of]="m.orca === '101'">{{ m.orca === '100' ? 'POF' : 'OF' }}</span></td>
-      <td>{{ m.ridn }}</td>
-      <td>{{ m.stat }}</td>
-      <td class="num">{{ m.trqt }}</td>
-      <td>{{ m.pldt }}</td>
-    </tr>
-  </tbody>
-</table>
+  <!-- Tableau HTML Standard avec classes Soho -->
+  <table *ngIf="lignes.length > 0" class="datagrid">
+    <thead>
+      <tr class="datagrid-header">
+        <th>Type</th>
+        <th>Numéro</th>
+        <th>Quantité</th>
+        <th>Date</th>
+        <th>Statut</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let m of lignes" class="datagrid-row">
+        <td>
+          <span [class.badge-of]="m.orca === '101'" [class.badge-pof]="m.orca === '100'">
+            {{ m.orca === '100' ? 'POF' : 'OF' }}
+          </span>
+        </td>
+        <td>{{ m.ridn }}</td>
+        <td class="text-right">{{ m.trqt }}</td>
+        <td>{{ m.pldt | date:'dd/MM/yyyy' }}</td>
+        <td>{{ m.stat }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
