@@ -1,1 +1,11 @@
-
+.empty-msg {
+  text-align: center;
+  padding: 40px 20px;
+  color: #64748b;
+  background-color: #f8fafc;
+  border-radius: 8px;
+  border: 1px dashed #cbd5e1;
+  margin-top: 15px;
+  font-style: italic;
+  font-size: 1.3rem;
+}

@@ -1,12 +1,26 @@
-<div *ngIf="lignes.length === 0" class="empty-state">
-  Aucune action client pour cet article.
-</div>
+<div class="tab-content">
+  <div *ngIf="lignes.length === 0" class="empty-state">
+    Aucune action client pour cet article.
+  </div>
 
-<soho-datagrid
-  *ngIf="lignes.length > 0"
-  [columns]="colonnes"
-  [dataset]="lignes"
-  rowHeight="medium"
-  [pagination]="true"
-  [pagesize]="20">
-</soho-datagrid>
+  <table *ngIf="lignes.length > 0" class="custom-table">
+    <thead>
+      <tr>
+        <th>N° commande</th>
+        <th>Client</th>
+        <th class="text-right">Quantité</th>
+        <th>Date planifiée</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let m of lignes">
+        <td><strong>{{ m.ridn }}</strong></td>
+        <td>{{ m.rftx }}</td>
+        <td class="text-right">
+          <span class="quantity-badge">{{ m.trqt }}</span>
+        </td>
+        <td>{{ formatM3Date(m.pldt) }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

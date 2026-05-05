@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { StockMouvement } from '../../../../models/stock-mouvement.model';
-import {SohoDataGridComponent } from 'ids-enterprise-ng';
+import {formatM3Date} from '../../../../shared/utils/m3-date.util';
 
 @Component({
   selector:    'app-tab-actions',
@@ -8,13 +8,6 @@ import {SohoDataGridComponent } from 'ids-enterprise-ng';
   styleUrls:   ['./actions.component.css'],
 })
 export class ActionsComponent {
-
   @Input() lignes: StockMouvement[] = [];
-
-  readonly colonnes: SohoDataGridColumn[] = [
-    { id: 'ridn', name: 'N° commande',    field: 'ridn', sortable: true },
-    { id: 'rftx', name: 'Client',         field: 'rftx', sortable: true },
-    { id: 'trqt', name: 'Quantité',       field: 'trqt', sortable: true, numberFormat: { minimumFractionDigits: 0, maximumFractionDigits: 0 } },
-    { id: 'pldt', name: 'Date planifiée', field: 'pldt', sortable: true },
-  ];
+  protected readonly formatM3Date = formatM3Date;
 }

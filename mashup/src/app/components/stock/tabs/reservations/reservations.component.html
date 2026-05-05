@@ -18,7 +18,7 @@
     <tr *ngFor="let m of lignes">
       <td>{{ m.ridn }}</td>
       <td class="text-right">{{ m.trqt }}</td>
-      <td>{{ m.pldt | date:'dd/MM/yyyy' }}</td>
+      <td>{{ formatM3Date(m.pldt) }}</td>
       <td>{{ m.stat }}</td>
     </tr>
     </tbody>

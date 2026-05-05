@@ -9,16 +9,20 @@
 .simple-table th {
   background-color: #f4f4f4;
   padding: 10px;
-  text-align: left;
+  text-align: center;
   border-bottom: 2px solid #ddd;
+  font-size: 1.75rem;
 }
 
 .simple-table td {
   padding: 10px;
   border-bottom: 1px solid #eee;
+  font-size: 1.75rem;
+  text-align: center;
+
 }
 
-.text-right { text-align: right; }
+.text-right { text-align: center!important }
 
 .empty-msg {
   padding: 20px;

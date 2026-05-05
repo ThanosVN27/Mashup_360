@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { StockMouvement } from '../../../../models/stock-mouvement.model';
 import { SharedModule } from '../../../../shared/shared.module';
+import {formatM3Date} from '../../../../shared/utils/m3-date.util';
 
 @Component({
   selector:    'app-tab-reservations',
@@ -44,4 +45,5 @@ export class ReservationsComponent {
       width: 80
     }
   ];
+  protected readonly formatM3Date = formatM3Date;
 }

@@ -86,4 +86,6 @@ export class StockService {
   private toNumber(value: any): number {
     return parseFloat(value ?? '0') || 0;
   }
+
+
 }
