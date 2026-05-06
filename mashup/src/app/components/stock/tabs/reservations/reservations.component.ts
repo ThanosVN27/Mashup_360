@@ -1,49 +1,59 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { StockClientService } from '../../../../services/stock-client.service';
 import { StockMouvement } from '../../../../models/stock-mouvement.model';
-import { SharedModule } from '../../../../shared/shared.module';
-import {formatM3Date} from '../../../../shared/utils/m3-date.util';
+import { formatM3Date } from '../../../../shared/utils/m3-date.util';
 
 @Component({
   selector:    'app-tab-reservations',
   templateUrl: './reservations.component.html',
   styleUrls:   ['./reservations.component.css'],
-  //standalone:  true,
-  //imports:     [SharedModule],
 })
-export class ReservationsComponent {
-  @Input() lignes: StockMouvement[] = [];
+export class ReservationsComponent implements OnChanges, OnDestroy {
+  @Input() itno = '';
 
-  // Définition des colonnes pour les réservations (ORCA 311)[cite: 1, 4]
+  lignes: StockMouvement[] = [];
+  isLoading = false;
+  errorMessage = '';
+
+  private sub?: Subscription;
+
   readonly colonnes: SohoDataGridColumn[] = [
+    { id: 'ridn', name: 'N° Commande',  field: 'ridn', sortable: true, align: 'center', filterType: 'text' },
+    { id: 'trqt', name: 'Qté Réservée', field: 'trqt', sortable: true, align: 'center', filterType: 'decimal', formatter: Soho.Formatters.Integer },
     {
-      id: 'ridn',
-      name: 'N° Commande',
-      field: 'ridn',
-      sortable: true,
-      filterType: 'text'
+      id: 'pldt', name: 'Date de Besoin', field: 'pldt', sortable: true, align: 'center', filterType: 'text',
+      formatter: (_r: number, _c: number, v: string) => formatM3Date(v),
     },
-    {
-      id: 'trqt',
-      name: 'Qté Réservée',
-      field: 'trqt',
-      sortable: true,
-      align: 'right',
-      formatter: Soho.Formatters.Integer // Quantité sans décimales[cite: 3]
-    },
-    {
-      id: 'pldt',
-      name: 'Date de Besoin',
-      field: 'pldt',
-      sortable: true,
-      formatter: Soho.Formatters.Date,
-      dateFormat: 'dd/MM/yyyy'
-    },
-    {
-      id: 'stat',
-      name: 'Statut',
-      field: 'stat',
-      width: 80
-    }
+    { id: 'stat', name: 'Statut', field: 'stat', align: 'center', width: 80, filterType: 'text' },
   ];
-  protected readonly formatM3Date = formatM3Date;
+
+  constructor(private readonly clientService: StockClientService) {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['itno'] && this.itno) {
+      this.charger();
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.sub?.unsubscribe();
+  }
+
+  private charger(): void {
+    this.isLoading = true;
+    this.errorMessage = '';
+    this.lignes = [];
+    this.sub?.unsubscribe();
+    this.sub = this.clientService.getReservations(this.itno).subscribe({
+      next: (data) => {
+        this.lignes = data;
+        this.isLoading = false;
+      },
+      error: () => {
+        this.errorMessage = 'Erreur chargement réservations';
+        this.isLoading = false;
+      },
+    });
+  }
 }

@@ -1,31 +1,24 @@
-.tab-content { padding: 15px; }
-
-.simple-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
+.tab-content {
+  padding: 16px;
+  background-color: #ffffff;
 }
-
-.simple-table th {
-  background-color: #f4f4f4;
-  padding: 10px;
-  text-align: center;
-  border-bottom: 2px solid #ddd;
-  font-size: 1.75rem;
-}
-
-.simple-table td {
-  padding: 10px;
-  border-bottom: 1px solid #eee;
-  font-size: 1.75rem;
-  text-align: center;
-
-}
-
-.text-right { text-align: center!important }
 
 .empty-msg {
-  padding: 20px;
+  padding: 60px 20px;
   text-align: center;
-  color: #666;
+  color: #94a3b8;
+  font-size: 1.5rem;
+  font-style: italic;
+  border: 2px dashed #e2e8f0;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+.error-msg {
+  color: #dc2626;
+  padding: 16px;
+  border: 1px solid #fca5a5;
+  border-radius: 8px;
+  background-color: #fef2f2;
+  margin-top: 16px;
 }

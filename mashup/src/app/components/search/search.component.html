@@ -1,8 +1,9 @@
 <!-- Barre de recherche partagée — utilisée depuis NavigationComponent -->
 <div class="search-bar">
 
-  <div class="field">
-    <label for="itno-input" class="label">Code article (ITNO)</label>
+  <label for="itno-input" class="label">Code article (ITNO)</label>
+
+  <div class="search-row">
     <input
       soho-input
       id="itno-input"
@@ -10,10 +11,10 @@
       placeholder="Ex : 23454"
       [(ngModel)]="itno"
       (keyup.enter)="lancer()" />
-  </div>
 
-  <button soho-button="primary" (click)="lancer()">
-    Rechercher
-  </button>
+    <button soho-button="primary" (click)="lancer()">
+      Rechercher
+    </button>
+  </div>
 
 </div>

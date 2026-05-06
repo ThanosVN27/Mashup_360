@@ -1,11 +1,24 @@
+.tab-content {
+  padding: 16px;
+  background-color: #ffffff;
+}
+
 .empty-msg {
+  padding: 60px 20px;
   text-align: center;
-  padding: 40px 20px;
-  color: #64748b;
-  background-color: #f8fafc;
-  border-radius: 8px;
-  border: 1px dashed #cbd5e1;
-  margin-top: 15px;
+  color: #94a3b8;
+  font-size: 1.5rem;
   font-style: italic;
-  font-size: 1.3rem;
+  border: 2px dashed #e2e8f0;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+.error-msg {
+  color: #dc2626;
+  padding: 16px;
+  border: 1px solid #fca5a5;
+  border-radius: 8px;
+  background-color: #fef2f2;
+  margin-top: 16px;
 }

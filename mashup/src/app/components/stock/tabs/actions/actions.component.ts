@@ -1,13 +1,59 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { StockClientService } from '../../../../services/stock-client.service';
 import { StockMouvement } from '../../../../models/stock-mouvement.model';
-import {formatM3Date} from '../../../../shared/utils/m3-date.util';
+import { formatM3Date } from '../../../../shared/utils/m3-date.util';
 
 @Component({
   selector:    'app-tab-actions',
   templateUrl: './actions.component.html',
   styleUrls:   ['./actions.component.css'],
 })
-export class ActionsComponent {
-  @Input() lignes: StockMouvement[] = [];
-  protected readonly formatM3Date = formatM3Date;
+export class ActionsComponent implements OnChanges, OnDestroy {
+  @Input() itno = '';
+
+  lignes: StockMouvement[] = [];
+  isLoading = false;
+  errorMessage = '';
+
+  private sub?: Subscription;
+
+  readonly colonnes: SohoDataGridColumn[] = [
+    { id: 'ridn', name: 'N° Commande',   field: 'ridn', sortable: true, align: 'center', filterType: 'text' },
+    { id: 'rftx', name: 'Client',         field: 'rftx', sortable: true, align: 'center', filterType: 'text' },
+    { id: 'trqt', name: 'Total réservé', field: 'trqt', sortable: true, align: 'center', filterType: 'decimal', formatter: Soho.Formatters.Integer },
+    {
+      id: 'pldt', name: 'Date planifiée', field: 'pldt', sortable: true, align: 'center', filterType: 'text',
+      formatter: (_r: number, _c: number, v: string) => formatM3Date(v),
+    },
+  ];
+
+  constructor(private readonly clientService: StockClientService) {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['itno'] && this.itno) {
+      this.charger();
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.sub?.unsubscribe();
+  }
+
+  private charger(): void {
+    this.isLoading = true;
+    this.errorMessage = '';
+    this.lignes = [];
+    this.sub?.unsubscribe();
+    this.sub = this.clientService.getActions(this.itno).subscribe({
+      next: (data) => {
+        this.lignes = data;
+        this.isLoading = false;
+      },
+      error: () => {
+        this.errorMessage = 'Erreur chargement actions';
+        this.isLoading = false;
+      },
+    });
+  }
 }

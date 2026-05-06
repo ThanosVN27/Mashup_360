@@ -1,32 +1,24 @@
 <div class="tab-content">
-  <!-- Message si vide -->
-  <div *ngIf="lignes.length === 0" class="empty-msg">
+  <span *ngIf="isLoading" soho-busy-indicator displayDelay="0"></span>
+
+  <div *ngIf="errorMessage" class="error-msg">{{ errorMessage }}</div>
+
+  <div *ngIf="!isLoading && !errorMessage && lignes.length === 0" class="empty-msg">
     Aucun mouvement trouvé pour cet article.
   </div>
 
-  <!-- Tableau HTML Standard avec classes Soho -->
-  <table *ngIf="lignes.length > 0" class="datagrid">
-    <thead>
-      <tr class="datagrid-header">
-        <th>Type</th>
-        <th>Numéro</th>
-        <th>Quantité</th>
-        <th>Date</th>
-        <th>Statut</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let m of lignes" class="datagrid-row">
-        <td>
-          <span [class.badge-of]="m.orca === '101'" [class.badge-pof]="m.orca === '100'">
-            {{ m.orca === '100' ? 'POF' : 'OF' }}
-          </span>
-        </td>
-        <td>{{ m.ridn }}</td>
-        <td class="text-right">{{ m.trqt }}</td>
-        <td>{{ formatM3Date(m.pldt) }}</td>
-        <td>{{ m.stat }}</td>
-      </tr>
-    </tbody>
-  </table>
+  <div
+    *ngIf="!isLoading && lignes.length > 0"
+    soho-datagrid
+    [dataset]="lignes"
+    [columns]="colonnes"
+    [selectable]="false"
+    [filterable]="true"
+    [rowHeight]="'short'"
+    [paging]="true"
+    [pagesize]="10"
+    [pagesizes]="[5, 10, 25, 100]"
+    [enableTooltips]="true"
+    style="width: 100%">
+  </div>
 </div>

@@ -1,26 +1,59 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { StockAchatService } from '../../../../services/stock-achat.service';
 import { StockMouvement } from '../../../../models/stock-mouvement.model';
-
+import { formatM3Date } from '../../../../shared/utils/m3-date.util';
 
 @Component({
   selector:    'app-tab-achats',
   templateUrl: './achats.component.html',
   styleUrls:   ['./achats.component.css'],
 })
-export class AchatsComponent {
-  @Input() lignes: StockMouvement[] = [];
+export class AchatsComponent implements OnChanges, OnDestroy {
+  @Input() itno = '';
+
+  lignes: StockMouvement[] = [];
+  isLoading = false;
+  errorMessage = '';
+
+  private sub?: Subscription;
 
   readonly colonnes: SohoDataGridColumn[] = [
-    { id: 'ridn', name: 'N° commande', field: 'ridn', sortable: true },
-    { id: 'trqt', name: 'Quantité', field: 'trqt', sortable: true, numberFormat: { minimumFractionDigits: 0, maximumFractionDigits: 0 } },
-    { id: 'codt', name: 'Date livraison', field: 'codt', sortable: true },
+    { id: 'ridn', name: 'N° Commande',      field: 'ridn', sortable: true, align: 'center', filterType: 'text' },
+    { id: 'trqt', name: 'Quantité achetée', field: 'trqt', sortable: true, align: 'center', filterType: 'decimal', formatter: Soho.Formatters.Integer },
+    {
+      id: 'pldt', name: 'Date planifiée', field: 'pldt', sortable: true, align: 'center', filterType: 'text',
+      formatter: (_r: number, _c: number, v: string) => formatM3Date(v),
+    },
+    { id: 'stat', name: 'Statut', field: 'stat', align: 'center', width: 100, filterType: 'text' },
   ];
 
-  private formatDate(dateStr: string): string {
-    if (!dateStr || dateStr.length !== 8) return dateStr; // Retourne tel quel si le format est inattendu
-    const year = dateStr.substring(0, 4);
-    const month = dateStr.substring(4, 6);
-    const day = dateStr.substring(6, 8);
-    return `${day}/${month}/${year}`;
+  constructor(private readonly achatService: StockAchatService) {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['itno'] && this.itno) {
+      this.charger();
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.sub?.unsubscribe();
+  }
+
+  private charger(): void {
+    this.isLoading = true;
+    this.errorMessage = '';
+    this.lignes = [];
+    this.sub?.unsubscribe();
+    this.sub = this.achatService.getAchats(this.itno).subscribe({
+      next: (data) => {
+        this.lignes = data;
+        this.isLoading = false;
+      },
+      error: () => {
+        this.errorMessage = 'Erreur chargement achats';
+        this.isLoading = false;
+      },
+    });
   }
 }

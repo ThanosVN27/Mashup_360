@@ -27,7 +27,8 @@ import {OfPofComponent} from './components/stock/tabs/ofpof/ofpof.component';
       AchatsComponent,
       ReservationsComponent,
       ActionsComponent,
-      OfPofComponent
+      OfPofComponent,
+
 
    ],
    imports: [

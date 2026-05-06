@@ -54,10 +54,10 @@
       <!-- Contenu des onglets -->
       <div class="tab-content">
         <app-tab-synthese *ngIf="activeTab === 'synthese'" [article]="article"></app-tab-synthese>
-        <app-tab-ofpof *ngIf="activeTab === 'ofpof'" [lignes]="ofpofLignes"></app-tab-ofpof>
-        <app-tab-achats *ngIf="activeTab === 'achats'" [lignes]="achatsLignes"></app-tab-achats>
-        <app-tab-reservations *ngIf="activeTab === 'reservations'" [lignes]="reservationsLignes"></app-tab-reservations>
-        <app-tab-actions *ngIf="activeTab === 'actions'" [lignes]="actionsLignes"></app-tab-actions>
+        <app-tab-ofpof *ngIf="activeTab === 'ofpof'" [itno]="article.itno"></app-tab-ofpof>
+        <app-tab-achats *ngIf="activeTab === 'achats'" [itno]="article.itno"></app-tab-achats>
+        <app-tab-reservations *ngIf="activeTab === 'reservations'" [itno]="article.itno"></app-tab-reservations>
+        <app-tab-actions *ngIf="activeTab === 'actions'" [itno]="article.itno"></app-tab-actions>
       </div>
     </div>
   </div>

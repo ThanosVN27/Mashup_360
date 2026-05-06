@@ -1,26 +1,24 @@
 <div class="tab-content">
-  <!-- Message si aucune donnée -->
-  <div *ngIf="lignes.length === 0" class="empty-msg">
+  <span *ngIf="isLoading" soho-busy-indicator displayDelay="0"></span>
+
+  <div *ngIf="errorMessage" class="error-msg">{{ errorMessage }}</div>
+
+  <div *ngIf="!isLoading && !errorMessage && lignes.length === 0" class="empty-msg">
     Aucune réservation client pour cet article.
   </div>
 
-  <!-- Tableau HTML Classique -->
-  <table *ngIf="lignes.length > 0" class="simple-table">
-    <thead>
-    <tr>
-      <th>N° Commande</th>
-      <th class="text-right">Quantité</th>
-      <th>Date planifiée </th>
-      <th>Statut</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let m of lignes">
-      <td>{{ m.ridn }}</td>
-      <td class="text-right">{{ m.trqt }}</td>
-      <td>{{ formatM3Date(m.pldt) }}</td>
-      <td>{{ m.stat }}</td>
-    </tr>
-    </tbody>
-  </table>
+  <div
+    *ngIf="!isLoading && lignes.length > 0"
+    soho-datagrid
+    [dataset]="lignes"
+    [columns]="colonnes"
+    [selectable]="false"
+    [filterable]="true"
+    [rowHeight]="'short'"
+    [paging]="true"
+    [pagesize]="10"
+    [pagesizes]="[5, 10, 25, 100]"
+    [enableTooltips]="true"
+    style="width: 100%">
+  </div>
 </div>

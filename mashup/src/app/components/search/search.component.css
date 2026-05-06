@@ -1,25 +1,28 @@
 .search-bar {
-  display:       flex;
-  align-items:   flex-end;
-  gap:           16px; /* Espace agrandi */
-  padding:       20px 32px; /* Padding agrandi */
-  background:    #f8f9fa; /* Gris très clair pour contraster */
-  border-bottom: 2px solid #e0e0e0;
-  box-shadow:    0 4px 10px rgba(0, 0, 0, 0.05); /* Ombre plus douce */
-}
-
-.field {
   display:        flex;
   flex-direction: column;
-  gap:            6px; /* Plus d'espace entre label et input */
+  gap:            6px;
+  padding:        20px 32px;
+  background:     #f8f9fa;
+  border-bottom:  2px solid #e0e0e0;
+  box-shadow:     0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
 .label {
-  font-size:      13px; /* Agrandissement */
-  font-weight:    700; /* Plus gras */
-  color:          #111111; /* Noir */
+  font-size:      13px;
+  font-weight:    700;
+  color:          #111111;
   text-transform: uppercase;
-  letter-spacing: 1px; /* Plus d'espace */
+  letter-spacing: 1px;
 }
 
+.search-row {
+  display:     flex;
+  align-items: center;
+  gap:         12px;
+}
 
+.search-row input {
+  flex: 0 0 auto;
+  width: 220px;
+}

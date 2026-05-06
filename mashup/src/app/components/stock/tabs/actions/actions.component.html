@@ -1,26 +1,24 @@
 <div class="tab-content">
-  <div *ngIf="lignes.length === 0" class="empty-state">
+  <span *ngIf="isLoading" soho-busy-indicator displayDelay="0"></span>
+
+  <div *ngIf="errorMessage" class="error-msg">{{ errorMessage }}</div>
+
+  <div *ngIf="!isLoading && !errorMessage && lignes.length === 0" class="empty-msg">
     Aucune action client pour cet article.
   </div>
 
-  <table *ngIf="lignes.length > 0" class="custom-table">
-    <thead>
-      <tr>
-        <th>N° commande</th>
-        <th>Client</th>
-        <th class="text-right">Quantité</th>
-        <th>Date planifiée</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let m of lignes">
-        <td><strong>{{ m.ridn }}</strong></td>
-        <td>{{ m.rftx }}</td>
-        <td class="text-right">
-          <span class="quantity-badge">{{ m.trqt }}</span>
-        </td>
-        <td>{{ formatM3Date(m.pldt) }}</td>
-      </tr>
-    </tbody>
-  </table>
+  <div
+    *ngIf="!isLoading && lignes.length > 0"
+    soho-datagrid
+    [dataset]="lignes"
+    [columns]="colonnes"
+    [selectable]="false"
+    [filterable]="true"
+    [rowHeight]="'short'"
+    [paging]="true"
+    [pagesize]="10"
+    [pagesizes]="[5, 10, 25, 100]"
+    [enableTooltips]="true"
+    style="width: 100%">
+  </div>
 </div>

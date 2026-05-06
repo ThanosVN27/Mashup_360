@@ -1,12 +1,24 @@
-<div *ngIf="lignes.length === 0" class="empty-msg">
-  Aucun ordre d'achat pour cet article.
-</div>
+<div class="tab-content">
+  <span *ngIf="isLoading" soho-busy-indicator displayDelay="0"></span>
 
-<soho-datagrid
-  *ngIf="lignes.length > 0"
-  [columns]="colonnes"
-  [dataset]="lignes"
-  rowHeight="medium"
-  [pagination]="true"
-  [pagesize]="20">
-</soho-datagrid>
+  <div *ngIf="errorMessage" class="error-msg">{{ errorMessage }}</div>
+
+  <div *ngIf="!isLoading && !errorMessage && lignes.length === 0" class="empty-msg">
+    Aucun ordre d'achat trouvé pour cet article.
+  </div>
+
+  <div
+    *ngIf="!isLoading && lignes.length > 0"
+    soho-datagrid
+    [dataset]="lignes"
+    [columns]="colonnes"
+    [selectable]="false"
+    [filterable]="true"
+    [rowHeight]="'short'"
+    [paging]="true"
+    [pagesize]="10"
+    [pagesizes]="[5, 10, 25, 100]"
+    [enableTooltips]="true"
+    style="width: 100%">
+  </div>
+</div>
