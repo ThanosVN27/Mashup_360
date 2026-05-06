@@ -59,7 +59,7 @@
 .article-code__label {
   font-size:      12px;
   font-weight:    700;
-  color:          #bfdbfe;
+  color:          #ffffff;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
@@ -73,7 +73,7 @@
 .article-libelle {
   font-size:   17px;
   font-weight: 600;
-  color:       #dbeafe;
+  color:       #ffffff;
   flex:        1;
   min-width:   0;
 }

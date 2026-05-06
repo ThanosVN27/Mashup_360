@@ -26,7 +26,7 @@ export class StockComponent implements OnDestroy {
     { id: 'synthese',      label: 'Synthèse',        badge: false },
     { id: 'ofpof',        label: 'OF / POF',         badge: true  },
     { id: 'achats',       label: 'Achats',            badge: true  },
-    { id: 'ventes', label: 'Ventes',     badge: true  },
+    { id: 'ventes',       label: 'Ventes',     badge: true  },
     { id: 'actions',      label: 'Aktions',           badge: true  },
   ];
 
@@ -41,14 +41,14 @@ export class StockComponent implements OnDestroy {
 
   get ofpofLignes()        { return this.mouvements.filter(m => (m.orca === '100' && m.stat !== '10') || m.orca === '101'); }
   get achatsLignes()       { return this.mouvements.filter(m => m.orca === '251'); }
-  get reservationsLignes() { return this.mouvements.filter(m => m.orca === '311'); }
+  get ventesLignes() { return this.mouvements.filter(m => m.orca === '311'); }
   get actionsLignes()      { return this.mouvements.filter(m => m.orca === '030'); }
 
   badgeFor(id: string): number {
     const counts: Record<string, number> = {
       ofpof:        this.ofpofLignes.length,
       achats:       this.achatsLignes.length,
-      reservations: this.reservationsLignes.length,
+      ventes:       this.ventesLignes.length,
       actions:      this.actionsLignes.length,
     };
     return counts[id] ?? 0;
