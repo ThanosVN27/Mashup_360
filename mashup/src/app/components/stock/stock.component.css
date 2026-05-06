@@ -1,7 +1,3 @@
-/* ============================================================
-   Stock 360 — Styles
-   ============================================================ */
-
 
 /* ── Conteneur global ──────────────────────────────────────── */
 
@@ -55,8 +51,8 @@
   gap:              24px; /* Plus d'espace */
   padding:          20px 28px; /* Plus d'espace */
   margin-bottom:    24px;
-  background:       #111111; /* Fond Noir */
-  border-left:      6px solid #fff3cd; /* Bordure Jaune */
+  background:       #3e6dd2; /* Bleu nuage */
+  border-left:      6px solid #595854; /* Bordure Jaune */
   border-radius:    10px; /* Plus arrondi */
   box-shadow:       0 4px 12px rgba(0, 0, 0, 0.15);
   color:            #FFFFFF; /* Texte blanc par défaut dans ce bloc */
@@ -94,7 +90,7 @@
   align-items:   center;
   padding:       6px 14px;
   border-radius: 20px;
-  background:    rgba(255, 215, 0, 0.2); /* Fond jaune semi-transparent */
+  background:    rgba(254, 254, 253, 0.2); /* Fond jaune semi-transparent */
   border:        1px solid #FFFFFF;
   color:         #FFFFFF; /* Jaune */
   font-size:     14px;
