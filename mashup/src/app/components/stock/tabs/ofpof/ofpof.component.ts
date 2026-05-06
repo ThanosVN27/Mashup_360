@@ -20,20 +20,20 @@ export class OfPofComponent implements OnChanges, OnDestroy {
 
   readonly colonnes: SohoDataGridColumn[] = [
     {
-      id: 'type', name: 'Type', field: 'orca', width: 90, align: 'center',
+      id: 'type', name: 'Type', field: 'orca', width: 200, align: 'center', filterType: 'text',
       formatter: (_row: number, _cell: number, value: string) => {
         const label    = value === '100' ? 'POF' : 'OF';
         const cssClass = value === '100' ? 'badge-pof' : 'badge-of';
         return `<span class="${cssClass}">${label}</span>`;
       },
     },
-    { id: 'ridn', name: 'Numéro',   field: 'ridn', sortable: true, align: 'center', filterType: 'text' },
-    { id: 'trqt', name: 'Quantité', field: 'trqt', sortable: true, align: 'center', filterType: 'decimal', formatter: Soho.Formatters.Integer },
+    { id: 'ridn', name: 'Numéro',   field: 'ridn', width: 200, sortable: true, align: 'center', filterType: 'text' },
+    { id: 'trqt', name: 'Quantité', field: 'trqt', width: 200, sortable: true, align: 'center', filterType: 'decimal', formatter: Soho.Formatters.Integer },
     {
-      id: 'pldt', name: 'Date', field: 'pldt', sortable: true, align: 'center', filterType: 'text',
+      id: 'pldt', name: 'Date', field: 'pldt', width: 200, sortable: true, align: 'center', filterType: 'text',
       formatter: (_row: number, _cell: number, value: string) => formatM3Date(value),
     },
-    { id: 'stat', name: 'Statut', field: 'stat', align: 'center', width: 90, filterType: 'text' },
+    { id: 'stat', name: 'Statut', field: 'stat', width: 200, align: 'center', filterType: 'text' },
   ];
 
   constructor(private readonly productionService: StockProductionService) {}
@@ -55,7 +55,7 @@ export class OfPofComponent implements OnChanges, OnDestroy {
     this.sub?.unsubscribe();
     this.sub = this.productionService.getProduction(this.itno).subscribe({
       next: (data) => {
-        this.lignes = data;
+        this.lignes = [...data].sort((a, b) => a.pldt.localeCompare(b.pldt));
         this.isLoading = false;
       },
       error: () => {

@@ -1,55 +1,71 @@
+/* ── Grid principal : 2 colonnes, lignes partagées → hauteurs identiques ── */
 .synth-grid {
   display:               grid;
   grid-template-columns: 1fr 1fr;
-  gap:                   24px; /* Plus d'espace */
+  gap:                   0 24px;
 }
 
 @media (max-width: 800px) {
   .synth-grid { grid-template-columns: 1fr; }
 }
 
-.synth-card {
-  border:        1px solid #e2e8f0;
-  border-radius: 8px; /* Coins plus ronds */
-  overflow:      hidden;
-  box-shadow:    0 2px 8px rgba(0, 0, 0, 0.05); /* Ombre plus douce */
-}
-
-.synth-card__title {
-  margin:         0;
-  padding:        16px 20px; /* Plus d'espace */
-  font-size:      15px; /* Plus grand */
-  font-weight:    800; /* Plus gras */
-  color:          #111111; /* Noir absolu */
+/* ── En-têtes ── */
+.synth-head {
+  padding:        16px 20px;
+  font-size:      15px;
+  font-weight:    800;
+  color:          #111111;
   background:     #f8fafc;
-  border-bottom:  2px solid #FFD700; /* Ligne jaune vif pour souligner le titre */
   text-transform: uppercase;
   letter-spacing: 1px;
+  border:         1px solid #e2e8f0;
+  border-bottom:  2px solid #FFD700;
+  border-radius:  8px 8px 0 0;
 }
 
-.synth-card__body { padding: 0; }
-
-.synth-row {
+/* ── Cellules de données ── */
+.synth-cell {
   display:         flex;
   justify-content: space-between;
   align-items:     center;
-  padding:         14px 20px; /* Plus d'espace */
+  padding:         14px 20px;
   border-bottom:   1px solid #f1f5f9;
   transition:      background-color 0.2s ease;
 }
 
-.synth-row:last-child { border-bottom: none; }
-.synth-row:hover      { background: #f8fafc; } /* Hover plus léger */
+.synth-cell:hover { background: #f8fafc; }
 
-.synth-row__label {
-  font-size:      13px; /* Plus grand */
+.synth-l {
+  border-left:  1px solid #e2e8f0;
+  border-right: 1px solid #e2e8f0;
+}
+
+.synth-r {
+  border-left:  1px solid #e2e8f0;
+  border-right: 1px solid #e2e8f0;
+}
+
+/* Dernière ligne : arrondi bas + bordure basse */
+.synth-last {
+  border-bottom: 1px solid #e2e8f0;
+  border-radius: 0 0 8px 8px;
+}
+
+/* ── Variantes de fond ── */
+.synth-warning { background: #fffbeb; border-left: 4px solid #FFD700 !important; }
+.synth-danger  { background: #fef2f2; border-left: 4px solid #ef4444 !important; }
+.synth-check   { background: #f0fdf4; border-left: 4px solid #22c55e !important; }
+
+/* ── Labels ── */
+.synth-label {
+  font-size:      13px;
   font-weight:    700;
   color:          #475569;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
-.synth-row__label small {
+.synth-label small {
   display:        block;
   font-size:      12px;
   font-weight:    500;
@@ -59,14 +75,15 @@
   letter-spacing: 0;
 }
 
-.synth-row__value {
-  font-size:   18px; /* Plus grand */
+/* ── Valeurs ── */
+.synth-val {
+  font-size:   18px;
   font-weight: 800;
-  color:       #111111; /* Noir absolu */
+  color:       #111111;
   text-align:  right;
 }
 
-.synth-row__value em {
+.synth-val em {
   font-style:  normal;
   font-size:   12px;
   font-weight: 500;
@@ -74,17 +91,25 @@
   margin-left: 6px;
 }
 
-.synth-row__value--with-badge {
+.synth-val--warn   { color: #b45309; }
+.synth-val--danger { color: #b91c1c; }
+
+.synth-val--with-badge {
   display:     flex;
   align-items: center;
   gap:         12px;
 }
 
-/* Nouvelles couleurs pour les variantes */
-.synth-row--warning { background: #fffbeb; border-left: 4px solid #FFD700; } /* Ligne jaune */
-.synth-row--warning .synth-row__value { color: #b45309; }
+/* ── Tags ── */
+.tag {
+  font-size:      11px;
+  font-weight:    700;
+  padding:        3px 8px;
+  border-radius:  4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space:    nowrap;
+}
 
-.synth-row--danger  { background: #fef2f2; border-left: 4px solid #ef4444; }
-.synth-row--danger  .synth-row__value { color: #b91c1c; }
-
-.synth-row--check   { background: #f0fdf4; border-left: 4px solid #22c55e; }
+.tag-ok  { background: #dcfce7; color: #166534; }
+.tag-err { background: #fee2e2; color: #991b1b; }

@@ -19,13 +19,13 @@ export class ReservationsComponent implements OnChanges, OnDestroy {
   private sub?: Subscription;
 
   readonly colonnes: SohoDataGridColumn[] = [
-    { id: 'ridn', name: 'N° Commande',  field: 'ridn', sortable: true, align: 'center', filterType: 'text' },
-    { id: 'trqt', name: 'Qté Réservée', field: 'trqt', sortable: true, align: 'center', filterType: 'decimal', formatter: Soho.Formatters.Integer },
+    { id: 'ridn', name: 'N° Commande',  field: 'ridn', width: 200, sortable: true, align: 'center', filterType: 'text' },
+    { id: 'trqt', name: 'Qté Réservée', field: 'trqt', width: 200, sortable: true, align: 'center', filterType: 'decimal', formatter: Soho.Formatters.Integer },
     {
-      id: 'pldt', name: 'Date de Besoin', field: 'pldt', sortable: true, align: 'center', filterType: 'text',
+      id: 'pldt', name: 'Date de Besoin', field: 'pldt', width: 200, sortable: true, align: 'center', filterType: 'text',
       formatter: (_r: number, _c: number, v: string) => formatM3Date(v),
     },
-    { id: 'stat', name: 'Statut', field: 'stat', align: 'center', width: 80, filterType: 'text' },
+    { id: 'stat', name: 'Statut', field: 'stat', width: 200, align: 'center', filterType: 'text' },
   ];
 
   constructor(private readonly clientService: StockClientService) {}
@@ -47,7 +47,7 @@ export class ReservationsComponent implements OnChanges, OnDestroy {
     this.sub?.unsubscribe();
     this.sub = this.clientService.getReservations(this.itno).subscribe({
       next: (data) => {
-        this.lignes = data;
+        this.lignes = [...data].sort((a, b) => a.pldt.localeCompare(b.pldt));
         this.isLoading = false;
       },
       error: () => {

@@ -19,11 +19,11 @@ export class ActionsComponent implements OnChanges, OnDestroy {
   private sub?: Subscription;
 
   readonly colonnes: SohoDataGridColumn[] = [
-    { id: 'ridn', name: 'N° Commande',   field: 'ridn', sortable: true, align: 'center', filterType: 'text' },
-    { id: 'rftx', name: 'Client',         field: 'rftx', sortable: true, align: 'center', filterType: 'text' },
-    { id: 'trqt', name: 'Total réservé', field: 'trqt', sortable: true, align: 'center', filterType: 'decimal', formatter: Soho.Formatters.Integer },
+    { id: 'ridn', name: 'N° Commande',   field: 'ridn', width: 200, sortable: true, align: 'center', filterType: 'text' },
+    { id: 'rftx', name: 'Client',         field: 'rftx', width: 200, sortable: true, align: 'center', filterType: 'text' },
+    { id: 'trqt', name: 'Total réservé', field: 'trqt', width: 200, sortable: true, align: 'center', filterType: 'decimal', formatter: Soho.Formatters.Integer },
     {
-      id: 'pldt', name: 'Date planifiée', field: 'pldt', sortable: true, align: 'center', filterType: 'text',
+      id: 'pldt', name: 'Date planifiée', field: 'pldt', width: 200, sortable: true, align: 'center', filterType: 'text',
       formatter: (_r: number, _c: number, v: string) => formatM3Date(v),
     },
   ];
@@ -47,7 +47,7 @@ export class ActionsComponent implements OnChanges, OnDestroy {
     this.sub?.unsubscribe();
     this.sub = this.clientService.getActions(this.itno).subscribe({
       next: (data) => {
-        this.lignes = data;
+        this.lignes = [...data].sort((a, b) => a.pldt.localeCompare(b.pldt));
         this.isLoading = false;
       },
       error: () => {
