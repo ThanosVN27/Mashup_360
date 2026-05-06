@@ -51,8 +51,8 @@
   gap:              24px; /* Plus d'espace */
   padding:          20px 28px; /* Plus d'espace */
   margin-bottom:    24px;
-  background:       #3e6dd2; /* Bleu nuage */
-  border-left:      6px solid #595854; /* Bordure Jaune */
+  background:       linear-gradient(120deg, #58a0f8 0%, #2563eb 100%);
+  border-left:      6px solid #000; /* Bordure Jaune */
   border-radius:    10px; /* Plus arrondi */
   box-shadow:       0 4px 12px rgba(0, 0, 0, 0.15);
   color:            #FFFFFF; /* Texte blanc par défaut dans ce bloc */
@@ -81,7 +81,7 @@
 .article-libelle {
   font-size:   18px; /* Plus grand */
   font-weight: 600;
-  color:       #e2e8f0; /* Blanc cassé */
+  color:       #FFFFFF; /* Blanc cassé */
   flex:        1;
 }
 
