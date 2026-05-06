@@ -26,7 +26,7 @@ export class StockComponent implements OnDestroy {
     { id: 'synthese',      label: 'Synthèse',        badge: false },
     { id: 'ofpof',        label: 'OF / POF',         badge: true  },
     { id: 'achats',       label: 'Achats',            badge: true  },
-    { id: 'reservations', label: 'Réservations',     badge: true  },
+    { id: 'ventes', label: 'Ventes',     badge: true  },
     { id: 'actions',      label: 'Aktions',           badge: true  },
   ];
 
@@ -95,7 +95,7 @@ export class StockComponent implements OnDestroy {
           quqt,
           rjqt,
           resaVente:         stqt - aval,
-          totalPof:          this.somme(movs.filter(m => m.orca === '100' && m.stat !== '10')),
+          totalPof:          this.somme(movs.filter(m => m.orca === '100' && m.stat !== '10')) ,
           totalOf:           this.somme(movs.filter(m => m.orca === '101')),
           totalAchats:       this.somme(movs.filter(m => m.orca === '251')),
           totalReservations: this.somme(movs.filter(m => m.orca === '311')),

@@ -1,27 +1,38 @@
 .tab-content {
-  padding: 16px;
+  padding:          0;
   background-color: #ffffff;
 }
 
-.badge-of  { color: #2d8948; font-weight: bold; font-size: 1.2rem; }
-.badge-pof { color: #0072ed; font-weight: bold; font-size: 1.2rem; }
+/* Badges OF / POF */
+.badge-of  { color: #15803d; font-weight: 700; }
+.badge-pof { color: #1d4ed8; font-weight: 700; }
+
+/* Wrapper scrollable sur mobile */
+.tab-content > div[soho-datagrid] {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
 
 .empty-msg {
-  padding: 60px 20px;
-  text-align: center;
-  color: #94a3b8;
-  font-size: 1.5rem;
-  font-style: italic;
-  border: 2px dashed #e2e8f0;
+  padding:       48px 20px;
+  text-align:    center;
+  color:         #94a3b8;
+  font-size:     15px;
+  font-style:    italic;
+  border:        2px dashed #e2e8f0;
   border-radius: 8px;
-  margin-top: 20px;
+  margin:        16px;
 }
 
 .error-msg {
-  color: #dc2626;
-  padding: 16px;
-  border: 1px solid #fca5a5;
-  border-radius: 8px;
+  display:          flex;
+  align-items:      center;
+  gap:              10px;
+  color:            #b91c1c;
+  padding:          14px 16px;
+  border:           1px solid #fca5a5;
+  border-radius:    8px;
   background-color: #fef2f2;
-  margin-top: 16px;
+  margin:           16px;
+  font-size:        14px;
 }
