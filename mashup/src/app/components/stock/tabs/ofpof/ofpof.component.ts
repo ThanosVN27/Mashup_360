@@ -28,11 +28,8 @@ export class OfPofComponent implements OnChanges, OnDestroy {
       },
     },
     { id: 'ridn', name: 'Numéro',   field: 'ridn', width: 200, sortable: true, align: 'center', filterType: 'text' },
-    { id: 'trqt', name: 'Quantité', field: 'trqt', width: 200, sortable: true, align: 'center', filterType: 'decimal', formatter: Soho.Formatters.Integer },
-    {
-      id: 'pldt', name: 'Date', field: 'pldt', width: 200, sortable: true, align: 'center', filterType: 'text',
-      formatter: (_row: number, _cell: number, value: string) => formatM3Date(value),
-    },
+    { id: 'trqt', name: 'Quantité à produire', field: 'trqt', width: 200, sortable: true, align: 'center', filterType: 'decimal', formatter: Soho.Formatters.Integer },
+    { id: 'pldt', name: 'Date', field: 'pldt', width: 200, sortable: true, align: 'center', filterType: 'text',formatter: (_row: number, _cell: number, value: string) => formatM3Date(value),},
     { id: 'stat', name: 'Statut', field: 'stat', width: 200, align: 'center', filterType: 'text' },
   ];
 

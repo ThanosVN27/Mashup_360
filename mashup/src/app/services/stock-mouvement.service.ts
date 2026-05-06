@@ -18,7 +18,7 @@ export class StockMouvementService {
       const req: IMIRequest = {
         program:            'MMS080MI',
         transaction:        'SelMtrlTrans',
-        record:             { ITNO: itno, WHLO: 'E01', WHGR: 'ESCAL_GP', CONO: 100 },
+        record:             { ITNO: itno, WHLO: 'E01', WHGR: 'GRP_ENTREPRISE', CONO: 100 },
         outputFields:       ['ORCA', 'RIDN', 'TRQT', 'PLDT', 'CODT', 'RFTX', 'STAT'],
         maxReturnedRecords: 999,
       };

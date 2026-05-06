@@ -24,7 +24,6 @@
 
 
 /* ── Bandeau d'erreur ──────────────────────────────────────── */
-
 .error-banner {
   display:          flex;
   align-items:      center;
@@ -57,7 +56,7 @@
   padding:          20px 28px; /* Plus d'espace */
   margin-bottom:    24px;
   background:       #111111; /* Fond Noir */
-  border-left:      6px solid #FFD700; /* Bordure Jaune */
+  border-left:      6px solid #fff3cd; /* Bordure Jaune */
   border-radius:    10px; /* Plus arrondi */
   box-shadow:       0 4px 12px rgba(0, 0, 0, 0.15);
   color:            #FFFFFF; /* Texte blanc par défaut dans ce bloc */
@@ -72,7 +71,7 @@
 .article-code__label {
   font-size:      13px;
   font-weight:    700;
-  color:          #FFD700; /* Jaune */
+  color:          #FFFFFF; /* Jaune */
   text-transform: uppercase;
   letter-spacing: 1px;
 }
@@ -96,8 +95,8 @@
   padding:       6px 14px;
   border-radius: 20px;
   background:    rgba(255, 215, 0, 0.2); /* Fond jaune semi-transparent */
-  border:        1px solid #FFD700;
-  color:         #FFD700; /* Jaune */
+  border:        1px solid #FFFFFF;
+  color:         #FFFFFF; /* Jaune */
   font-size:     14px;
   font-weight:   800;
 }
@@ -108,7 +107,7 @@
 }
 
 .article-poids strong {
-  color:       #FFD700; /* Jaune */
+  color: #FFFFFF; /* Jaune */
   font-weight: 800;
 }
 
@@ -149,12 +148,12 @@
 
 .tab-btn:hover {
   color:        #111111; /* Noir */
-  background:   #e2e8f0;
+  background:   #FFFFFF;
 }
 
 .tab-btn--active {
   color:        #111111; /* Noir */
-  border-bottom-color: #FFD700; /* Ligne Jaune */
+  border-bottom-color: #78d5f6; /* Ligne Jaune */
   background:   #ffffff;
 }
 
@@ -174,7 +173,7 @@
 
 .tab-btn--active .tab-count {
   background: #111111; /* Fond Noir */
-  color:      #FFD700; /* Texte Jaune */
+  color:      #FFFFFF; /* Texte Jaune */
 }
 
 .tab-panel {

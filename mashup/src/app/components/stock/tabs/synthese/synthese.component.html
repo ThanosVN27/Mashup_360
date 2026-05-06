@@ -15,11 +15,9 @@
   </div>
 
   <!-- ── Ligne 2 ── -->
-  <div class="synth-cell synth-l synth-warning">
-    <span class="synth-label">
-      Resa vente
-    </span>
-    <span class="synth-val synth-val--warn">{{ article.resaVente }} <em>{{ article.unms }}</em></span>
+  <div class="synth-cell synth-l">
+    <span class="synth-label">Stock affectable</span>
+    <span class="synth-val">{{ article.aval }} <em>{{ article.unms }}</em></span>
   </div>
   <div class="synth-cell synth-r">
     <span class="synth-label">Total OF lancés</span>
@@ -27,9 +25,11 @@
   </div>
 
   <!-- ── Ligne 3 ── -->
-  <div class="synth-cell synth-l">
-    <span class="synth-label">Stock affectable</span>
-    <span class="synth-val">{{ article.aval }} <em>{{ article.unms }}</em></span>
+  <div class="synth-cell synth-l synth-warning">
+    <span class="synth-label">
+      Resa vente
+    </span>
+    <span class="synth-val synth-val--warn">{{ article.resaVente }} <em>{{ article.unms }}</em></span>
   </div>
   <div class="synth-cell synth-r">
     <span class="synth-label">Total achats</span>

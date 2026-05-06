@@ -20,9 +20,9 @@ export class ReservationsComponent implements OnChanges, OnDestroy {
 
   readonly colonnes: SohoDataGridColumn[] = [
     { id: 'ridn', name: 'N° Commande',  field: 'ridn', width: 200, sortable: true, align: 'center', filterType: 'text' },
-    { id: 'trqt', name: 'Qté Réservée', field: 'trqt', width: 200, sortable: true, align: 'center', filterType: 'decimal', formatter: Soho.Formatters.Integer },
+    { id: 'trqt', name: 'Quantité Réservée', field: 'trqt', width: 200, sortable: true, align: 'center', filterType: 'decimal', formatter: Soho.Formatters.Integer },
     {
-      id: 'pldt', name: 'Date de Besoin', field: 'pldt', width: 200, sortable: true, align: 'center', filterType: 'text',
+      id: 'pldt', name: 'Date planifiée', field: 'pldt', width: 200, sortable: true, align: 'center', filterType: 'text',
       formatter: (_r: number, _c: number, v: string) => formatM3Date(v),
     },
     { id: 'stat', name: 'Statut', field: 'stat', width: 200, align: 'center', filterType: 'text' },
