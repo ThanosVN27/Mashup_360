@@ -11,8 +11,7 @@ export class NagivationComponent {
   rechercheActuelle: RechercheEvent | null = null;
 
   onRecherche(event: RechercheEvent): void {
-    // Nouvel objet à chaque recherche → le setter @Input de StockComponent se déclenche toujours,
-    // même si itno ou whgr n'ont pas changé.
+    // Nouvel objet → le setter @Input de StockComponent se déclenche même si les valeurs n'ont pas changé
     this.rechercheActuelle = { ...event };
   }
 }

@@ -13,9 +13,9 @@ export interface RechercheEvent {
 })
 export class SearchComponent implements OnInit {
 
-  itno    = '';
-  whgr    = '';
-  groupes: WhgrOption[] = [];
+  itno           = '';
+  whgr           = '';
+  groupes:       WhgrOption[] = [];
   loadingGroupes = true;
 
   @Output() recherche = new EventEmitter<RechercheEvent>();
@@ -25,23 +25,22 @@ export class SearchComponent implements OnInit {
   ngOnInit(): void {
     this.whgrService.getGroupes().subscribe({
       next: (groupes) => {
-        this.groupes       = groupes;
+        this.groupes        = groupes;
+        this.whgr           = groupes[0]?.code ?? '';
         this.loadingGroupes = false;
-        if (groupes.length > 0) {
-          this.whgr = groupes[0].code;
-        }
       },
       error: () => {
-        this.groupes        = [{ code: 'GRP_ENTREPRISE' , depot: '100' }];
+        this.groupes        = [{ code: 'GRP_ENTREPRISE' }];
         this.whgr           = 'GRP_ENTREPRISE';
-        this.loadingGroupes  = false;
+        this.loadingGroupes = false;
       },
     });
   }
 
   lancer(): void {
     const itno = this.itno.trim();
-    if (!itno || !this.whgr) return;
-    this.recherche.emit({ itno, whgr: this.whgr });
+    if (itno && this.whgr) {
+      this.recherche.emit({ itno, whgr: this.whgr });
+    }
   }
 }

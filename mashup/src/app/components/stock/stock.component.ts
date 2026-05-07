@@ -8,9 +8,9 @@ import { StockMouvement } from '../../models/stock-mouvement.model';
 import { RechercheEvent } from '../search/search.component';
 
 @Component({
-  selector: 'app-stock',
+  selector:    'app-stock',
   templateUrl: './stock.component.html',
-  styleUrls: ['./stock.component.css'],
+  styleUrls:   ['./stock.component.css'],
 })
 export class StockComponent implements OnDestroy {
 
@@ -21,19 +21,19 @@ export class StockComponent implements OnDestroy {
     }
   }
 
-  loading = false;
-  erreur: string | null = null;
-  article: StockArticle | null = null;
+  loading     = false;
+  erreur:     string | null = null;
+  article:    StockArticle | null = null;
   mouvements: StockMouvement[] = [];
-  activeTab = 'synthese';
-  whgrActuel = 'GRP_ENTREPRISE';
+  activeTab   = 'synthese';
+  whgrActuel  = 'GRP_ENTREPRISE';
 
   readonly tabs = [
-    { id: 'synthese', label: 'Synthèse',  badge: false },
-    { id: 'ofpof',   label: 'OF / POF',   badge: true  },
-    { id: 'achats',  label: 'Achats',      badge: true  },
-    { id: 'ventes',  label: 'Ventes',      badge: true  },
-    { id: 'actions', label: 'Aktions',     badge: true  },
+    { id: 'synthese', label: 'Synthèse', badge: false },
+    { id: 'ofpof',   label: 'OF / POF',  badge: true  },
+    { id: 'achats',  label: 'Achats',     badge: true  },
+    { id: 'ventes',  label: 'Ventes',     badge: true  },
+    { id: 'actions', label: 'Aktions',    badge: true  },
   ];
 
   private readonly destroy$ = new Subject<void>();
@@ -43,21 +43,18 @@ export class StockComponent implements OnDestroy {
     private readonly mouvementService: StockMouvementService,
   ) {}
 
-  setTab(id: string): void { this.activeTab = id; }
+  setTab(id: string): void {
+    this.activeTab = id;
+  }
 
-  get ofpofLignes()  { return this.mouvements.filter(m => (m.orca === '100' && m.stat !== '10') || m.orca === '101'); }
-  get achatsLignes() { return this.mouvements.filter(m => m.orca === '251'); }
-  get ventesLignes() { return this.mouvements.filter(m => m.orca === '311'); }
-  get aktionsLignes(){ return this.mouvements.filter(m => m.orca === '030'); }
-
-  badgeFor(id: string): number {
-    const counts: Record<string, number> = {
-      ofpof:   this.ofpofLignes.length,
-      achats:  this.achatsLignes.length,
-      ventes:  this.ventesLignes.length,
-      actions: this.aktionsLignes.length,
-    };
-    return counts[id] ?? 0;
+  badgeFor(tabId: string): number {
+    switch (tabId) {
+      case 'ofpof':   return this.mouvements.filter(m => (m.orca === '100' && m.stat !== '10') || m.orca === '101').length;
+      case 'achats':  return this.mouvements.filter(m => m.orca === '251').length;
+      case 'ventes':  return this.mouvements.filter(m => m.orca === '311').length;
+      case 'actions': return this.mouvements.filter(m => m.orca === '030').length;
+      default:        return 0;
+    }
   }
 
   ngOnDestroy(): void {
@@ -73,9 +70,9 @@ export class StockComponent implements OnDestroy {
 
     this.stockService.getArticleInfo(code).pipe(
       takeUntil(this.destroy$),
-      switchMap(produit =>
+      switchMap(info =>
         this.stockService.getPoidsNet(code).pipe(
-          map(poidsNet => ({ ...produit, poidsNet }))
+          map(poidsNet => ({ ...info, poidsNet }))
         )
       ),
       switchMap(info =>
@@ -83,9 +80,9 @@ export class StockComponent implements OnDestroy {
           map(stocks => ({ ...info, ...stocks }))
         )
       ),
-      switchMap(combined =>
+      switchMap(info =>
         this.mouvementService.getAll(code, whgr).pipe(
-          map(movs => ({ ...combined, movs }))
+          map(movs => ({ ...info, movs }))
         )
       ),
     ).subscribe({
@@ -109,13 +106,11 @@ export class StockComponent implements OnDestroy {
         };
         this.loading = false;
       },
-      error: () => this.gererErreur(code),
+      error: () => {
+        this.erreur  = `Erreur lors de la récupération des données pour l'article "${code}".`;
+        this.loading = false;
+      },
     });
-  }
-
-  private gererErreur(code: string): void {
-    this.erreur  = `Erreur lors de la récupération des données pour l'article "${code}".`;
-    this.loading = false;
   }
 
   private somme(lignes: StockMouvement[]): number {

@@ -5,8 +5,7 @@ import { IMIRequest, IMIResponse } from '@infor-up/m3-odin';
 import { MIService } from '@infor-up/m3-odin-angular';
 
 export interface WhgrOption {
-  code:  string;
-  depot: string;
+  code: string;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -22,7 +21,7 @@ export class WhgrService {
         program:            'CMS100MI',
         transaction:        'LstWhsGroups',
         record:             {},
-        outputFields:       ['MNWHGR', 'MNWHLO'],
+        outputFields:       ['MNWHGR'],
         maxReturnedRecords: 100,
       };
       this.groupes$ = this.mi.execute(req).pipe(
@@ -31,9 +30,9 @@ export class WhgrService {
             (res.items ?? [])
               .map(item => (item['MNWHGR'] ?? '').trim())
               .filter(code => code !== '')
-          )].map(code => ({ code, depot: '' }))
+          )].map(code => ({ code }))
         ),
-        catchError(() => of([{ code: 'GRP_ENTREPRISE', depot: '' }])),
+        catchError(() => of([{ code: 'GRP_ENTREPRISE' }])),
         shareReplay(1)
       );
     }
