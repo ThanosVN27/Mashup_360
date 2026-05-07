@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { catchError, map, shareReplay } from 'rxjs/operators';
+import { catchError, map, shareReplay, switchMap } from 'rxjs/operators';
 import { IMIRequest, IMIResponse } from '@infor-up/m3-odin';
-import { MIService } from '@infor-up/m3-odin-angular';
+import { MIService, UserService } from '@infor-up/m3-odin-angular';
 
 export interface WhgrOption {
   code: string;
@@ -13,7 +13,10 @@ export class WhgrService {
 
   private groupes$?: Observable<WhgrOption[]>;
 
-  constructor(private readonly mi: MIService) {}
+  constructor(
+    private readonly mi:   MIService,
+    private readonly user: UserService,
+  ) {}
 
   getGroupes(): Observable<WhgrOption[]> {
     if (!this.groupes$) {
@@ -24,7 +27,9 @@ export class WhgrService {
         outputFields:       ['MNWHGR'],
         maxReturnedRecords: 100,
       };
-      this.groupes$ = this.mi.execute(req).pipe(
+      // Attend que le contexte utilisateur M3 soit prêt avant d'appeler l'API
+      this.groupes$ = this.user.getUserContext().pipe(
+        switchMap(() => this.mi.execute(req)),
         map((res: IMIResponse) =>
           [...new Set(
             (res.items ?? [])

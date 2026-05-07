@@ -21,7 +21,7 @@ export class AchatsComponent implements OnChanges, OnDestroy {
 
   readonly colonnes: SohoDataGridColumn[] = [
     { id: 'ridn', name: 'N° Commande',      field: 'ridn', width: 200, sortable: true, align: 'center', filterType: 'text' },
-    { id: 'ridl', name: 'N° Ligne',         field: 'ridl', width: 120, sortable: true, align: 'center', filterType: 'text' },
+    { id: 'ridl', name: 'N° Ligne',         field: 'ridl', width: 200, sortable: true, align: 'center', filterType: 'text' },
     { id: 'trqt', name: 'Quantité achetée', field: 'trqt', width: 200, sortable: true, align: 'center', filterType: 'decimal', formatter: Soho.Formatters.Integer },
     {
       id: 'pldt', name: 'Date planifiée', field: 'pldt', width: 200, sortable: true, align: 'center', filterType: 'text',
