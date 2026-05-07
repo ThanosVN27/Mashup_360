@@ -3,10 +3,10 @@
   display:         flex;
   align-items:     center;
   justify-content: space-between;
-  height:          60px;
-  padding:         0 32px;
-  background:      #dbeafe;
-  border-bottom:   2px solid #93c5fd;
+  height:          56px;
+  padding:         0 24px;
+  background:      #ffffff;
+  border-bottom:   2px solid #d8d8d8;
   position:        sticky;
   top:             0;
   z-index:         200;
@@ -16,19 +16,19 @@
 .app-header__brand {
   display:     flex;
   align-items: center;
-  gap:         14px;
+  gap:         12px;
 }
 
 .app-header__logo {
   display:         flex;
   align-items:     center;
   justify-content: center;
-  width:           40px;
-  height:          40px;
-  border-radius:   8px;
-  background:      #1e40af;
+  width:           36px;
+  height:          36px;
+  border-radius:   4px;
+  background:      #0b6cbb;
   color:           #ffffff;
-  font-size:       15px;
+  font-size:       14px;
   font-weight:     900;
   letter-spacing:  -0.5px;
   flex-shrink:     0;
@@ -37,24 +37,24 @@
 .app-header__titles {
   display:        flex;
   flex-direction: column;
-  gap:            2px;
+  gap:            1px;
 }
 
 .app-header__title {
-  font-size:      17px;
-  font-weight:    800;
-  color:          #1e3a8a;
-  letter-spacing: 0.3px;
+  font-size:      15px;
+  font-weight:    700;
+  color:          #333333;
+  letter-spacing: 0.2px;
   line-height:    1.2;
   text-transform: uppercase;
 }
 
 .app-header__subtitle {
-  font-size:      11px;
-  font-weight:    500;
-  color:          #3b82f6;
+  font-size:      10px;
+  font-weight:    400;
+  color:          #767676;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.8px;
 }
 
 /* ── Droite ── */
@@ -67,32 +67,27 @@
 .app-header__badge {
   display:        inline-flex;
   align-items:    center;
-  padding:        4px 12px;
-  border-radius:  20px;
-  background:     #1e40af;
-  color:          #ffffff;
+  padding:        3px 10px;
+  border-radius:  3px;
+  background:     #f0f0f0;
+  border:         1px solid #d8d8d8;
+  color:          #333333;
   font-size:      11px;
-  font-weight:    800;
+  font-weight:    700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
 .app-header__date {
-  font-size:      12px;
-  color:          #1e40af;
-  font-weight:    600;
-  text-transform: capitalize;
+  font-size:  12px;
+  color:      #767676;
+  font-weight: 400;
 }
 
 /* ── Responsive mobile ── */
 @media (max-width: 640px) {
-  .app-header {
-    height:  auto;
-    padding: 10px 16px;
-    gap:     8px;
-  }
-
+  .app-header        { height: auto; padding: 10px 16px; gap: 8px; }
   .app-header__date  { display: none; }
-  .app-header__title { font-size: 14px; }
-  .app-header__logo  { width: 34px; height: 34px; font-size: 13px; }
+  .app-header__title { font-size: 13px; }
+  .app-header__logo  { width: 30px; height: 30px; font-size: 12px; }
 }

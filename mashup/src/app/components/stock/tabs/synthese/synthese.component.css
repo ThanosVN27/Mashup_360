@@ -11,16 +11,16 @@
 
 /* ── En-têtes ── */
 .synth-head {
-  padding:        16px 20px;
-  font-size:      15px;
-  font-weight:    800;
-  color:          #111111;
-  background:     #f8fafc;
+  padding:        12px 16px;
+  font-size:      13px;
+  font-weight:    700;
+  color:          #333333;
+  background:     #f0f0f0;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  border:         1px solid #e2e8f0;
-  border-bottom:  2px solid #1e40af;
-  border-radius:  8px 8px 0 0;
+  letter-spacing: 0.8px;
+  border:         1px solid #d8d8d8;
+  border-bottom:  2px solid #0b6cbb;
+  border-radius:  4px 4px 0 0;
 }
 
 /* ── Cellules de données ── */
@@ -28,88 +28,88 @@
   display:         flex;
   justify-content: space-between;
   align-items:     center;
-  padding:         14px 20px;
-  border-bottom:   1px solid #f1f5f9;
-  transition:      background-color 0.2s ease;
+  padding:         12px 16px;
+  border-bottom:   1px solid #f0f0f0;
+  transition:      background-color 0.15s ease;
 }
 
-.synth-cell:hover { background: #f8fafc; }
+.synth-cell:hover { background: #f8f8f8; }
 
 .synth-l {
-  border-left:  1px solid #e2e8f0;
-  border-right: 1px solid #e2e8f0;
+  border-left:  1px solid #d8d8d8;
+  border-right: 1px solid #d8d8d8;
 }
 
 .synth-r {
-  border-left:  1px solid #e2e8f0;
-  border-right: 1px solid #e2e8f0;
+  border-left:  1px solid #d8d8d8;
+  border-right: 1px solid #d8d8d8;
 }
 
-/* Dernière ligne : arrondi bas + bordure basse */
+/* Dernière ligne */
 .synth-last {
-  border-bottom: 1px solid #e2e8f0;
-  border-radius: 0 0 8px 8px;
+  border-bottom: 1px solid #d8d8d8;
+  border-radius: 0 0 4px 4px;
 }
 
 /* ── Variantes de fond ── */
-.synth-warning { background: #fffbeb; border-left: 4px solid #FFD700 !important; }
-.synth-danger  { background: #fef2f2; border-left: 4px solid #ef4444 !important; }
-.synth-check   { background: #f0fdf4; border-left: 4px solid #22c55e !important; }
+.synth-warning { background: #fff8e6; border-left: 4px solid #f0a500 !important; }
+.synth-danger  { background: #fdf1f1; border-left: 4px solid #c40a0a !important; }
+.synth-check   { background: #f1f8ee; border-left: 4px solid #2d8600 !important; }
 
 /* ── Labels ── */
 .synth-label {
-  font-size:      13px;
-  font-weight:    700;
-  color:          #475569;
+  font-size:      12px;
+  font-weight:    600;
+  color:          #767676;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .synth-label small {
   display:        block;
-  font-size:      12px;
-  font-weight:    500;
-  color:          #94a3b8;
-  margin-top:     4px;
+  font-size:      11px;
+  font-weight:    400;
+  color:          #b3b3b3;
+  margin-top:     3px;
   text-transform: none;
   letter-spacing: 0;
 }
 
 /* ── Valeurs ── */
 .synth-val {
-  font-size:   18px;
-  font-weight: 800;
-  color:       #111111;
+  font-size:   16px;
+  font-weight: 700;
+  color:       #333333;
   text-align:  right;
 }
 
 .synth-val em {
   font-style:  normal;
-  font-size:   12px;
-  font-weight: 500;
-  color:       #94a3b8;
-  margin-left: 6px;
+  font-size:   11px;
+  font-weight: 400;
+  color:       #b3b3b3;
+  margin-left: 5px;
 }
 
-.synth-val--warn   { color: #b45309; }
-.synth-val--danger { color: #b91c1c; }
+.synth-val--warn   { color: #a56200; }
+.synth-val--danger { color: #c40a0a; }
 
 .synth-val--with-badge {
   display:     flex;
   align-items: center;
-  gap:         12px;
+  gap:         10px;
 }
 
 /* ── Tags ── */
 .tag {
-  font-size:      11px;
+  font-size:      10px;
   font-weight:    700;
-  padding:        3px 8px;
-  border-radius:  4px;
+  padding:        2px 7px;
+  border-radius:  3px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   white-space:    nowrap;
 }
 
-.tag-ok  { background: #dcfce7; color: #166534; }
-.tag-err { background: #fee2e2; color: #991b1b; }
+.tag-ok  { background: #e1f2d6; color: #1f5c00; }
+.tag-err { background: #fce8e8; color: #8f0000; }

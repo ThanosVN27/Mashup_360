@@ -1,8 +1,9 @@
 /* ── Conteneur global ── */
 .stock-container {
-  max-width:   1400px;
-  margin:      24px auto;
-  padding:     0 32px 48px;
+  max-width:   1600px;
+  min-height:  calc(100vh - 120px);
+  margin:      16px auto;
+  padding:     0 16px 32px;
   font-family: 'Source Sans Pro', -apple-system, sans-serif;
 }
 
@@ -43,8 +44,8 @@
   gap:           20px;
   padding:       18px 24px;
   margin-bottom: 20px;
-  background:    linear-gradient(120deg, #1e40af 0%, #2563eb 100%);
-  border-left:   5px solid #93c5fd;
+  background:    #0b6cbb;
+  border-left:   5px solid rgba(255,255,255,0.25);
   border-radius: 10px;
   box-shadow:    0 4px 14px rgba(30, 64, 175, 0.2);
   color:         #ffffff;
@@ -128,11 +129,11 @@
   background:     transparent;
   font-size:      13px;
   font-weight:    700;
-  color:          #64748b;
+  color:          #767676;
   cursor:         pointer;
   border-bottom:  3px solid transparent;
   margin-bottom:  -2px;
-  transition:     all 0.2s ease;
+  transition:     all 0.15s ease;
   white-space:    nowrap;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -140,32 +141,32 @@
 }
 
 .tab-btn:hover {
-  color:      #1e40af;
-  background: #eff6ff;
+  color:      #0b6cbb;
+  background: #f0f7ff;
 }
 
 .tab-btn--active {
-  color:              #1e40af;
-  border-bottom-color: #1e40af;
-  background:         #ffffff;
+  color:               #0b6cbb;
+  border-bottom-color: #0b6cbb;
+  background:          #ffffff;
 }
 
 .tab-count {
   display:         inline-flex;
   align-items:     center;
   justify-content: center;
-  min-width:       22px;
-  height:          20px;
-  padding:         0 6px;
-  border-radius:   10px;
-  background:      #e2e8f0;
-  color:           #64748b;
+  min-width:       20px;
+  height:          18px;
+  padding:         0 5px;
+  border-radius:   9px;
+  background:      #d8d8d8;
+  color:           #767676;
   font-size:       11px;
-  font-weight:     800;
+  font-weight:     700;
 }
 
 .tab-btn--active .tab-count {
-  background: #1e40af;
+  background: #0b6cbb;
   color:      #ffffff;
 }
 
@@ -187,7 +188,7 @@
 .welcome-state svg {
   width:           56px;
   height:          56px;
-  stroke:          #93c5fd;
+  stroke:          #b3d4f0;
   stroke-width:    1.5;
   fill:            none;
   stroke-linecap:  round;
@@ -198,7 +199,7 @@
   margin:      0;
   font-size:   16px;
   font-weight: 500;
-  color:       #64748b;
+  color:       #767676;
 }
 
 /* ── État vide dans un onglet ── */
