@@ -3,14 +3,27 @@
 
   <div *ngIf="errorMessage" class="error-msg">{{ errorMessage }}</div>
 
-  <div *ngIf="!isLoading && !errorMessage && lignes.length === 0" class="empty-msg">
+  <!-- Barre de filtre OF / POF -->
+  <div *ngIf="!isLoading && lignes.length > 0" class="ofpof-toolbar">
+    <button class="ofpof-btn" [class.ofpof-btn--active]="filtre === 'tous'" (click)="setFiltre('tous')">
+      Tous <span class="ofpof-count">{{ lignes.length }}</span>
+    </button>
+    <button class="ofpof-btn badge-of-btn" [class.ofpof-btn--active]="filtre === 'of'" (click)="setFiltre('of')">
+      OF <span class="ofpof-count">{{ countOf }}</span>
+    </button>
+    <button class="ofpof-btn badge-pof-btn" [class.ofpof-btn--active]="filtre === 'pof'" (click)="setFiltre('pof')">
+      POF <span class="ofpof-count">{{ countPof }}</span>
+    </button>
+  </div>
+
+  <div *ngIf="!isLoading && !errorMessage && lignesFiltrees.length === 0" class="empty-msg">
     Aucun mouvement trouvé pour cet article.
   </div>
 
   <div
-    *ngIf="!isLoading && lignes.length > 0"
+    *ngIf="!isLoading && lignesFiltrees.length > 0"
     soho-datagrid
-    [dataset]="lignes"
+    [dataset]="lignesFiltrees"
     [columns]="colonnes"
     [selectable]="false"
     [filterable]="true"

@@ -13,15 +13,20 @@ export class OfPofComponent implements OnChanges, OnDestroy {
   @Input() itno = '';
   @Input() whgr = 'GRP_ENTREPRISE';
 
-  lignes: StockMouvement[] = [];
-  isLoading = false;
+  lignes:        StockMouvement[] = [];
+  lignesFiltrees: StockMouvement[] = [];
+  isLoading    = false;
   errorMessage = '';
+  filtre: 'tous' | 'of' | 'pof' = 'tous';
+
+  get countOf():  number { return this.lignes.filter(l => l.orca === '101').length; }
+  get countPof(): number { return this.lignes.filter(l => l.orca === '100').length; }
 
   private sub?: Subscription;
 
   readonly colonnes: SohoDataGridColumn[] = [
     {
-      id: 'type', name: 'Type', field: 'orca', width: 200, align: 'center', filterType: 'text',
+      id: 'type', name: 'Type', field: 'orca', width: 100, align: 'center', filterType: 'text',
       formatter: (_row: number, _cell: number, value: string) => {
         const label    = value === '100' ? 'POF' : 'OF';
         const cssClass = value === '100' ? 'badge-pof' : 'badge-of';
@@ -49,14 +54,27 @@ export class OfPofComponent implements OnChanges, OnDestroy {
     this.sub?.unsubscribe();
   }
 
+  setFiltre(f: 'tous' | 'of' | 'pof'): void {
+    this.filtre = f;
+    this.appliquerFiltre();
+  }
+
+  private appliquerFiltre(): void {
+    if (this.filtre === 'of')       this.lignesFiltrees = [...this.lignes.filter(l => l.orca === '101')];
+    else if (this.filtre === 'pof') this.lignesFiltrees = [...this.lignes.filter(l => l.orca === '100')];
+    else                            this.lignesFiltrees = [...this.lignes];
+  }
+
   private charger(): void {
     this.isLoading = true;
     this.errorMessage = '';
     this.lignes = [];
+    this.lignesFiltrees = [];
     this.sub?.unsubscribe();
     this.sub = this.productionService.getProduction(this.itno, this.whgr).subscribe({
       next: (data) => {
         this.lignes = [...data].sort((a, b) => a.pldt.localeCompare(b.pldt));
+        this.appliquerFiltre();
         this.isLoading = false;
       },
       error: () => {

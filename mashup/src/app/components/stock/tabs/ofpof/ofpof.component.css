@@ -3,9 +3,57 @@
   background-color: #ffffff;
 }
 
-/* Badges OF / POF */
+/* Badges OF / POF dans la grille */
 .badge-of  { color: #15803d; font-weight: 700; }
-.badge-pof { color: #1d4ed8; font-weight: 700; }
+.badge-pof { color: #0b6cbb; font-weight: 700; }
+
+/* ── Barre de filtre ── */
+.ofpof-toolbar {
+  display:     flex;
+  gap:         6px;
+  padding:     12px 16px 8px;
+}
+
+.ofpof-btn {
+  display:       inline-flex;
+  align-items:   center;
+  gap:           6px;
+  padding:       5px 14px;
+  border:        1px solid #d8d8d8;
+  border-radius: 3px;
+  background:    #f0f0f0;
+  color:         #767676;
+  font-size:     12px;
+  font-weight:   700;
+  cursor:        pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition:    all 0.15s ease;
+}
+
+.ofpof-btn:hover { background: #e0e0e0; color: #333333; }
+
+.ofpof-btn--active {
+  background: #0b6cbb;
+  border-color: #0b6cbb;
+  color: #ffffff;
+}
+
+.badge-of-btn.ofpof-btn--active  { background: #15803d; border-color: #15803d; }
+.badge-pof-btn.ofpof-btn--active { background: #0b6cbb; border-color: #0b6cbb; }
+
+.ofpof-count {
+  display:         inline-flex;
+  align-items:     center;
+  justify-content: center;
+  min-width:       18px;
+  height:          16px;
+  padding:         0 4px;
+  border-radius:   8px;
+  background:      rgba(255,255,255,0.25);
+  font-size:       10px;
+  font-weight:     800;
+}
 
 /* Wrapper scrollable sur mobile */
 .tab-content > div[soho-datagrid] {
