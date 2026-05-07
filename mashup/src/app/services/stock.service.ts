@@ -39,11 +39,11 @@ export class StockService {
     );
   }
 
-  getStocksAgreges(itno: string): Observable<{ stqt: number; aval: number; quqt: number; rjqt: number }> {
+  getStocksAgreges(itno: string, whgr: string): Observable<{ stqt: number; aval: number; quqt: number; rjqt: number }> {
     const req: IMIRequest = {
       program:      'MMS200MI',
       transaction:  'GetAggWhsGrp',
-      record:       { ITNO: itno, WHGR: 'GRP_ENTREPRISE' ,CONO: 100},
+      record:       { ITNO: itno, WHGR: whgr ,CONO: 100},
       outputFields: ['STQT', 'AVAL', 'QUQT', 'RJQT'],
 
     };
@@ -58,12 +58,12 @@ export class StockService {
     );
   }
 
-  getMouvements(itno: string): Observable<StockMouvement[]> {
+  getMouvements(itno: string, whgr: string): Observable<StockMouvement[]> {
     const req: IMIRequest = {
       program:            'MMS080MI',
       transaction:        'SelMtrlTrans',
-      record:             { ITNO: itno, WHLO: 'E01', WHGR: 'GRP_ENTREPRISE',CONO: 100 },
-      outputFields:       ['ORCA', 'RIDN', 'TRQT', 'PLDT', 'CODT', 'RFTX', 'STAT'],
+      record:             { ITNO: itno, WHLO: 'E01', WHGR: whgr,CONO: 100 },
+      outputFields:       ['ORCA', 'RIDN', 'RIDL', 'TRQT', 'PLDT', 'CODT', 'RFTX', 'STAT', 'AGNO'],
       maxReturnedRecords: 999,
 
     };
@@ -72,11 +72,13 @@ export class StockService {
         (res.items ?? []).map(item => ({
           orca: item['ORCA'] ?? '',
           ridn: item['RIDN'] ?? '',
+          ridl: item['RIDL'] ?? '',
           trqt: this.toNumber(item['TRQT']),
           pldt: item['PLDT'] ?? '',
           codt: item['CODT'] ?? '',
           rftx: item['RFTX'] ?? '',
           stat: item['STAT'] ?? '',
+          agno: item['AGNO'] ?? '',
         }))
       ),
       catchError(() => of([]))

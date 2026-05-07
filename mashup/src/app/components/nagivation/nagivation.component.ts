@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+import { RechercheEvent } from '../search/search.component';
 
 @Component({
   selector:    'app-nagivation',
@@ -8,10 +8,11 @@ import { Component } from '@angular/core';
 })
 export class NagivationComponent {
 
-  // Code article transmis par SearchComponent, passé à StockComponent
-  itnoActuel = '';
+  rechercheActuelle: RechercheEvent | null = null;
 
-  onRecherche(itno: string): void {
-    this.itnoActuel = itno;
+  onRecherche(event: RechercheEvent): void {
+    // Nouvel objet à chaque recherche → le setter @Input de StockComponent se déclenche toujours,
+    // même si itno ou whgr n'ont pas changé.
+    this.rechercheActuelle = { ...event };
   }
 }

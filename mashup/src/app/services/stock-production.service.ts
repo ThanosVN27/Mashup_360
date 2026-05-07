@@ -9,9 +9,8 @@ export class StockProductionService {
 
   constructor(private readonly mouv: StockMouvementService) {}
 
-  // OF lancés (101) + POF confirmées (100, statut != 10).
-  getProduction(itno: string): Observable<StockMouvement[]> {
-    return this.mouv.getAll(itno).pipe(
+  getProduction(itno: string, whgr: string): Observable<StockMouvement[]> {
+    return this.mouv.getAll(itno, whgr).pipe(
       map(items => items.filter(m =>
         (m.orca === '100' && m.stat !== '10') || m.orca === '101'
       ))

@@ -1,20 +1,19 @@
-<!-- Barre de recherche partagée — utilisée depuis NavigationComponent -->
 <div class="search-bar">
 
-  <label for="itno-input" class="label">Code article (ITNO)</label>
-
-  <div class="search-row">
-    <input
-      soho-input
-      id="itno-input"
-      type="text"
-      placeholder="Ex : 23454"
-      [(ngModel)]="itno"
-      (keyup.enter)="lancer()" />
-
-    <button soho-button="primary" (click)="lancer()">
-      Rechercher
-    </button>
+  <div class="search-group">
+    <label for="whgr-select" class="label">Groupe de dépôt</label>
+    <select soho-dropdown id="whgr-select" [(ngModel)]="whgr" [disabled]="loadingGroupes">
+      <option *ngIf="loadingGroupes" value="">Chargement…</option>
+      <option *ngFor="let g of groupes" [value]="g.code">{{ g.code }}</option>
+    </select>
   </div>
+
+  <div class="search-field">
+    <label for="itno-input" class="label">Code article (ITNO)</label>
+    <input soho-input id="itno-input" type="text" placeholder="Ex : 23454"
+           [(ngModel)]="itno" (keyup.enter)="lancer()" />
+  </div>
+
+  <button soho-button="primary" (click)="lancer()">Rechercher</button>
 
 </div>

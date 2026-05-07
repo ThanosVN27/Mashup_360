@@ -5,12 +5,13 @@ import { StockMouvement } from '../../../../models/stock-mouvement.model';
 import { formatM3Date } from '../../../../shared/utils/m3-date.util';
 
 @Component({
-  selector: 'app-tab-ofpof',
+  selector:    'app-tab-ofpof',
   templateUrl: './ofpof.component.html',
-  styleUrls: ['./ofpof.component.css']
+  styleUrls:   ['./ofpof.component.css'],
 })
 export class OfPofComponent implements OnChanges, OnDestroy {
   @Input() itno = '';
+  @Input() whgr = 'GRP_ENTREPRISE';
 
   lignes: StockMouvement[] = [];
   isLoading = false;
@@ -27,16 +28,19 @@ export class OfPofComponent implements OnChanges, OnDestroy {
         return `<span class="${cssClass}">${label}</span>`;
       },
     },
-    { id: 'ridn', name: 'Numéro',   field: 'ridn', width: 200, sortable: true, align: 'center', filterType: 'text' },
+    { id: 'ridn', name: 'Numéro',              field: 'ridn', width: 200, sortable: true, align: 'center', filterType: 'text' },
     { id: 'trqt', name: 'Quantité à produire', field: 'trqt', width: 200, sortable: true, align: 'center', filterType: 'decimal', formatter: Soho.Formatters.Integer },
-    { id: 'pldt', name: 'Date', field: 'pldt', width: 200, sortable: true, align: 'center', filterType: 'text',formatter: (_row: number, _cell: number, value: string) => formatM3Date(value),},
+    {
+      id: 'pldt', name: 'Date', field: 'pldt', width: 200, sortable: true, align: 'center', filterType: 'text',
+      formatter: (_row: number, _cell: number, value: string) => formatM3Date(value),
+    },
     { id: 'stat', name: 'Statut', field: 'stat', width: 200, align: 'center', filterType: 'text' },
   ];
 
   constructor(private readonly productionService: StockProductionService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['itno'] && this.itno) {
+    if ((changes['itno'] || changes['whgr']) && this.itno) {
       this.charger();
     }
   }
@@ -50,7 +54,7 @@ export class OfPofComponent implements OnChanges, OnDestroy {
     this.errorMessage = '';
     this.lignes = [];
     this.sub?.unsubscribe();
-    this.sub = this.productionService.getProduction(this.itno).subscribe({
+    this.sub = this.productionService.getProduction(this.itno, this.whgr).subscribe({
       next: (data) => {
         this.lignes = [...data].sort((a, b) => a.pldt.localeCompare(b.pldt));
         this.isLoading = false;

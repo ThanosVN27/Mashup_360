@@ -12,14 +12,14 @@ export class StockMouvementService {
 
   constructor(private readonly mi: MIService) {}
 
-  // Retourne tous les mouvements pour un article (cache par ITNO).
-  getAll(itno: string): Observable<StockMouvement[]> {
-    if (!this.cache.has(itno)) {
+  getAll(itno: string, whgr: string): Observable<StockMouvement[]> {
+    const key = `${itno}-${whgr}`;
+    if (!this.cache.has(key)) {
       const req: IMIRequest = {
         program:            'MMS080MI',
         transaction:        'SelMtrlTrans',
-        record:             { ITNO: itno, WHLO: 'E01', WHGR: 'GRP_ENTREPRISE', CONO: 100 },
-        outputFields:       ['ORCA', 'RIDN', 'TRQT', 'PLDT', 'CODT', 'RFTX', 'STAT'],
+        record:             { ITNO: itno, WHLO: 'E01', WHGR: whgr, CONO: 100 },
+        outputFields:       ['ORCA', 'RIDN', 'RIDL', 'TRQT', 'PLDT', 'CODT', 'RFTX', 'STAT', 'AGNO'],
         maxReturnedRecords: 999,
       };
       const obs = this.mi.execute(req).pipe(
@@ -27,18 +27,20 @@ export class StockMouvementService {
           (res.items ?? []).map(item => ({
             orca: item['ORCA'] ?? '',
             ridn: item['RIDN'] ?? '',
+            ridl: item['RIDL'] ?? '',
             trqt: parseFloat(item['TRQT'] ?? '0') || 0,
             pldt: item['PLDT'] ?? '',
             codt: item['CODT'] ?? '',
             rftx: item['RFTX'] ?? '',
             stat: item['STAT'] ?? '',
+            agno: item['AGNO'] ?? '',
           }))
         ),
         catchError(() => of([])),
         shareReplay(1)
       );
-      this.cache.set(itno, obs);
+      this.cache.set(key, obs);
     }
-    return this.cache.get(itno)!;
+    return this.cache.get(key)!;
   }
 }

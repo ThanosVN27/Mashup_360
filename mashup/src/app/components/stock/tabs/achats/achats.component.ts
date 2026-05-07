@@ -11,6 +11,7 @@ import { formatM3Date } from '../../../../shared/utils/m3-date.util';
 })
 export class AchatsComponent implements OnChanges, OnDestroy {
   @Input() itno = '';
+  @Input() whgr = 'GRP_ENTREPRISE';
 
   lignes: StockMouvement[] = [];
   isLoading = false;
@@ -20,6 +21,7 @@ export class AchatsComponent implements OnChanges, OnDestroy {
 
   readonly colonnes: SohoDataGridColumn[] = [
     { id: 'ridn', name: 'N° Commande',      field: 'ridn', width: 200, sortable: true, align: 'center', filterType: 'text' },
+    { id: 'ridl', name: 'N° Ligne',         field: 'ridl', width: 120, sortable: true, align: 'center', filterType: 'text' },
     { id: 'trqt', name: 'Quantité achetée', field: 'trqt', width: 200, sortable: true, align: 'center', filterType: 'decimal', formatter: Soho.Formatters.Integer },
     {
       id: 'pldt', name: 'Date planifiée', field: 'pldt', width: 200, sortable: true, align: 'center', filterType: 'text',
@@ -31,7 +33,7 @@ export class AchatsComponent implements OnChanges, OnDestroy {
   constructor(private readonly achatService: StockAchatService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['itno'] && this.itno) {
+    if ((changes['itno'] || changes['whgr']) && this.itno) {
       this.charger();
     }
   }
@@ -45,7 +47,7 @@ export class AchatsComponent implements OnChanges, OnDestroy {
     this.errorMessage = '';
     this.lignes = [];
     this.sub?.unsubscribe();
-    this.sub = this.achatService.getAchats(this.itno).subscribe({
+    this.sub = this.achatService.getAchats(this.itno, this.whgr).subscribe({
       next: (data) => {
         this.lignes = [...data].sort((a, b) => a.pldt.localeCompare(b.pldt));
         this.isLoading = false;

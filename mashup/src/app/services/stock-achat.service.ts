@@ -9,9 +9,8 @@ export class StockAchatService {
 
   constructor(private readonly mouv: StockMouvementService) {}
 
-  // Commandes achat (ORCA 251).
-  getAchats(itno: string): Observable<StockMouvement[]> {
-    return this.mouv.getAll(itno).pipe(
+  getAchats(itno: string, whgr: string): Observable<StockMouvement[]> {
+    return this.mouv.getAll(itno, whgr).pipe(
       map(items => items.filter(m => m.orca === '251'))
     );
   }
