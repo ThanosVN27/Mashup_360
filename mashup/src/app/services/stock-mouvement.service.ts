@@ -44,8 +44,4 @@ export class StockMouvementService {
     }
     return this.cache.get(key)!;
   }
-
-
-
-
 }

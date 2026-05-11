@@ -58,28 +58,28 @@ export class StockComponent implements OnDestroy {
   }
 
   private charger(code: string, whgr: string): void {
-    this.loading      = true;
-    this.erreur       = null;
-    this.article      = null;
-    this.badges       = {};
-    this.movsOfPof    = [];
-    this.movsAchats   = [];
-    this.movsVentes   = [];
-    this.movsActions  = [];
+    this.loading     = true;
+    this.erreur      = null;
+    this.article     = null;
+    this.badges      = {};
+    this.movsOfPof   = [];
+    this.movsAchats  = [];
+    this.movsVentes  = [];
+    this.movsActions = [];
 
     forkJoin({
-      info:   this.stockService.getArticleInfo(code),
-      poids:  this.stockService.getPoidsNet(code),
-      stocks: this.stockService.getStocksAgreges(code, whgr),
-      movs:   this.mouvementService.getAll(code, whgr),
+      info:     this.stockService.getArticleInfo(code),
+      poids:    this.stockService.getPoidsNet(code),
+      stocks:   this.stockService.getStocksAgreges(code, whgr),
+      movs:     this.mouvementService.getAll(code, whgr),
       contract: this.clientService.getReservations(code, whgr),
     }).pipe(
       takeUntil(this.destroy$),
     ).subscribe({
       next: ({ info, poids, stocks, movs, contract }) => {
-        const { itds, unms }       = info;
+        const { itds, unms }             = info;
         const { stqt, aval, quqt, rjqt } = stocks;
-        const { totaux, badges, filtres } = this.traiterMouvements(movs);
+        const { totaux, badges, filtres } = this.traiterMouvements(movs, contract);
 
         this.badges      = badges;
         this.movsOfPof   = filtres.ofpof;
@@ -101,30 +101,30 @@ export class StockComponent implements OnDestroy {
     });
   }
 
-  private traiterMouvements(movs: StockMouvement[]): {
+  private traiterMouvements(movs: StockMouvement[], ventes: StockMouvement[]): {
     totaux:  Pick<StockArticle, 'totalPof' | 'totalOf' | 'totalAchats' | 'totalReservations' | 'totalActions'>;
     badges:  Record<string, number>;
-    filtres: { ofpof: StockMouvement[]; achats: StockMouvement[]; ventes: StockMouvement[]; actions: StockMouvement[] ,};
+    filtres: { ofpof: StockMouvement[]; achats: StockMouvement[]; actions: StockMouvement[] };
   } {
-    let totalPof = 0, totalOf = 0, totalAchats = 0, totalReservations = 0, totalActions = 0;
-    const ofpof: StockMouvement[] = [], achats: StockMouvement[] = [],
-          ventes: StockMouvement[] = [], actions: StockMouvement[] = [];
+    let totalPof = 0, totalOf = 0, totalAchats = 0, totalActions = 0;
+    const ofpof: StockMouvement[] = [], achats: StockMouvement[] = [], actions: StockMouvement[] = [];
 
     for (const m of movs) {
-      if      (m.orca === '100' && m.stat !== '10') { totalPof          += m.trqt; ofpof.push(m);   }
-      else if (m.orca === '101')                    { totalOf           += m.trqt; ofpof.push(m);   }
-      else if (m.orca === '251')                    { totalAchats       += m.trqt; achats.push(m);  }
-      else if (m.orca === '311')                    { totalReservations += m.trqt; ventes.push(m);  }
-      else if (m.orca === '030')                    { totalActions      += m.trqt; actions.push(m); }
+      if      (m.orca === '100' && m.stat !== '10') { totalPof    += m.trqt; ofpof.push(m);   }
+      else if (m.orca === '101')                    { totalOf     += m.trqt; ofpof.push(m);   }
+      else if (m.orca === '251')                    { totalAchats += m.trqt; achats.push(m);  }
+      else if (m.orca === '030')                    { totalActions+= m.trqt; actions.push(m); }
     }
 
     const byDate = (a: StockMouvement, b: StockMouvement) => a.pldt.localeCompare(b.pldt);
-    ofpof.sort(byDate); achats.sort(byDate); ventes.sort(byDate); actions.sort(byDate);
+    ofpof.sort(byDate); achats.sort(byDate); actions.sort(byDate);
+
+    const totalReservations = ventes.reduce((sum, m) => sum + m.trqt, 0);
 
     return {
       totaux:  { totalPof, totalOf, totalAchats, totalReservations, totalActions },
       badges:  { ofpof: ofpof.length, achats: achats.length, ventes: ventes.length, actions: actions.length },
-      filtres: { ofpof, achats, ventes, actions },
+      filtres: { ofpof, achats, actions },
     };
   }
 }
