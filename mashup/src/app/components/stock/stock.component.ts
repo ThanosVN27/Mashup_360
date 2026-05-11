@@ -16,18 +16,20 @@ export class StockComponent implements OnDestroy {
 
   @Input() set recherche(params: RechercheEvent | null) {
     if (params?.itno) {
-      this.whgrActuel = params.whgr;
-      this.charger(params.itno, this.whgrActuel);
+      this.charger(params.itno, params.whgr);
     }
   }
 
   loading     = false;
   erreur:     string | null = null;
   article:    StockArticle | null = null;
-  mouvements: StockMouvement[] = [];
   activeTab   = 'synthese';
-  whgrActuel  = '';
   badges:     Record<string, number> = {};
+
+  movsOfPof:   StockMouvement[] = [];
+  movsAchats:  StockMouvement[] = [];
+  movsVentes:  StockMouvement[] = [];
+  movsActions: StockMouvement[] = [];
 
   readonly tabs = [
     { id: 'synthese', label: 'Synthèse', badge: false },
@@ -44,13 +46,9 @@ export class StockComponent implements OnDestroy {
     private readonly mouvementService: StockMouvementService,
   ) {}
 
-  setTab(id: string): void {
-    this.activeTab = id;
-  }
+  setTab(id: string): void { this.activeTab = id; }
 
-  badgeFor(tabId: string): number {
-    return this.badges[tabId] ?? 0;
-  }
+  badgeFor(tabId: string): number { return this.badges[tabId] ?? 0; }
 
   ngOnDestroy(): void {
     this.destroy$.next();
@@ -58,11 +56,14 @@ export class StockComponent implements OnDestroy {
   }
 
   private charger(code: string, whgr: string): void {
-    this.loading    = true;
-    this.erreur     = null;
-    this.article    = null;
-    this.mouvements = [];
-    this.badges     = {};
+    this.loading      = true;
+    this.erreur       = null;
+    this.article      = null;
+    this.badges       = {};
+    this.movsOfPof    = [];
+    this.movsAchats   = [];
+    this.movsVentes   = [];
+    this.movsActions  = [];
 
     forkJoin({
       info:   this.stockService.getArticleInfo(code),
@@ -73,12 +74,16 @@ export class StockComponent implements OnDestroy {
       takeUntil(this.destroy$),
     ).subscribe({
       next: ({ info, poids, stocks, movs }) => {
-        const { itds, unms } = info;
+        const { itds, unms }       = info;
         const { stqt, aval, quqt, rjqt } = stocks;
-        const { totaux, badges } = this.calculerTotauxEtBadges(movs);
-        this.mouvements = movs;
-        this.badges     = badges;
-        this.article    = {
+        const { totaux, badges, filtres } = this.traiterMouvements(movs);
+
+        this.badges      = badges;
+        this.movsOfPof   = filtres.ofpof;
+        this.movsAchats  = filtres.achats;
+        this.movsVentes  = filtres.ventes;
+        this.movsActions = filtres.actions;
+        this.article     = {
           itno: code, itds, unms, poidsNet: poids,
           stqt, aval, quqt, rjqt,
           resaVente: stqt - aval,
@@ -93,24 +98,30 @@ export class StockComponent implements OnDestroy {
     });
   }
 
-  private calculerTotauxEtBadges(movs: StockMouvement[]): {
-    totaux: Pick<StockArticle, 'totalPof' | 'totalOf' | 'totalAchats' | 'totalReservations' | 'totalActions'>;
-    badges: Record<string, number>;
+  private traiterMouvements(movs: StockMouvement[]): {
+    totaux:  Pick<StockArticle, 'totalPof' | 'totalOf' | 'totalAchats' | 'totalReservations' | 'totalActions'>;
+    badges:  Record<string, number>;
+    filtres: { ofpof: StockMouvement[]; achats: StockMouvement[]; ventes: StockMouvement[]; actions: StockMouvement[] };
   } {
     let totalPof = 0, totalOf = 0, totalAchats = 0, totalReservations = 0, totalActions = 0;
-    let cntOfPof = 0, cntAchats = 0, cntVentes = 0, cntActions = 0;
+    const ofpof: StockMouvement[] = [], achats: StockMouvement[] = [],
+          ventes: StockMouvement[] = [], actions: StockMouvement[] = [];
 
     for (const m of movs) {
-      if      (m.orca === '100' && m.stat !== '10') { totalPof         += m.trqt; cntOfPof++;  }
-      else if (m.orca === '101')                    { totalOf          += m.trqt; cntOfPof++;  }
-      else if (m.orca === '251')                    { totalAchats      += m.trqt; cntAchats++; }
-      else if (m.orca === '311')                    { totalReservations += m.trqt; cntVentes++; }
-      else if (m.orca === '030')                    { totalActions     += m.trqt; cntActions++; }
+      if      (m.orca === '100' && m.stat !== '10') { totalPof          += m.trqt; ofpof.push(m);   }
+      else if (m.orca === '101')                    { totalOf           += m.trqt; ofpof.push(m);   }
+      else if (m.orca === '251')                    { totalAchats       += m.trqt; achats.push(m);  }
+      else if (m.orca === '311')                    { totalReservations += m.trqt; ventes.push(m);  }
+      else if (m.orca === '030')                    { totalActions      += m.trqt; actions.push(m); }
     }
 
+    const byDate = (a: StockMouvement, b: StockMouvement) => a.pldt.localeCompare(b.pldt);
+    ofpof.sort(byDate); achats.sort(byDate); ventes.sort(byDate); actions.sort(byDate);
+
     return {
-      totaux: { totalPof, totalOf, totalAchats, totalReservations, totalActions },
-      badges: { ofpof: cntOfPof, achats: cntAchats, ventes: cntVentes, actions: cntActions },
+      totaux:  { totalPof, totalOf, totalAchats, totalReservations, totalActions },
+      badges:  { ofpof: ofpof.length, achats: achats.length, ventes: ventes.length, actions: actions.length },
+      filtres: { ofpof, achats, ventes, actions },
     };
   }
 }

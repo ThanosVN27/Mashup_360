@@ -1,12 +1,8 @@
 <div class="tab-content">
-  <span *ngIf="isLoading" soho-busy-indicator displayDelay="0"></span>
 
-  <div *ngIf="errorMessage" class="error-msg">{{ errorMessage }}</div>
-
-  <!-- Barre de filtre OF / POF -->
-  <div *ngIf="!isLoading && lignes.length > 0" class="ofpof-toolbar">
+  <div *ngIf="toutesLignes.length > 0" class="ofpof-toolbar">
     <button class="ofpof-btn" [class.ofpof-btn--active]="filtre === 'tous'" (click)="setFiltre('tous')">
-      Tous <span class="ofpof-count">{{ lignes.length }}</span>
+      Tous <span class="ofpof-count">{{ toutesLignes.length }}</span>
     </button>
     <button class="ofpof-btn badge-of-btn" [class.ofpof-btn--active]="filtre === 'of'" (click)="setFiltre('of')">
       OF <span class="ofpof-count">{{ countOf }}</span>
@@ -16,12 +12,12 @@
     </button>
   </div>
 
-  <div *ngIf="!isLoading && !errorMessage && lignesFiltrees.length === 0" class="empty-msg">
+  <div *ngIf="toutesLignes.length === 0" class="empty-msg">
     Aucun mouvement trouvé pour cet article.
   </div>
 
   <div
-    *ngIf="!isLoading && lignesFiltrees.length > 0"
+    *ngIf="lignesFiltrees.length > 0"
     soho-datagrid
     [dataset]="lignesFiltrees"
     [columns]="colonnes"
@@ -34,4 +30,5 @@
     [enableTooltips]="true"
     style="width: 100%">
   </div>
+
 </div>

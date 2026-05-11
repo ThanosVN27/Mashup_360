@@ -1,14 +1,11 @@
 <div class="tab-content">
-  <span *ngIf="isLoading" soho-busy-indicator displayDelay="0"></span>
 
-  <div *ngIf="errorMessage" class="error-msg">{{ errorMessage }}</div>
-
-  <div *ngIf="!isLoading && !errorMessage && lignes.length === 0" class="empty-msg">
+  <div *ngIf="lignes.length === 0" class="empty-msg">
     Aucune réservation client pour cet article.
   </div>
 
   <div
-    *ngIf="!isLoading && lignes.length > 0"
+    *ngIf="lignes.length > 0"
     soho-datagrid
     [dataset]="lignes"
     [columns]="colonnes"
@@ -21,4 +18,5 @@
     [enableTooltips]="true"
     style="width: 100%">
   </div>
+
 </div>
