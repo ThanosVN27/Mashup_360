@@ -26,7 +26,7 @@ export class OfPofComponent implements OnChanges, OnDestroy {
 
   readonly colonnes: SohoDataGridColumn[] = [
     {
-      id: 'type', name: 'Type', field: 'orca', width: 100, align: 'center', filterType: 'text',
+      id: 'type', name: 'Type', field: 'orca', width: 200, align: 'center', filterType: 'text',
       formatter: (_row: number, _cell: number, value: string) => {
         const label    = value === '100' ? 'POF' : 'OF';
         const cssClass = value === '100' ? 'badge-pof' : 'badge-of';
