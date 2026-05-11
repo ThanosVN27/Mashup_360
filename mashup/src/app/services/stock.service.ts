@@ -56,6 +56,6 @@ export class StockService {
   }
 
   private toNum(value: unknown): number {
-    return parseFloat(String(value ?? '0')) || 0;
+    return parseInt(String(value ?? '0')) || 0;
   }
 }

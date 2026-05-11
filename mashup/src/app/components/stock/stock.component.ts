@@ -36,7 +36,7 @@ export class StockComponent implements OnDestroy {
     { id: 'synthese', label: 'Synthèse', badge: false },
     { id: 'ofpof',   label: 'OF / POF',  badge: true  },
     { id: 'achats',  label: 'Achats',     badge: true  },
-    { id: 'ventes',  label: 'Ventes',     badge: true  },
+    { id: 'ventes',  label: 'Réservations client',     badge: true  },
     { id: 'actions', label: 'Aktions',    badge: true  },
   ];
 
@@ -105,7 +105,9 @@ export class StockComponent implements OnDestroy {
     totaux:  Pick<StockArticle, 'totalPof' | 'totalOf' | 'totalAchats' | 'totalReservations' | 'totalActions'>;
     badges:  Record<string, number>;
     filtres: { ofpof: StockMouvement[]; achats: StockMouvement[]; actions: StockMouvement[] };
-  } {
+  }
+
+  {
     let totalPof = 0, totalOf = 0, totalAchats = 0, totalActions = 0;
     const ofpof: StockMouvement[] = [], achats: StockMouvement[] = [], actions: StockMouvement[] = [];
 

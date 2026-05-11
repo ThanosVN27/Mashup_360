@@ -31,7 +31,7 @@
         <strong class="article-code__value">{{ article.itno }}</strong>
       </div>
       <div class="article-libelle">{{ article.itds }}</div>
-      <span class="article-tag">{{ article.unms }}</span>
+      <!-- <span class="article-tag">{{ article.unms }}</span> -->
       <div class="article-poids">Poids net : <strong>{{ article.poidsNet }} kg</strong></div>
     </div>
 
@@ -54,10 +54,10 @@
       <!-- Contenu des onglets -->
       <div class="tab-content">
         <app-tab-synthese     *ngIf="activeTab === 'synthese'" [article]="article"></app-tab-synthese>
-        <app-tab-ofpof        *ngIf="activeTab === 'ofpof'"   [lignes]="movsOfPof"></app-tab-ofpof>
-        <app-tab-achats       *ngIf="activeTab === 'achats'"  [lignes]="movsAchats"></app-tab-achats>
-        <app-tab-reservations *ngIf="activeTab === 'ventes'"  [lignes]="movsVentes"></app-tab-reservations>
-        <app-tab-actions      *ngIf="activeTab === 'actions'" [lignes]="movsActions"></app-tab-actions>
+        <app-tab-ofpof        *ngIf="activeTab === 'ofpof'"   [lignes]="movsOfPof"   [unms]="article.unms"></app-tab-ofpof>
+        <app-tab-achats       *ngIf="activeTab === 'achats'"  [lignes]="movsAchats"  [unms]="article.unms"></app-tab-achats>
+        <app-tab-reservations *ngIf="activeTab === 'ventes'"  [lignes]="movsVentes"  [unms]="article.unms"></app-tab-reservations>
+        <app-tab-actions      *ngIf="activeTab === 'actions'" [lignes]="movsActions" [unms]="article.unms"></app-tab-actions>
       </div>
     </div>
   </div>

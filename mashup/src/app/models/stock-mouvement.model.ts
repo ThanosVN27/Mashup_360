@@ -9,4 +9,5 @@ export interface StockMouvement {
   stat: string;   // Statut (ORCA 100 stat=10 exclu des POF confirmées)
   rids: string;   // Suffixe ligne commande (POSX pour OIS100MI)
   agno: string;   // Numéro contrat (pour réservations)
+  ori1: string;   // Origine du mouvement (ex: "M3" ou "ResaVente")
 }
