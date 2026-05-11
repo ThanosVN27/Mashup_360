@@ -9,7 +9,7 @@ export interface WhgrOption {
 }
 
 @Injectable({ providedIn: 'root' })
-export class WhgrService {
+export class GroupService {
 
   private groupes$?: Observable<WhgrOption[]>;
 
@@ -37,7 +37,7 @@ export class WhgrService {
               .filter(code => code !== '')
           )].map(code => ({ code }))
         ),
-        catchError(() => of([{ code: 'GRP_ENTREPRISE' }])),
+        catchError(() => of([])),
         shareReplay(1)
       );
     }

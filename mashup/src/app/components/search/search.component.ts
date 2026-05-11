@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { WhgrService, WhgrOption } from '../../services/customer.service';
+import { GroupService, WhgrOption } from '../../services/group.service';
 
 export interface RechercheEvent {
   itno: string;
@@ -20,7 +20,7 @@ export class SearchComponent implements OnInit {
 
   @Output() recherche = new EventEmitter<RechercheEvent>();
 
-  constructor(private readonly whgrService: WhgrService) {}
+  constructor(private readonly whgrService: GroupService) {}
 
   ngOnInit(): void {
     this.whgrService.getGroupes().subscribe({
