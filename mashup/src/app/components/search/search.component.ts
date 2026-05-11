@@ -26,7 +26,8 @@ export class SearchComponent implements OnInit {
     this.whgrService.getGroupes().subscribe({
       next: (groupes) => {
         this.groupes        = groupes;
-        this.whgr           = groupes[0]?.code ?? '';
+        const preferred     = groupes.find(g => g.code.toUpperCase() === 'GRP_ENTREPRISE');
+        this.whgr           = preferred?.code ?? groupes[0]?.code ?? '';
         this.loadingGroupes = false;
       },
       error: () => {

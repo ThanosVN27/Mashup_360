@@ -15,10 +15,7 @@ export class AchatsComponent {
     { id: 'ridn', name: 'N° Commande',      field: 'ridn', width: 200, sortable: true, align: 'center', filterType: 'text' },
     { id: 'ridl', name: 'N° Ligne',         field: 'ridl', width: 200, sortable: true, align: 'center', filterType: 'text' },
     { id: 'trqt', name: 'Quantité achetée', field: 'trqt', width: 200, sortable: true, align: 'center', filterType: 'decimal', formatter: Soho.Formatters.Integer },
-    {
-      id: 'pldt', name: 'Date planifiée', field: 'pldt', width: 200, sortable: true, align: 'center', filterType: 'text',
-      formatter: (_r: number, _c: number, v: string) => formatM3Date(v),
-    },
+    { id: 'pldt', name: 'Date planifiée', field: 'pldt', width: 200, sortable: true, align: 'center', filterType: 'text',formatter: (_r: number, _c: number, v: string) => formatM3Date(v),},
     { id: 'stat', name: 'Statut', field: 'stat', width: 200, align: 'center', filterType: 'text' },
   ];
 }

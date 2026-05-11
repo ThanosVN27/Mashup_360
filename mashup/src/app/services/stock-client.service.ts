@@ -27,6 +27,7 @@ export class StockClientService {
           )
         );
       }),
+      map(lines => [...lines].sort((a, b) => a.pldt.localeCompare(b.pldt))),
     );
   }
 
@@ -40,12 +41,12 @@ export class StockClientService {
     const req: IMIRequest = {
       program:      'OIS100MI',
       transaction:  'GetLine',
-      record:       { CONO: 100, ORNO: orno, PONR: ponr },
+      record:       { CONO: 100, ORNO: orno, PONR: ponr},
       outputFields: ['AGNO'],
     };
     return this.mi.execute(req).pipe(
-      map((res: IMIResponse) => (res.item?.['AGNO'] ?? '').trim()),
-      catchError(() => of(''))
+      map((res: IMIResponse) => (res.item?.['AGNO'] ?? '').trim() || '---'),
+      catchError(() => of('---'))
     );
   }
 }

@@ -3,6 +3,7 @@ import { Subject, forkJoin } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { StockService } from '../../services/stock.service';
 import { StockMouvementService } from '../../services/stock-mouvement.service';
+import { StockClientService } from '../../services/stock-client.service';
 import { StockArticle } from '../../models/stock-article.model';
 import { StockMouvement } from '../../models/stock-mouvement.model';
 import { RechercheEvent } from '../search/search.component';
@@ -44,6 +45,7 @@ export class StockComponent implements OnDestroy {
   constructor(
     private readonly stockService:     StockService,
     private readonly mouvementService: StockMouvementService,
+    private readonly clientService:    StockClientService,
   ) {}
 
   setTab(id: string): void { this.activeTab = id; }
@@ -70,10 +72,11 @@ export class StockComponent implements OnDestroy {
       poids:  this.stockService.getPoidsNet(code),
       stocks: this.stockService.getStocksAgreges(code, whgr),
       movs:   this.mouvementService.getAll(code, whgr),
+      contract: this.clientService.getReservations(code, whgr),
     }).pipe(
       takeUntil(this.destroy$),
     ).subscribe({
-      next: ({ info, poids, stocks, movs }) => {
+      next: ({ info, poids, stocks, movs, contract }) => {
         const { itds, unms }       = info;
         const { stqt, aval, quqt, rjqt } = stocks;
         const { totaux, badges, filtres } = this.traiterMouvements(movs);
@@ -81,7 +84,7 @@ export class StockComponent implements OnDestroy {
         this.badges      = badges;
         this.movsOfPof   = filtres.ofpof;
         this.movsAchats  = filtres.achats;
-        this.movsVentes  = filtres.ventes;
+        this.movsVentes  = contract;
         this.movsActions = filtres.actions;
         this.article     = {
           itno: code, itds, unms, poidsNet: poids,
@@ -101,7 +104,7 @@ export class StockComponent implements OnDestroy {
   private traiterMouvements(movs: StockMouvement[]): {
     totaux:  Pick<StockArticle, 'totalPof' | 'totalOf' | 'totalAchats' | 'totalReservations' | 'totalActions'>;
     badges:  Record<string, number>;
-    filtres: { ofpof: StockMouvement[]; achats: StockMouvement[]; ventes: StockMouvement[]; actions: StockMouvement[] };
+    filtres: { ofpof: StockMouvement[]; achats: StockMouvement[]; ventes: StockMouvement[]; actions: StockMouvement[] ,};
   } {
     let totalPof = 0, totalOf = 0, totalAchats = 0, totalReservations = 0, totalActions = 0;
     const ofpof: StockMouvement[] = [], achats: StockMouvement[] = [],

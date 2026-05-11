@@ -7,5 +7,6 @@ export interface StockMouvement {
   codt: string;   // Date livraison (achats ORCA 251)
   rftx: string;   // Nom client (actions ORCA 030 uniquement)
   stat: string;   // Statut (ORCA 100 stat=10 exclu des POF confirmées)
+  rids: string;   // Suffixe ligne commande (POSX pour OIS100MI)
   agno: string;   // Numéro contrat (pour réservations)
 }

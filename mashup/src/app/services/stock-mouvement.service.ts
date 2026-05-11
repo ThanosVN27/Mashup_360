@@ -19,7 +19,7 @@ export class StockMouvementService {
         program:            'MMS080MI',
         transaction:        'SelMtrlTrans',
         record:             { ITNO: itno, WHLO: 'E01', WHGR: whgr, CONO: 100 },
-        outputFields:       ['ORCA', 'RIDN', 'RIDL', 'TRQT', 'PLDT', 'CODT', 'RFTX', 'STAT', 'AGNO'],
+        outputFields:       ['ORCA', 'RIDN', 'RIDL', 'RIDS', 'TRQT', 'PLDT', 'CODT', 'RFTX', 'STAT', 'AGNO'],
         maxReturnedRecords: 999,
       };
       const obs = this.mi.execute(req).pipe(
@@ -28,12 +28,13 @@ export class StockMouvementService {
             orca: item['ORCA'] ?? '',
             ridn: item['RIDN'] ?? '',
             ridl: item['RIDL'] ?? '',
+            rids: item['RIDS'] ?? '',
             trqt: parseFloat(item['TRQT'] ?? '0') || 0,
             pldt: item['PLDT'] ?? '',
             codt: item['CODT'] ?? '',
             rftx: item['RFTX'] ?? '',
             stat: item['STAT'] ?? '',
-            agno: item['AGNO'] ?? '',
+            agno: item['AGNO']?.trim() || '--',
           }))
         ),
         catchError(() => of([])),
@@ -43,4 +44,8 @@ export class StockMouvementService {
     }
     return this.cache.get(key)!;
   }
+
+
+
+
 }
