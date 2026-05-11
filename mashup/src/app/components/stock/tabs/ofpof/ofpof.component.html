@@ -1,23 +1,37 @@
 <div class="tab-content">
+  <!-- Indicateur de chargement -->
+  <span *ngIf="isLoading" soho-busy-indicator displayDelay="0"></span>
 
-  <div *ngIf="toutesLignes.length > 0" class="ofpof-toolbar">
-    <button class="ofpof-btn" [class.ofpof-btn--active]="filtre === 'tous'" (click)="setFiltre('tous')">
+  <!-- Message d'erreur -->
+  <div *ngIf="errorMessage" class="error-msg">{{ errorMessage }}</div>
+
+  <div *ngIf="!isLoading && toutesLignes.length > 0" class="ofpof-toolbar">
+    <button class="ofpof-btn"
+            [class.ofpof-btn--active]="filtre === 'tous'"
+            (click)="setFiltre('tous')">
       Tous <span class="ofpof-count">{{ toutesLignes.length }}</span>
     </button>
-    <button class="ofpof-btn badge-of-btn" [class.ofpof-btn--active]="filtre === 'of'" (click)="setFiltre('of')">
+
+    <button class="ofpof-btn badge-of-btn"
+            [class.ofpof-btn--active]="filtre === 'of'"
+            (click)="setFiltre('of')">
       OF <span class="ofpof-count">{{ countOf }}</span>
     </button>
-    <button class="ofpof-btn badge-pof-btn" [class.ofpof-btn--active]="filtre === 'pof'" (click)="setFiltre('pof')">
+
+    <button class="ofpof-btn badge-pof-btn"
+            [class.ofpof-btn--active]="filtre === 'pof'"
+            (click)="setFiltre('pof')">
       POF <span class="ofpof-count">{{ countPof }}</span>
     </button>
   </div>
 
-  <div *ngIf="toutesLignes.length === 0" class="empty-msg">
+
+  <div *ngIf="!isLoading && !errorMessage && lignesFiltrees.length === 0" class="empty-msg">
     Aucun mouvement trouvé pour cet article.
   </div>
 
   <div
-    *ngIf="lignesFiltrees.length > 0"
+    *ngIf="!isLoading && lignesFiltrees.length > 0"
     soho-datagrid
     [dataset]="lignesFiltrees"
     [columns]="colonnes"
@@ -30,5 +44,4 @@
     [enableTooltips]="true"
     style="width: 100%">
   </div>
-
 </div>

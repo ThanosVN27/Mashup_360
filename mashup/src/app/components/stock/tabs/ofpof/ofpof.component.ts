@@ -9,6 +9,8 @@ import { formatM3Date } from '../../../../shared/utils/m3-date.util';
 })
 export class OfPofComponent {
 
+  @Input() isLoading    = false;
+  @Input() errorMessage = '';
   @Input() set lignes(data: StockMouvement[]) {
     this.toutesLignes   = data;
     this.lignesFiltrees = this.filtrer(data);
@@ -23,7 +25,7 @@ export class OfPofComponent {
 
   readonly colonnes: SohoDataGridColumn[] = [
     {
-      id: 'type', name: 'Type', field: 'orca', width: 100, align: 'center', filterType: 'text',
+      id: 'type', name: 'Type', field: 'orca', width: 150, align: 'center', filterType: 'text',
       formatter: (_row: number, _cell: number, value: string) => {
         const label    = value === '100' ? 'POF' : 'OF';
         const cssClass = value === '100' ? 'badge-pof' : 'badge-of';
