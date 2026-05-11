@@ -32,7 +32,8 @@ export class StockService {
       outputFields: ['N796'],
     };
     return this.mi.execute(req).pipe(
-      map((res: IMIResponse) => res.item?.['N796'] ?? '0')
+      map((res: IMIResponse) => res.item?.['N796'] ?? '0'),
+      catchError(() => of('0'))
     );
   }
 

@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy } from '@angular/core';
-import { Subject } from 'rxjs';
-import { map, switchMap, takeUntil } from 'rxjs/operators';
+import { Subject, forkJoin } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { StockService } from '../../services/stock.service';
 import { StockMouvementService } from '../../services/stock-mouvement.service';
 import { StockArticle } from '../../models/stock-article.model';
@@ -16,7 +16,7 @@ export class StockComponent implements OnDestroy {
 
   @Input() set recherche(params: RechercheEvent | null) {
     if (params?.itno) {
-      this.whgrActuel = params.whgr || 'GRP_ENTREPRISE';
+      this.whgrActuel = params.whgr;
       this.charger(params.itno, this.whgrActuel);
     }
   }
@@ -26,7 +26,8 @@ export class StockComponent implements OnDestroy {
   article:    StockArticle | null = null;
   mouvements: StockMouvement[] = [];
   activeTab   = 'synthese';
-  whgrActuel  = 'GRP_ENTREPRISE';
+  whgrActuel  = '';
+  badges:     Record<string, number> = {};
 
   readonly tabs = [
     { id: 'synthese', label: 'Synthèse', badge: false },
@@ -48,13 +49,7 @@ export class StockComponent implements OnDestroy {
   }
 
   badgeFor(tabId: string): number {
-    switch (tabId) {
-      case 'ofpof':   return this.mouvements.filter(m => (m.orca === '100' && m.stat !== '10') || m.orca === '101').length;
-      case 'achats':  return this.mouvements.filter(m => m.orca === '251').length;
-      case 'ventes':  return this.mouvements.filter(m => m.orca === '311').length;
-      case 'actions': return this.mouvements.filter(m => m.orca === '030').length;
-      default:        return 0;
-    }
+    return this.badges[tabId] ?? 0;
   }
 
   ngOnDestroy(): void {
@@ -67,42 +62,27 @@ export class StockComponent implements OnDestroy {
     this.erreur     = null;
     this.article    = null;
     this.mouvements = [];
+    this.badges     = {};
 
-    this.stockService.getArticleInfo(code).pipe(
+    forkJoin({
+      info:   this.stockService.getArticleInfo(code),
+      poids:  this.stockService.getPoidsNet(code),
+      stocks: this.stockService.getStocksAgreges(code, whgr),
+      movs:   this.mouvementService.getAll(code, whgr),
+    }).pipe(
       takeUntil(this.destroy$),
-      switchMap(info =>
-        this.stockService.getPoidsNet(code).pipe(
-          map(poidsNet => ({ ...info, poidsNet }))
-        )
-      ),
-      switchMap(info =>
-        this.stockService.getStocksAgreges(code, whgr).pipe(
-          map(stocks => ({ ...info, ...stocks }))
-        )
-      ),
-      switchMap(info =>
-        this.mouvementService.getAll(code, whgr).pipe(
-          map(movs => ({ ...info, movs }))
-        )
-      ),
     ).subscribe({
-      next: ({ itds, unms, poidsNet, stqt, aval, quqt, rjqt, movs }) => {
+      next: ({ info, poids, stocks, movs }) => {
+        const { itds, unms } = info;
+        const { stqt, aval, quqt, rjqt } = stocks;
+        const { totaux, badges } = this.calculerTotauxEtBadges(movs);
         this.mouvements = movs;
-        this.article = {
-          itno:              code,
-          itds,
-          unms,
-          poidsNet,
-          stqt,
-          aval,
-          quqt,
-          rjqt,
-          resaVente:         stqt - aval,
-          totalPof:          this.somme(movs.filter(m => m.orca === '100' && m.stat !== '10')),
-          totalOf:           this.somme(movs.filter(m => m.orca === '101')),
-          totalAchats:       this.somme(movs.filter(m => m.orca === '251')),
-          totalReservations: this.somme(movs.filter(m => m.orca === '311')),
-          totalActions:      this.somme(movs.filter(m => m.orca === '030')),
+        this.badges     = badges;
+        this.article    = {
+          itno: code, itds, unms, poidsNet: poids,
+          stqt, aval, quqt, rjqt,
+          resaVente: stqt - aval,
+          ...totaux,
         };
         this.loading = false;
       },
@@ -113,7 +93,24 @@ export class StockComponent implements OnDestroy {
     });
   }
 
-  private somme(lignes: StockMouvement[]): number {
-    return lignes.reduce((acc, m) => acc + m.trqt, 0);
+  private calculerTotauxEtBadges(movs: StockMouvement[]): {
+    totaux: Pick<StockArticle, 'totalPof' | 'totalOf' | 'totalAchats' | 'totalReservations' | 'totalActions'>;
+    badges: Record<string, number>;
+  } {
+    let totalPof = 0, totalOf = 0, totalAchats = 0, totalReservations = 0, totalActions = 0;
+    let cntOfPof = 0, cntAchats = 0, cntVentes = 0, cntActions = 0;
+
+    for (const m of movs) {
+      if      (m.orca === '100' && m.stat !== '10') { totalPof         += m.trqt; cntOfPof++;  }
+      else if (m.orca === '101')                    { totalOf          += m.trqt; cntOfPof++;  }
+      else if (m.orca === '251')                    { totalAchats      += m.trqt; cntAchats++; }
+      else if (m.orca === '311')                    { totalReservations += m.trqt; cntVentes++; }
+      else if (m.orca === '030')                    { totalActions     += m.trqt; cntActions++; }
+    }
+
+    return {
+      totaux: { totalPof, totalOf, totalAchats, totalReservations, totalActions },
+      badges: { ofpof: cntOfPof, achats: cntAchats, ventes: cntVentes, actions: cntActions },
+    };
   }
 }

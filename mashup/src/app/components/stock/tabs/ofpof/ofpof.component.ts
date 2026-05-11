@@ -11,7 +11,7 @@ import { formatM3Date } from '../../../../shared/utils/m3-date.util';
 })
 export class OfPofComponent implements OnChanges, OnDestroy {
   @Input() itno = '';
-  @Input() whgr = 'GRP_ENTREPRISE';
+  @Input() whgr = '';
 
   lignes:        StockMouvement[] = [];
   lignesFiltrees: StockMouvement[] = [];

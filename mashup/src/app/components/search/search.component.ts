@@ -30,8 +30,8 @@ export class SearchComponent implements OnInit {
         this.loadingGroupes = false;
       },
       error: () => {
-        this.groupes        = [{ code: 'GRP_ENTREPRISE' }];
-        this.whgr           = 'GRP_ENTREPRISE';
+        this.groupes        = [];
+        this.whgr           = '';
         this.loadingGroupes = false;
       },
     });
