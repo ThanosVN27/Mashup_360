@@ -38,7 +38,7 @@ export class OfPofComponent {
       id: 'pldt', name: 'Date', field: 'pldt', width: 200, sortable: true, align: 'center', filterType: 'text',
       formatter: (_row: number, _cell: number, value: string) => formatM3Date(value),
     },
-    { id: 'stat', name: 'Statut', field: 'stat', width: 200, align: 'center', filterType: 'text' },
+    { id: 'stat', name: 'Statut', field: 'stat', width: 150, align: 'center', filterType: 'text' },
   ];
 
   setFiltre(f: 'tous' | 'of' | 'pof'): void {
