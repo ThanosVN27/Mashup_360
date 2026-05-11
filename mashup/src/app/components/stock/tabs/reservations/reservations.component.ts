@@ -28,6 +28,7 @@ export class ReservationsComponent implements OnChanges, OnDestroy {
       id: 'pldt', name: 'Date planifiée', field: 'pldt', width: 200, sortable: true, align: 'center', filterType: 'text',
       formatter: (_r: number, _c: number, v: string) => formatM3Date(v),
     },
+    { id : 'stat', name: 'Statut',        field: 'stat', width: 200, align: 'center', filterType: 'text' },
   ];
 
   constructor(private readonly clientService: StockClientService) {}
