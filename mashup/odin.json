@@ -1,5 +1,5 @@
 {
-   "projectName": "mashup-gestion-stocks",
+   "projectName": "mashup-stocks360",
    "proxy": {
       "/m3api-rest": {
          "target": "https://be-dev.escal.local:32008",
