@@ -2,6 +2,7 @@
 .synth-grid {
   display:               grid;
   grid-template-columns: 1fr 1fr;
+  grid-template-rows:    auto 1fr;
   gap:                   0 24px;
 }
 
@@ -85,7 +86,7 @@
 
 .synth-val em {
   font-style:  normal;
-  font-size:   12px;
+  font-size:   15px;
   font-weight: 400;
   color:       #b3b3b3;
   margin-left: 5px;
@@ -113,6 +114,123 @@
 
 .tag-ok  { background: #e1f2d6; color: #1f5c00; }
 .tag-err { background: #fce8e8; color: #8f0000; }
+
+/* ── Colonnes internes ── */
+.synth-col {
+  display:        flex;
+  flex-direction: column;
+  align-self:     stretch;
+}
+
+/* Les cellules gauches se répartissent également dans la hauteur disponible */
+.synth-col .synth-cell {
+  flex: 1;
+}
+
+/* Colonne flux : bordure globale qui reprend celle du header */
+.synth-col-flux {
+  border:        1px solid #d8d8d8;
+  border-top:    none;
+  border-radius: 0 0 4px 4px;
+  overflow:      hidden;
+  height:        100%;
+  box-sizing:    border-box;
+}
+
+/* ── Groupes accordéon ── */
+.flux-group {
+  flex:          1;
+  display:       flex;
+  flex-direction: column;
+  border-bottom: 1px solid #e0e0e0;
+}
+.flux-group--last { border-bottom: none; }
+
+.flux-group-body {
+  flex:       1;
+  background: #fff;
+}
+
+.flux-group-hd {
+  display:        flex;
+  align-items:    center;
+  gap:            10px;
+  padding:        20px 20px;
+  background:     #f5f5f5;
+  cursor:         pointer;
+  transition:     background 0.15s;
+}
+.flux-group-hd:hover { background: #eef4fb; }
+
+.flux-icon {
+  font-size:   18px;
+  font-weight: 700;
+  line-height: 1;
+}
+.flux-icon--in  { color: #2d8600; }
+.flux-icon--out { color: #c40a0a; }
+
+.flux-group-title {
+  flex:           1;
+  font-size:      13px;
+  font-weight:    700;
+  color:          #444;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+.flux-group-total {
+  font-size:   17px;
+  font-weight: 700;
+  color:       #333;
+}
+.flux-group-total em {
+  font-style:  normal;
+  font-size:   12px;
+  font-weight: 400;
+  color:       #b3b3b3;
+  margin-left: 4px;
+}
+
+.flux-chevron {
+  font-size: 10px;
+  color:     #999;
+}
+
+/* ── Lignes dans le groupe ── */
+
+.flux-line {
+  display:         flex;
+  justify-content: space-between;
+  align-items:     center;
+  padding:         22px 28px;
+  border-bottom:   1px solid #f0f0f0;
+  cursor:          pointer;
+  transition:      background 0.15s;
+}
+.flux-line:last-child { border-bottom: none; }
+.flux-line:hover      { background: #eef4fb; }
+
+.flux-line-label {
+  font-size:      13px;
+  font-weight:    600;
+  color:          #767676;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.flux-line-val {
+  font-size:   17px;
+  font-weight: 700;
+  color:       #333;
+}
+.flux-line-val em {
+  font-style:  normal;
+  font-size:   13px;
+  font-weight: 400;
+  color:       #b3b3b3;
+  margin-left: 4px;
+}
 
 /* ── Cellule / label cliquable ── */
 .synth-link { cursor: pointer; }

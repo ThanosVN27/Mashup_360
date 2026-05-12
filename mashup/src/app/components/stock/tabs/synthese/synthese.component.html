@@ -4,59 +4,80 @@
   <div class="synth-head">Stock actuel</div>
   <div class="synth-head">Flux à venir</div>
 
-  <!-- ── Ligne 1 ── -->
-  <div class="synth-cell synth-l">
-    <span class="synth-label">Stock disponible</span>
-    <span class="synth-val">{{ article.stqt }} <em>{{ article.unms }}</em></span>
-  </div>
-  <div class="synth-cell synth-r synth-link" (click)="tabChange.emit('ofpof')">
-    <span class="synth-label">Total POF confirmées</span>
-    <span class="synth-val">{{ article.totalPof }} <em>{{ article.unms }}</em></span>
-  </div>
-
-  <!-- ── Ligne 2 ── -->
-  <div class="synth-cell synth-l">
-    <span class="synth-label">Stock affectable</span>
-    <span class="synth-val">{{ article.aval }} <em>{{ article.unms }}</em></span>
-  </div>
-  <div class="synth-cell synth-r synth-link" (click)="tabChange.emit('ofpof')">
-    <span class="synth-label">Total OF lancés</span>
-    <span class="synth-val">{{ article.totalOf }} <em>{{ article.unms }}</em></span>
-  </div>
-
-  <!-- ── Ligne 3 ── -->
-  <div class="synth-cell synth-l synth-last synth-danger">
-    <span class="synth-label">Stock non conforme</span>
-  <span class="synth-val synth-val--danger">{{ article.rjqt }} <em>{{ article.unms }}</em></span>
-  </div>
-  <div class="synth-cell synth-r synth-link" (click)="tabChange.emit('achats')">
-    <span class="synth-label">Total achats</span>
-    <span class="synth-val">{{ article.totalAchats }} <em>{{ article.unms  }}</em></span>
+  <!-- ── Colonne gauche : Stock actuel ── -->
+  <div class="synth-col">
+    <div class="synth-cell synth-l">
+      <span class="synth-label">Stock disponible</span>
+      <span class="synth-val">{{ article.stqt }} <em>{{ article.unms }}</em></span>
+    </div>
+    <div class="synth-cell synth-l">
+      <span class="synth-label">Stock affectable</span>
+      <span class="synth-val">{{ article.aval }} <em>{{ article.unms }}</em></span>
+    </div>
+    <div class="synth-cell synth-l synth-warning">
+      <span class="synth-label">Réservation client</span>
+      <span class="synth-val synth-val--warn">{{ article.resaVente }} <em>{{ article.unms }}</em></span>
+    </div>
+    <div class="synth-cell synth-l">
+      <span class="synth-label">Stock sous contrôle</span>
+      <span class="synth-val">{{ article.quqt }} <em>{{ article.unms }}</em></span>
+    </div>
+    <div class="synth-cell synth-l synth-last synth-danger">
+      <span class="synth-label">Stock non conforme</span>
+      <span class="synth-val synth-val--danger">{{ article.rjqt }} <em>{{ article.unms }}</em></span>
+    </div>
   </div>
 
-  <!-- ── Ligne 4 ── -->
-  <div class="synth-cell synth-l">
-    <span class="synth-label">Stock sous contrôle</span>
-    <span class="synth-val">{{ article.quqt }} <em>{{ article.unms }}</em></span>
-  </div>
-  <div class="synth-cell synth-r synth-link" (click)="tabChange.emit('actions')">
-    <span class="synth-label">Total aktions</span>
-    <span class="synth-val">{{ article.totalActions }} <em>{{ article.unms }}</em></span>
-  </div>
+  <!-- ── Colonne droite : Flux à venir ── -->
+  <div class="synth-col synth-col-flux">
 
-  <!-- ── Ligne 5 (dernière) ── -->
-  <div class="synth-cell synth-l synth-warning">
-    <span class="synth-label">Réservations client</span>
-    <span class="synth-val synth-val--warn">{{ article.resaVente }} <em>{{ article.unms }}</em></span>
-  </div>
-  <div class="synth-cell synth-r synth-last synth-check synth-link" (click)="tabChange.emit('ventes')">
-    <span class="synth-label">Réservations client</span>
-    <span class="synth-val synth-val--with-badge">
-      {{ article.totalReservations }} <em>{{ article.unms }}</em>
-      <span [class]="resaVerifiee ? 'tag tag-ok' : 'tag tag-err'">
-        {{ resaVerifiee ? '= Réservations clients ✓' : 'Écart détecté !' }}
-      </span>
-    </span>
+    <!-- Flux entrant : OF + POF + Achats -->
+    <div class="flux-group">
+      <div class="flux-group-hd synth-link" (click)="fluxEntrantOpen = !fluxEntrantOpen">
+        <span class="flux-icon flux-icon--in">↓</span>
+        <span class="flux-group-title">Flux entrant</span>
+        <span class="flux-chevron">{{ fluxEntrantOpen ? '▲' : '▼' }}</span>
+      </div>
+      <div class="flux-group-body" *ngIf="fluxEntrantOpen">
+        <div class="flux-line synth-link" (click)="tabChange.emit('ofpof')">
+          <span class="flux-line-label">Total POF confirmées</span>
+          <span class="flux-line-val">{{ article.totalPof }} <em>{{ article.unms }}</em></span>
+        </div>
+        <div class="flux-line synth-link" (click)="tabChange.emit('ofpof')">
+          <span class="flux-line-label">Total OF lancés</span>
+          <span class="flux-line-val">{{ article.totalOf }} <em>{{ article.unms }}</em></span>
+        </div>
+        <div class="flux-line synth-link" (click)="tabChange.emit('achats')">
+          <span class="flux-line-label">Total achats</span>
+          <span class="flux-line-val">{{ article.totalAchats }} <em>{{ article.unms }}</em></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Flux sortant : Aktions + Réservations clients -->
+    <div class="flux-group flux-group--last">
+      <div class="flux-group-hd synth-link" (click)="fluxSortantOpen = !fluxSortantOpen">
+        <span class="flux-icon flux-icon--out">↑</span>
+        <span class="flux-group-title">Flux sortant</span>
+        <span class="flux-chevron">{{ fluxSortantOpen ? '▲' : '▼' }}</span>
+      </div>
+      <div class="flux-group-body" *ngIf="fluxSortantOpen">
+        <div class="flux-line synth-link" (click)="tabChange.emit('actions')">
+          <span class="flux-line-label">Total aktions</span>
+          <span class="flux-line-val">{{ article.totalActions }} <em>{{ article.unms }}</em></span>
+        </div>
+        <div class="flux-line synth-link" (click)="tabChange.emit('ventes')">
+          <span class="flux-line-label">Réservations clients</span>
+          <span class="flux-line-val synth-val--with-badge">
+            {{ article.totalReservations }} <em>{{ article.unms }}</em>
+            <span [class]="resaVerifiee ? 'tag tag-ok' : 'tag tag-err'">
+              {{ resaVerifiee ? '✓' : '!' }}
+            </span>
+          </span>
+        </div>
+      </div>
+    </div>
+
   </div>
 
 </div>

@@ -11,6 +11,17 @@ export class SyntheseComponent {
   @Input()  article!: StockArticle;
   @Output() tabChange = new EventEmitter<string>();
 
+  fluxEntrantOpen = true;
+  fluxSortantOpen = true;
+
+  get totalEntrant(): number {
+    return this.article.totalPof + this.article.totalOf + this.article.totalAchats;
+  }
+
+  get totalSortant(): number {
+    return this.article.totalActions + this.article.totalReservations;
+  }
+
   get resaVerifiee(): boolean {
     return this.article.totalReservations === this.article.resaVente;
   }
