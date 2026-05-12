@@ -6,6 +6,7 @@ export interface StockArticle {
   // Stocks agrégés (MMS200MI GetAggWhsGrp)
   stqt: number;
   aval: number;
+  alqt: number;
   quqt: number;
   rjqt: number;
   // Calculé : stock disponible - stock affectable

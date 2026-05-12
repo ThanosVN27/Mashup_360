@@ -2,8 +2,8 @@
   display:       flex;
   align-items:   flex-end;
   flex-wrap:     wrap;
-  gap:           16px;
-  padding:       16px 32px;
+  gap:           10px;
+  padding:       10px 15px;
   background:    #ffffff;
   border-bottom: 1px solid #d8d8d8;
   box-shadow:    0 1px 4px rgba(0, 0, 0, 0.06);

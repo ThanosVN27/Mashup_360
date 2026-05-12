@@ -12,7 +12,7 @@
     </div>
     <div class="synth-cell synth-l">
       <span class="synth-label">Stock affectable</span>
-      <span class="synth-val">{{ fmt(article.aval) }} <em>{{ article.unms }}</em></span>
+      <span class="synth-val">{{ fmt(article.av01) }} <em>{{ article.unms }}</em></span>
     </div>
     <div class="synth-cell synth-l synth-warning">
       <span class="synth-label">Réservation client</span>
@@ -30,7 +30,6 @@
 
   <!-- ── Colonne droite : Flux à venir ── -->
   <div class="synth-col synth-col-flux">
-
     <!-- Flux entrant : OF + POF + Achats -->
     <div class="flux-group">
       <div class="flux-group-hd synth-link" (click)="fluxEntrantOpen = !fluxEntrantOpen">
@@ -56,10 +55,26 @@
 
     <!-- Flux sortant : Aktions + Réservations clients -->
     <div class="flux-group flux-group--last">
-      <div class="flux-group-hd synth-link" (click)="fluxSortantOpen = !fluxSortantOpen">
-        <span class="flux-icon flux-icon--out">↑</span>
-        <span class="flux-group-title">Flux sortant</span>
-        <span class="flux-chevron">{{ fluxSortantOpen ? '▲' : '▼' }}</span>
+      <div class="flux-group-hd">
+        <div class="flux-hd-toggle synth-link" (click)="fluxSortantOpen = !fluxSortantOpen">
+          <span class="flux-icon flux-icon--out">↑</span>
+          <span class="flux-group-title">Flux sortant</span>
+          <span class="flux-chevron">{{ fluxSortantOpen ? '▲' : '▼' }}</span>
+        </div>
+        <div class="flux-whgr-dropdown" (click)="$event.stopPropagation()">
+          <button class="flux-whgr-btn" (click)="whgrDropdownOpen = !whgrDropdownOpen">
+            {{ whgrSortant }}
+            <span class="flux-whgr-arrow">{{ whgrDropdownOpen ? '▲' : '▼' }}</span>
+          </button>
+          <div class="flux-whgr-list" *ngIf="whgrDropdownOpen">
+            <div class="flux-whgr-option"
+                 *ngFor="let g of whgrOptions"
+                 [class.flux-whgr-option--active]="g.code === whgrSortant"
+                 (click)="selectWhgr(g.code)">
+              {{ g.code }}
+            </div>
+          </div>
+        </div>
       </div>
       <div class="flux-group-body" *ngIf="fluxSortantOpen">
         <div class="flux-line synth-link" (click)="tabChange.emit('actions')">
@@ -70,9 +85,9 @@
           <span class="flux-line-label">Réservations clients</span>
           <span class="flux-line-val synth-val--with-badge">
             {{ fmt(article.totalReservations) }} <em>{{ article.unms }}</em>
-            <span [class]="resaVerifiee ? 'tag tag-ok' : 'tag tag-err'">
+            <!-- <span [class]="resaVerifiee ? 'tag tag-ok' : 'tag tag-err'">
               {{ resaVerifiee ? '✓' : '!' }}
-            </span>
+            </span> -->
           </span>
         </div>
       </div>

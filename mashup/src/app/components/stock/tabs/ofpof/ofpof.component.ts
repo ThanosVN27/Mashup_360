@@ -43,6 +43,7 @@ export class OfPofComponent implements OnChanges {
           formatter: (_row: number, _cell: number, value: string) => formatM3Date(value) },
         { id: 'stat', name: 'Statut', field: 'stat', width: 250, align: 'center', filterType: 'text',
           formatter: (_r: number, _c: number, v: string) => formatM3Status(v) },
+
       ];
     }
   }
