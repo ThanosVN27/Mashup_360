@@ -26,6 +26,7 @@ export class StockComponent implements OnDestroy {
   article:    StockArticle | null = null;
   activeTab   = 'synthese';
   badges:     Record<string, number> = {};
+  whgrSortant = 'GRP_ENTREPRISE';
 
   movsOfPof:   StockMouvement[] = [];
   movsAchats:  StockMouvement[] = [];
@@ -33,11 +34,11 @@ export class StockComponent implements OnDestroy {
   movsActions: StockMouvement[] = [];
 
   readonly tabs = [
-    { id: 'synthese', label: 'Synthèse', badge: false },
-    { id: 'ofpof',   label: 'OF / POF',  badge: true  },
-    { id: 'achats',  label: 'Achats',     badge: true  },
-    { id: 'ventes',  label: 'Réservations client',     badge: true  },
-    { id: 'actions', label: 'Aktions',    badge: true  },
+    { id: 'synthese', label: 'Synthèse',            badge: false },
+    { id: 'ofpof',   label: 'OF / POF',             badge: true  },
+    { id: 'achats',  label: 'Achats',               badge: true  },
+    { id: 'ventes',  label: 'Réservations client',  badge: true  },
+    { id: 'actions', label: 'Aktions',              badge: true  },
   ];
 
   private readonly destroy$ = new Subject<void>();
@@ -57,6 +58,37 @@ export class StockComponent implements OnDestroy {
     this.destroy$.complete();
   }
 
+  rechargerSortant(whgr: string): void {
+    if (!this.article) return;
+    this.whgrSortant = whgr;
+    const itno = this.article.itno;
+
+    forkJoin({
+      movs:     this.mouvementService.getAll(itno, whgr),
+      contract: this.clientService.getReservations(itno, whgr),
+    }).pipe(takeUntil(this.destroy$)).subscribe({
+      next: ({ movs, contract }) => {
+        let totalActions = 0;
+        const actions: StockMouvement[] = [];
+
+        for (const m of movs) {
+          if (m.orca === '030' && m.ori1 !== 'RES') {
+            totalActions += m.trqt;
+            actions.push(m);
+          }
+        }
+
+        const byDate = (a: StockMouvement, b: StockMouvement) => a.pldt.localeCompare(b.pldt);
+        const totalReservations = contract.reduce((sum, m) => sum + m.trqt, 0);
+
+        this.movsVentes  = contract;
+        this.movsActions = actions.sort(byDate);
+        this.badges      = { ...this.badges, ventes: contract.length, actions: actions.length };
+        this.article     = { ...this.article!, totalActions, totalReservations };
+      },
+    });
+  }
+
   private charger(code: string, whgr: string): void {
     this.loading     = true;
     this.erreur      = null;
@@ -68,18 +100,17 @@ export class StockComponent implements OnDestroy {
     this.movsActions = [];
 
     forkJoin({
-      info:     this.stockService.getArticleInfo(code),
-      poids:    this.stockService.getPoidsNet(code),
-      stocks:   this.stockService.getStocksAgreges(code, whgr),
-      movs:     this.mouvementService.getAll(code, whgr),
-      contract: this.clientService.getReservations(code, whgr),
-    }).pipe(
-      takeUntil(this.destroy$),
-    ).subscribe({
-      next: ({ info, poids, stocks, movs, contract }) => {
-        const { itds, unms }             = info;
-        const { stqt, aval, quqt, rjqt } = stocks;
-        const { totaux, badges, filtres } = this.traiterMouvements(movs, contract);
+      info:        this.stockService.getArticleInfo(code),
+      poids:       this.stockService.getPoidsNet(code),
+      stocks:      this.stockService.getStocksAgreges(code, whgr),
+      movsEntrant: this.mouvementService.getAll(code, whgr),
+      movsSortant: this.mouvementService.getAll(code, this.whgrSortant),
+      contract:    this.clientService.getReservations(code, this.whgrSortant),
+    }).pipe(takeUntil(this.destroy$)).subscribe({
+      next: ({ info, poids, stocks, movsEntrant, movsSortant, contract }) => {
+        const { itds, unms }    = info;
+        const { aval, alqt, quqt, rjqt } = stocks;
+        const { totaux, badges, filtres } = this.traiterMouvements(movsEntrant, movsSortant, contract);
 
         this.badges      = badges;
         this.movsOfPof   = filtres.ofpof;
@@ -88,8 +119,10 @@ export class StockComponent implements OnDestroy {
         this.movsActions = filtres.actions;
         this.article     = {
           itno: code, itds, unms, poidsNet: poids,
-          stqt, aval, quqt, rjqt,
-          resaVente: stqt - aval,
+          aval,                 // Stock disponible  = AVAL
+          effec: aval - alqt,   // Stock affectable  = AVAL - ALQT
+          quqt,  rjqt,
+          resaVente: alqt,      // Quantité allouée  = ALQT
           ...totaux,
         };
         this.loading = false;
@@ -101,21 +134,26 @@ export class StockComponent implements OnDestroy {
     });
   }
 
-  private traiterMouvements(movs: StockMouvement[], ventes: StockMouvement[]): {
+  private traiterMouvements(
+    movsEntrant: StockMouvement[],
+    movsSortant: StockMouvement[],
+    ventes:      StockMouvement[],
+  ): {
     totaux:  Pick<StockArticle, 'totalPof' | 'totalOf' | 'totalAchats' | 'totalReservations' | 'totalActions'>;
     badges:  Record<string, number>;
     filtres: { ofpof: StockMouvement[]; achats: StockMouvement[]; actions: StockMouvement[] };
-  }
-
-  {
+  } {
     let totalPof = 0, totalOf = 0, totalAchats = 0, totalActions = 0;
     const ofpof: StockMouvement[] = [], achats: StockMouvement[] = [], actions: StockMouvement[] = [];
 
-    for (const m of movs) {
-      if      (m.orca === '100' && m.stat !== '10') { totalPof    += m.trqt; ofpof.push(m);   }
-      else if (m.orca === '101')                    { totalOf     += m.trqt; ofpof.push(m);   }
-      else if (m.orca === '251')                    { totalAchats += m.trqt; achats.push(m);  }
-      else if (m.orca === '030' && m.ori1 !== 'RES') { totalActions+= m.trqt; actions.push(m); }
+    for (const m of movsEntrant) {
+      if      (m.orca === '100' && m.stat !== '10') { totalPof    += m.trqt; ofpof.push(m);  }
+      else if (m.orca === '101')                    { totalOf     += m.trqt; ofpof.push(m);  }
+      else if (m.orca === '251')                    { totalAchats += m.trqt; achats.push(m); }
+    }
+
+    for (const m of movsSortant) {
+      if (m.orca === '030' && m.ori1 !== 'RES') { totalActions += m.trqt; actions.push(m); }
     }
 
     const byDate = (a: StockMouvement, b: StockMouvement) => a.pldt.localeCompare(b.pldt);

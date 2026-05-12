@@ -132,7 +132,7 @@
   border:        1px solid #d8d8d8;
   border-top:    none;
   border-radius: 0 0 4px 4px;
-  overflow:      hidden;
+  overflow:      visible;
   height:        100%;
   box-sizing:    border-box;
 }
@@ -231,6 +231,62 @@
   color:       #b3b3b3;
   margin-left: 4px;
 }
+
+/* ── Toggle + dropdown côte à côte dans le header flux sortant ── */
+.flux-hd-toggle {
+  flex:        1;
+  display:     flex;
+  align-items: center;
+  gap:         10px;
+  cursor:      pointer;
+}
+
+/* ── Dropdown groupe de dépôts ── */
+.flux-whgr-dropdown { position: relative; }
+
+.flux-whgr-btn {
+  display:       flex;
+  align-items:   center;
+  gap:           6px;
+  padding:       5px 10px;
+  border:        1px solid #c8c8c8;
+  border-radius: 4px;
+  background:    #fff;
+  color:         #333;
+  font-size:     12px;
+  font-weight:   600;
+  cursor:        pointer;
+  white-space:   nowrap;
+  transition:    border-color 0.15s;
+}
+.flux-whgr-btn:hover { border-color: #0b6cbb; }
+
+.flux-whgr-arrow { font-size: 8px; color: #999; }
+
+.flux-whgr-list {
+  position:      absolute;
+  right:         0;
+  bottom:        calc(100% + 4px);
+  background:    #fff;
+  border:        1px solid #d8d8d8;
+  border-radius: 6px;
+  box-shadow:    0 6px 20px rgba(0,0,0,0.15);
+  z-index:       200;
+  min-width:     220px;
+  max-height:    420px;
+  overflow-y:    auto;
+}
+
+.flux-whgr-option {
+  padding:     12px 18px;
+  font-size:   14px;
+  font-weight: 500;
+  color:       #333;
+  cursor:      pointer;
+  transition:  background 0.12s;
+}
+.flux-whgr-option:hover   { background: #eef4fb; color: #0b6cbb; }
+.flux-whgr-option--active { background: #e4eef9; color: #0b6cbb; font-weight: 700; }
 
 /* ── Cellule / label cliquable ── */
 .synth-link { cursor: pointer; }

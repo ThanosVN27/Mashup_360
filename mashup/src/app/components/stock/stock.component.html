@@ -53,7 +53,7 @@
 
       <!-- Contenu des onglets -->
       <div class="tab-content">
-        <app-tab-synthese     *ngIf="activeTab === 'synthese'" [article]="article" (tabChange)="setTab($event)"></app-tab-synthese>
+        <app-tab-synthese     *ngIf="activeTab === 'synthese'" [article]="article" (tabChange)="setTab($event)" (whgrSortantChange)="rechargerSortant($event)"></app-tab-synthese>
         <app-tab-ofpof        *ngIf="activeTab === 'ofpof'"   [lignes]="movsOfPof"   [unms]="article.unms"></app-tab-ofpof>
         <app-tab-achats       *ngIf="activeTab === 'achats'"  [lignes]="movsAchats"  [unms]="article.unms"></app-tab-achats>
         <app-tab-reservations *ngIf="activeTab === 'ventes'"  [lignes]="movsVentes"  [unms]="article.unms"></app-tab-reservations>

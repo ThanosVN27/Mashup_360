@@ -8,15 +8,11 @@
   <div class="synth-col">
     <div class="synth-cell synth-l">
       <span class="synth-label">Stock disponible</span>
-      <span class="synth-val">{{ fmt(article.stqt) }} <em>{{ article.unms }}</em></span>
+      <span class="synth-val">{{ fmt(article.aval) }} <em>{{ article.unms }}</em></span>
     </div>
     <div class="synth-cell synth-l">
       <span class="synth-label">Stock affectable</span>
-      <span class="synth-val">{{ fmt(article.aval) }} <em>{{ article.unms }}</em></span>
-    </div>
-    <div class="synth-cell synth-l synth-warning">
-      <span class="synth-label">Réservation client</span>
-      <span class="synth-val synth-val--warn">{{ fmt(article.resaVente) }} <em>{{ article.unms }}</em></span>
+      <span class="synth-val">{{ fmt(article.effec) }} <em>{{ article.unms }}</em></span>
     </div>
     <div class="synth-cell synth-l">
       <span class="synth-label">Stock sous contrôle</span>
@@ -68,12 +64,7 @@
         </div>
         <div class="flux-line synth-link" (click)="tabChange.emit('ventes')">
           <span class="flux-line-label">Réservations clients</span>
-          <span class="flux-line-val synth-val--with-badge">
-            {{ fmt(article.totalReservations) }} <em>{{ article.unms }}</em>
-            <span [class]="resaVerifiee ? 'tag tag-ok' : 'tag tag-err'">
-              {{ resaVerifiee ? '✓' : '!' }}
-            </span>
-          </span>
+          <span class="flux-line-val">{{ fmt(article.totalReservations) }} <em>{{ article.unms }}</em></span>
         </div>
       </div>
     </div>

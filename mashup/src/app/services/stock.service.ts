@@ -50,21 +50,21 @@ export class StockService {
     );
   }
 
-  getStocksAgreges(itno: string, whgr: string): Observable<{ stqt: number; aval: number; quqt: number; rjqt: number }> {
+  getStocksAgreges(itno: string, whgr: string): Observable<{ aval: number; alqt: number; quqt: number; rjqt: number }> {
     const req: IMIRequest = {
       program:      'MMS200MI',
       transaction:  'GetAggWhsGrp',
       record:       { ITNO: itno, WHGR: whgr, CONO: 100 },
-      outputFields: ['STQT', 'AVAL', 'QUQT', 'RJQT'],
+      outputFields: ['AVAL', 'ALQT', 'QUQT', 'RJQT'],
     };
     return this.mi.execute(req).pipe(
       map((res: IMIResponse) => ({
-        stqt: this.toNum(res.item?.['STQT']),
-        aval: this.toNum(res.item?.['AVAL']),
-        quqt: this.toNum(res.item?.['QUQT']),
-        rjqt: this.toNum(res.item?.['RJQT']),
+        aval: this.toNum(res.item?.['AVAL']),  // Stock disponible
+        alqt: this.toNum(res.item?.['ALQT']),  // Quantité allouée (réservations)
+        quqt: this.toNum(res.item?.['QUQT']),  // Stock sous contrôle qualité
+        rjqt: this.toNum(res.item?.['RJQT']),  // Stock non conforme
       })),
-      catchError(() => of({ stqt: 0, aval: 0, quqt: 0, rjqt: 0 }))
+      catchError(() => of({ aval: 0, alqt: 0, quqt: 0, rjqt: 0 }))
     );
   }
 
