@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { StockArticle } from '../../../../models/stock-article.model';
 
 @Component({
@@ -8,7 +8,8 @@ import { StockArticle } from '../../../../models/stock-article.model';
 })
 export class SyntheseComponent {
 
-  @Input() article!: StockArticle;
+  @Input()  article!: StockArticle;
+  @Output() tabChange = new EventEmitter<string>();
 
   get resaVerifiee(): boolean {
     return this.article.totalReservations === this.article.resaVente;

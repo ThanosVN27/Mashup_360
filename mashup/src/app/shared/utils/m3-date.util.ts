@@ -1,3 +1,8 @@
+export function formatM3Qty(v: number, unms: string): string {
+  const rounded = Math.round(v || 0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  return unms ? `${rounded} ${unms}` : rounded;
+}
+
 export function formatM3Date(dateValue: string): string {
   if (!dateValue || dateValue.length !== 8) {
     return dateValue ?? '';

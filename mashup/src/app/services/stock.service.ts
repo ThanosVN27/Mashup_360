@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import { IMIRequest, IMIResponse } from '@infor-up/m3-odin';
 import { MIService } from '@infor-up/m3-odin-angular';
 
@@ -33,7 +33,20 @@ export class StockService {
     };
     return this.mi.execute(req).pipe(
       map((res: IMIResponse) => res.item?.['N796'] ?? '0'),
-      catchError(() => of('0'))
+      catchError(() => of('0')),
+      switchMap(n796 => {
+        if (parseFloat(n796) !== 0) return of(n796);
+        const req2: IMIRequest = {
+          program:      'MMS200MI',
+          transaction:  'Get',
+          record:       { ITNO: itno },
+          outputFields: ['NEWE'],
+        };
+        return this.mi.execute(req2).pipe(
+          map((res: IMIResponse) => res.item?.['NEWE'] ?? '0'),
+          catchError(() => of('0'))
+        );
+      })
     );
   }
 

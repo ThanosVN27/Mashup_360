@@ -9,7 +9,7 @@
     <span class="synth-label">Stock disponible</span>
     <span class="synth-val">{{ article.stqt }} <em>{{ article.unms }}</em></span>
   </div>
-  <div class="synth-cell synth-r">
+  <div class="synth-cell synth-r synth-link" (click)="tabChange.emit('ofpof')">
     <span class="synth-label">Total POF confirmées</span>
     <span class="synth-val">{{ article.totalPof }} <em>{{ article.unms }}</em></span>
   </div>
@@ -19,19 +19,17 @@
     <span class="synth-label">Stock affectable</span>
     <span class="synth-val">{{ article.aval }} <em>{{ article.unms }}</em></span>
   </div>
-  <div class="synth-cell synth-r">
+  <div class="synth-cell synth-r synth-link" (click)="tabChange.emit('ofpof')">
     <span class="synth-label">Total OF lancés</span>
     <span class="synth-val">{{ article.totalOf }} <em>{{ article.unms }}</em></span>
   </div>
 
   <!-- ── Ligne 3 ── -->
-  <div class="synth-cell synth-l synth-warning">
-    <span class="synth-label">
-      Resa vente
-    </span>
-    <span class="synth-val synth-val--warn">{{ article.resaVente }} <em>{{ article.unms }}</em></span>
+  <div class="synth-cell synth-l synth-last synth-danger">
+    <span class="synth-label">Stock non conforme</span>
+  <span class="synth-val synth-val--danger">{{ article.rjqt }} <em>{{ article.unms }}</em></span>
   </div>
-  <div class="synth-cell synth-r">
+  <div class="synth-cell synth-r synth-link" (click)="tabChange.emit('achats')">
     <span class="synth-label">Total achats</span>
     <span class="synth-val">{{ article.totalAchats }} <em>{{ article.unms  }}</em></span>
   </div>
@@ -41,18 +39,18 @@
     <span class="synth-label">Stock sous contrôle</span>
     <span class="synth-val">{{ article.quqt }} <em>{{ article.unms }}</em></span>
   </div>
-  <div class="synth-cell synth-r">
+  <div class="synth-cell synth-r synth-link" (click)="tabChange.emit('actions')">
     <span class="synth-label">Total aktions</span>
     <span class="synth-val">{{ article.totalActions }} <em>{{ article.unms }}</em></span>
   </div>
 
   <!-- ── Ligne 5 (dernière) ── -->
-  <div class="synth-cell synth-l synth-last synth-danger">
-    <span class="synth-label">Stock non conforme</span>
-    <span class="synth-val synth-val--danger">{{ article.rjqt }} <em>{{ article.unms }}</em></span>
+  <div class="synth-cell synth-l synth-warning">
+    <span class="synth-label">Réservations client</span>
+    <span class="synth-val synth-val--warn">{{ article.resaVente }} <em>{{ article.unms }}</em></span>
   </div>
-  <div class="synth-cell synth-r synth-last synth-check">
-    <span class="synth-label">Réservations clients</span>
+  <div class="synth-cell synth-r synth-last synth-check synth-link" (click)="tabChange.emit('ventes')">
+    <span class="synth-label">Réservations client</span>
     <span class="synth-val synth-val--with-badge">
       {{ article.totalReservations }} <em>{{ article.unms }}</em>
       <span [class]="resaVerifiee ? 'tag tag-ok' : 'tag tag-err'">

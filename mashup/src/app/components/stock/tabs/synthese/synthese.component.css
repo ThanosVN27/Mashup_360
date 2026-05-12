@@ -113,3 +113,10 @@
 
 .tag-ok  { background: #e1f2d6; color: #1f5c00; }
 .tag-err { background: #fce8e8; color: #8f0000; }
+
+/* ── Cellule / label cliquable ── */
+.synth-link { cursor: pointer; }
+
+.synth-cell.synth-link:hover { background: #eef4fb !important; }
+
+.synth-label.synth-link:hover { color: #0b6cbb; text-decoration: underline; }

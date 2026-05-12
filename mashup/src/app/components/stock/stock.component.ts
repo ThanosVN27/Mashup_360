@@ -115,7 +115,7 @@ export class StockComponent implements OnDestroy {
       if      (m.orca === '100' && m.stat !== '10') { totalPof    += m.trqt; ofpof.push(m);   }
       else if (m.orca === '101')                    { totalOf     += m.trqt; ofpof.push(m);   }
       else if (m.orca === '251')                    { totalAchats += m.trqt; achats.push(m);  }
-      else if (m.orca === '030')                    { totalActions+= m.trqt; actions.push(m); }
+      else if (m.orca === '030' && m.ori1 !== 'RES') { totalActions+= m.trqt; actions.push(m); }
     }
 
     const byDate = (a: StockMouvement, b: StockMouvement) => a.pldt.localeCompare(b.pldt);
