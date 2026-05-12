@@ -25,4 +25,8 @@ export class SyntheseComponent {
   get resaVerifiee(): boolean {
     return this.article.totalReservations === this.article.resaVente;
   }
+
+  fmt(v: number): string {
+    return Math.round(v || 0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  }
 }
