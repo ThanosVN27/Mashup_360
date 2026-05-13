@@ -14,11 +14,11 @@
       <div class="date-filter-inputs">
         <label class="date-filter-field">
           <span>Du</span>
-          <input type="date" [(ngModel)]="dateFrom" (change)="onDateChange()" class="date-input" />
+          <input type="date" [(ngModel)]="dateFrom" (change)="applyFilter()" class="date-input" />
         </label>
         <label class="date-filter-field">
           <span>Au</span>
-          <input type="date" [(ngModel)]="dateTo" (change)="onDateChange()" class="date-input" />
+          <input type="date" [(ngModel)]="dateTo" (change)="applyFilter()" class="date-input" />
         </label>
         <button *ngIf="dateFrom || dateTo" class="date-filter-reset" (click)="resetDates()" title="Effacer le filtre">
           ✕ Effacer

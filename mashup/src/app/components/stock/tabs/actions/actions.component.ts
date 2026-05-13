@@ -18,9 +18,6 @@ export class ActionsComponent implements OnInit, OnChanges {
   loadingContracts      = false;
   contracts:            ContractLine[] = [];
   filteredContracts:    ContractLine[] = [];
-
-  totalContrat          = 0;
-  totalReservee         = 0;
   filteredTotalContrat  = 0;
   filteredTotalReservee = 0;
 
@@ -81,10 +78,6 @@ export class ActionsComponent implements OnInit, OnChanges {
     });
   }
 
-  onDateChange(): void {
-    this.applyFilter();
-  }
-
   resetDates(): void {
     this.dateFrom = '';
     this.dateTo   = '';
@@ -94,35 +87,15 @@ export class ActionsComponent implements OnInit, OnChanges {
   closePopup(): void { this.popupVisible = false; }
 
   fmt(n: number): string {
-    return Math.round(n || 0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    return Math.round(n || 0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
   }
 
-  private loadContracts(): void {
-    this.loadingContracts = true;
-    this.contracts        = [];
-    this.filteredContracts = [];
-    this.totalContrat     = 0;
-    this.totalReservee    = 0;
-
-    this.clientService.getContractsByArticle(this.itno).subscribe({
-      next: data => {
-        this.contracts     = data;
-        this.totalContrat  = data.reduce((s, c) => s + (parseFloat(c.contractQuantity) || 0), 0);
-        this.totalReservee = data.reduce((s, c) => s + (parseFloat(c.reservedQuantity) || 0), 0);
-        this.loadingContracts = false;
-        this.contractsLoaded.emit(data.length);
-        this.applyFilter();
-      },
-      error: () => { this.loadingContracts = false; },
-    });
-  }
-
-  private applyFilter(): void {
-    const from = this.parseInputDate(this.dateFrom);
-    const to   = this.parseInputDate(this.dateTo);
+  applyFilter(): void {
+    const from = this.dateFrom ? new Date(this.dateFrom) : null;
+    const to   = this.dateTo   ? new Date(this.dateTo)   : null;
 
     this.filteredContracts = (!from && !to)
-      ? this.contracts
+      ? [...this.contracts]
       : this.contracts.filter(c => {
           const d = this.parseContractDate(c.startDate);
           if (!d) return true;
@@ -131,8 +104,39 @@ export class ActionsComponent implements OnInit, OnChanges {
           return true;
         });
 
+    this.filteredContracts.sort((a, b) => {
+      const da = this.parseContractDate(a.startDate);
+      const db = this.parseContractDate(b.startDate);
+      if (!da && !db) return 0;
+      if (!da) return 1;
+      if (!db) return -1;
+      return da.getTime() - db.getTime();
+    });
+
     this.filteredTotalContrat  = this.filteredContracts.reduce((s, c) => s + (parseFloat(c.contractQuantity) || 0), 0);
-    this.filteredTotalReservee = this.filteredContracts.reduce((s, c) => s + (parseFloat(c.reservedQuantity) || 0), 0);
+    this.filteredTotalReservee = this.filteredContracts.reduce((s, c) => s + (parseFloat(c.reservedQuantity)  || 0), 0);
+  }
+
+  fmtQty(v: string): string {
+    const n = parseFloat(v);
+    if (isNaN(n)) return v ?? '';
+    return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  }
+
+  private loadContracts(): void {
+    this.loadingContracts  = true;
+    this.contracts         = [];
+    this.filteredContracts = [];
+
+    this.clientService.getContractsByArticle(this.itno).subscribe({
+      next: data => {
+        this.contracts    = data;
+        this.loadingContracts = false;
+        this.contractsLoaded.emit(data.length);
+        this.applyFilter();
+      },
+      error: () => { this.loadingContracts = false; },
+    });
   }
 
   private parseContractDate(s: string): Date | null {
@@ -140,18 +144,6 @@ export class ActionsComponent implements OnInit, OnChanges {
     const [d, m, y] = s.split('/');
     const dt = new Date(+y, +m - 1, +d);
     return isNaN(dt.getTime()) ? null : dt;
-  }
-
-  private parseInputDate(s: string): Date | null {
-    if (!s) return null;
-    const dt = new Date(s);
-    return isNaN(dt.getTime()) ? null : dt;
-  }
-
-  fmtQty(v: string): string {
-    const n = parseFloat(v);
-    if (isNaN(n)) return v ?? '';
-    return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
   }
 
   private fmtStatus(v: string): string {

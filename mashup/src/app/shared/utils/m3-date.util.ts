@@ -14,3 +14,9 @@ export function formatM3Date(dateValue: string): string {
 
   return `${day}/${month}/${year}`;
 }
+
+function fmtQty(_r: number, _c: number, v: string): string {
+  const n = parseFloat(v);
+  if (isNaN(n)) return v ?? '';
+  return new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 0 }).format(Math.round(n));
+}

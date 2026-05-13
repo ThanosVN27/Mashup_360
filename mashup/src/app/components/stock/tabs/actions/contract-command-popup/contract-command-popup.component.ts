@@ -7,22 +7,7 @@ function fmtQty(_r: number, _c: number, v: string): string {
   return new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 0 }).format(Math.round(n));
 }
 
-const ORDER_STATUS_CLS: Record<string, string> = {
-  '11': 'os-confirmed',
-  '33': 'os-partial',
-  '44': 'os-delivered',
-  '55': 'os-pinvoiced',
-  '66': 'os-invoiced',
-  '77': 'os-closed',
-  '90': 'os-cancelled',
-};
 
-function fmtOrderStatus(_r: number, _c: number, v: string): string {
-  const code = (v ?? '').trim();
-  if (!code) return '';
-  const cls = ORDER_STATUS_CLS[code] ?? 'os-default';
-  return `<span class="os-badge ${cls}">${code}</span>`;
-}
 
 @Component({
   selector:        'app-contract-command-popup',
@@ -50,20 +35,6 @@ export class ContractCommandPopupComponent implements OnChanges {
   ];
 
   constructor(private readonly cdr: ChangeDetectorRef) {}
-
-  get totalOrdered(): number {
-    return this.orders.reduce((s, o) => s + (parseFloat(o.orderedQuantity)  || 0), 0);
-  }
-  get totalDelivered(): number {
-    return this.orders.reduce((s, o) => s + (parseFloat(o.deliveredQuantity) || 0), 0);
-  }
-  get totalInvoiced(): number {
-    return this.orders.reduce((s, o) => s + (parseFloat(o.invoicedQuantity)  || 0), 0);
-  }
-
-  fmtTotal(n: number): string {
-    return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['orders'] || changes['visible'] || changes['isLoading'] || changes['errorMessage']) {
