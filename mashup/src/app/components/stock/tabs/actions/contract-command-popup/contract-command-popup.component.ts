@@ -46,7 +46,7 @@ export class ContractCommandPopupComponent implements OnChanges {
     { id: 'orderedQuantity',       name: 'Qté commandée', field: 'orderedQuantity',       width: 140, sortable: true, align: 'center', formatter: fmtQty },
     { id: 'deliveredQuantity',     name: 'Qté livrée',    field: 'deliveredQuantity',     width: 130, sortable: true, align: 'center', formatter: fmtQty },
     { id: 'invoicedQuantity',      name: 'Qté facturée',  field: 'invoicedQuantity',      width: 130, sortable: true, align: 'center', formatter: fmtQty },
-    { id: 'orderStatus',           name: 'Statut',        field: 'orderStatus',           width: 200, sortable: true, align: 'center', formatter: fmtOrderStatus },
+    { id: 'orderStatus',           name: 'Statut',        field: 'orderStatus',           width: 200, sortable: true, align: 'center'},
   ];
 
   constructor(private readonly cdr: ChangeDetectorRef) {}
