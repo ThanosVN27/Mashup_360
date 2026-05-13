@@ -8,15 +8,11 @@
   <div class="synth-col">
     <div class="synth-cell synth-l">
       <span class="synth-label">Stock disponible</span>
-      <span class="synth-val">{{ fmt(article.stqt) }} <em>{{ article.unms }}</em></span>
+      <span class="synth-val">{{ fmt(article.aval) }} <em>{{ article.unms }}</em></span>
     </div>
     <div class="synth-cell synth-l">
       <span class="synth-label">Stock affectable</span>
-      <span class="synth-val">{{ fmt(article.av01) }} <em>{{ article.unms }}</em></span>
-    </div>
-    <div class="synth-cell synth-l synth-warning">
-      <span class="synth-label">Réservation client</span>
-      <span class="synth-val synth-val--warn">{{ fmt(article.resaVente) }} <em>{{ article.unms }}</em></span>
+      <span class="synth-val">{{ fmt(article.effec) }} <em>{{ article.unms }}</em></span>
     </div>
     <div class="synth-cell synth-l">
       <span class="synth-label">Stock sous contrôle</span>
@@ -30,6 +26,7 @@
 
   <!-- ── Colonne droite : Flux à venir ── -->
   <div class="synth-col synth-col-flux">
+
     <!-- Flux entrant : OF + POF + Achats -->
     <div class="flux-group">
       <div class="flux-group-hd synth-link" (click)="fluxEntrantOpen = !fluxEntrantOpen">
@@ -55,40 +52,33 @@
 
     <!-- Flux sortant : Aktions + Réservations clients -->
     <div class="flux-group flux-group--last">
-      <div class="flux-group-hd">
-        <div class="flux-hd-toggle synth-link" (click)="fluxSortantOpen = !fluxSortantOpen">
-          <span class="flux-icon flux-icon--out">↑</span>
-          <span class="flux-group-title">Flux sortant</span>
-          <span class="flux-chevron">{{ fluxSortantOpen ? '▲' : '▼' }}</span>
-        </div>
-        <div class="flux-whgr-dropdown" (click)="$event.stopPropagation()">
-          <button class="flux-whgr-btn" (click)="whgrDropdownOpen = !whgrDropdownOpen">
-            {{ whgrSortant }}
-            <span class="flux-whgr-arrow">{{ whgrDropdownOpen ? '▲' : '▼' }}</span>
-          </button>
-          <div class="flux-whgr-list" *ngIf="whgrDropdownOpen">
-            <div class="flux-whgr-option"
-                 *ngFor="let g of whgrOptions"
-                 [class.flux-whgr-option--active]="g.code === whgrSortant"
-                 (click)="selectWhgr(g.code)">
-              {{ g.code }}
-            </div>
-          </div>
-        </div>
+      <div class="flux-group-hd synth-link" (click)="fluxSortantOpen = !fluxSortantOpen">
+        <span class="flux-icon flux-icon--out">↑</span>
+        <span class="flux-group-title">Flux sortant</span>
+        <span class="flux-chevron">{{ fluxSortantOpen ? '▲' : '▼' }}</span>
       </div>
       <div class="flux-group-body" *ngIf="fluxSortantOpen">
         <div class="flux-line synth-link" (click)="tabChange.emit('actions')">
           <span class="flux-line-label">Total aktions</span>
           <span class="flux-line-val">{{ fmt(article.totalActions) }} <em>{{ article.unms }}</em></span>
         </div>
+        <div class="flux-line">
+          <span class="flux-line-label">Total Qté contrat</span>
+          <span class="flux-line-val">{{ fmt(article.totalContrat) }} <em>{{ article.unms }}</em></span>
+        </div>
+        <div class="flux-line">
+          <span class="flux-line-label">Total Qté réservée</span>
+          <span class="flux-line-val">{{ fmt(article.totalReservee) }} <em>{{ article.unms }}</em></span>
+        </div>
+        <div class="flux-line flux-line--diff">
+          <span class="flux-line-label">Différence (contrat − réservé)</span>
+          <span class="flux-line-val" [class.flux-val--neg]="article.totalContrat - article.totalReservee < 0">
+            {{ fmt(article.totalContrat - article.totalReservee) }} <em>{{ article.unms }}</em>
+          </span>
+        </div>
         <div class="flux-line synth-link" (click)="tabChange.emit('ventes')">
           <span class="flux-line-label">Réservations clients</span>
-          <span class="flux-line-val synth-val--with-badge">
-            {{ fmt(article.totalReservations) }} <em>{{ article.unms }}</em>
-            <!-- <span [class]="resaVerifiee ? 'tag tag-ok' : 'tag tag-err'">
-              {{ resaVerifiee ? '✓' : '!' }}
-            </span> -->
-          </span>
+          <span class="flux-line-val">{{ fmt(article.totalReservations) }} <em>{{ article.unms }}</em></span>
         </div>
       </div>
     </div>

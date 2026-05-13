@@ -4,6 +4,7 @@ import { catchError, map, switchMap } from 'rxjs/operators';
 import { IMIRequest, IMIResponse } from '@infor-up/m3-odin';
 import { MIService } from '@infor-up/m3-odin-angular';
 
+
 @Injectable({ providedIn: 'root' })
 export class StockService {
 
@@ -50,25 +51,28 @@ export class StockService {
     );
   }
 
-  getStocksAgreges(itno: string, whgr: string): Observable<{  aval: number; av01: number; quqt: number; rjqt: number }> {
+  getStocksAgreges(itno: string, whgr: string): Observable<{ aval: number; alqt: number; quqt: number; rjqt: number }> {
     const req: IMIRequest = {
       program:      'MMS200MI',
       transaction:  'GetAggWhsGrp',
       record:       { ITNO: itno, WHGR: whgr, CONO: 100 },
-      outputFields: [ 'AVAL', 'ALQT', 'QUQT', 'RJQT'],
+      outputFields: ['AVAL', 'ALQT', 'QUQT', 'RJQT'],
     };
     return this.mi.execute(req).pipe(
       map((res: IMIResponse) => ({
         aval: this.toNum(res.item?.['AVAL']),
-        av01: this.toNum(res.item?.['ALQT']),
+        alqt: this.toNum(res.item?.['ALQT']),
         quqt: this.toNum(res.item?.['QUQT']),
         rjqt: this.toNum(res.item?.['RJQT']),
       })),
-      catchError(() => of({ stqt: 0, aval: 0, av01: 0, quqt: 0, rjqt: 0 }))
+      catchError(() => of({ aval: 0, alqt: 0, quqt: 0, rjqt: 0 }))
     );
   }
 
   private toNum(value: unknown): number {
     return parseInt(String(value ?? '0')) || 0;
   }
+
+
+
 }

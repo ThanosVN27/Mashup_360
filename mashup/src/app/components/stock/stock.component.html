@@ -57,7 +57,7 @@
         <app-tab-ofpof        *ngIf="activeTab === 'ofpof'"   [lignes]="movsOfPof"   [unms]="article.unms"></app-tab-ofpof>
         <app-tab-achats       *ngIf="activeTab === 'achats'"  [lignes]="movsAchats"  [unms]="article.unms"></app-tab-achats>
         <app-tab-reservations *ngIf="activeTab === 'ventes'"  [lignes]="movsVentes"  [unms]="article.unms"></app-tab-reservations>
-        <app-tab-actions      *ngIf="activeTab === 'actions'" [lignes]="movsActions" [unms]="article.unms"></app-tab-actions>
+        <app-tab-actions      *ngIf="activeTab === 'actions'" [itno]="article.itno" [unms]="article.unms" (contractsLoaded)="updateActionsBadge($event)"></app-tab-actions>
       </div>
     </div>
   </div>

@@ -1,23 +1,68 @@
 <div class="tab-content">
 
-  <div *ngIf="lignes.length === 0" class="empty-msg">
-    Aucune action client pour cet article.
+  <div *ngIf="loadingContracts" class="contrat-loading">Chargement…</div>
+
+  <div *ngIf="!loadingContracts && contracts.length === 0" class="empty-msg">
+    Aucun contrat pour cet article.
   </div>
 
-  <div
-    *ngIf="lignes.length > 0"
-    soho-datagrid
-    [dataset]="lignes"
-    [columns]="colonnes"
-    [selectable]="false"
-    [filterable]="true"
-    [rowHeight]="'short'"
-    [paging]="true"
-    [pagesize]="10"
-    [pagesizes]="[5, 10, 25, 100]"
-    [enableTooltips]="true"
-    [initialSort]="{ sortId: 'pldt', ascending: true }"
-    style="width: 100%">
-  </div>
+  <ng-container *ngIf="!loadingContracts && contracts.length > 0">
+
+    <!-- Filtre date début -->
+    <div class="date-filter-bar">
+      <span class="date-filter-label">Filtrer par Date début :</span>
+      <div class="date-filter-inputs">
+        <label class="date-filter-field">
+          <span>Du</span>
+          <input type="date" [(ngModel)]="dateFrom" (change)="onDateChange()" class="date-input" />
+        </label>
+        <label class="date-filter-field">
+          <span>Au</span>
+          <input type="date" [(ngModel)]="dateTo" (change)="onDateChange()" class="date-input" />
+        </label>
+        <button *ngIf="dateFrom || dateTo" class="date-filter-reset" (click)="resetDates()" title="Effacer le filtre">
+          ✕ Effacer
+        </button>
+      </div>
+      <span *ngIf="dateFrom || dateTo" class="date-filter-count">
+        {{ filteredContracts.length }} / {{ contracts.length }} contrat(s)
+      </span>
+    </div>
+
+    <div
+      soho-datagrid
+      [dataset]="filteredContracts"
+      [columns]="colonnesContrat"
+      [selectable]="false"
+      [filterable]="true"
+      [rowHeight]="'short'"
+      [paging]="true"
+      [pagesize]="10"
+      [pagesizes]="[10, 25, 50]"
+      [enableTooltips]="true"
+      (rowClicked)="onRowClicked($event)"
+      style="width: 100%">
+    </div>
+
+    <!-- Totaux -->
+    <div class="actions-totaux">
+      <span class="actions-total-item">
+        Total Qté contrat : <strong>{{ fmt(filteredTotalContrat) }}</strong>
+      </span>
+      <span class="actions-total-item">
+        Total Qté réservée : <strong>{{ fmt(filteredTotalReservee) }}</strong>
+      </span>
+    </div>
+
+  </ng-container>
 
 </div>
+
+<app-contract-command-popup
+  [visible]="popupVisible"
+  [selectedContract]="selectedContract"
+  [orders]="popupOrders"
+  [isLoading]="popupLoading"
+  [errorMessage]="popupError"
+  (close)="closePopup()">
+</app-contract-command-popup>

@@ -51,6 +51,10 @@ export class StockComponent implements OnDestroy {
 
   setTab(id: string): void { this.activeTab = id; }
 
+  updateActionsBadge(count: number): void {
+    this.badges = { ...this.badges, actions: count };
+  }
+
   badgeFor(tabId: string): number { return this.badges[tabId] ?? 0; }
 
   ngOnDestroy(): void {
@@ -105,28 +109,32 @@ export class StockComponent implements OnDestroy {
       poids:       this.stockService.getPoidsNet(code),
       stocks:      this.stockService.getStocksAgreges(code, whgr),
       movsEntrant: this.mouvementService.getAll(code, whgr),
-      movsSortant: this.mouvementService.getAll(code, 'GRP_ENTREPRISE'),
-      contract:    this.clientService.getReservations(code, 'GRP_ENTREPRISE'),
+      movsSortant: this.mouvementService.getAll(code, this.whgrSortant),
+      contract:    this.clientService.getReservations(code, this.whgrSortant),
+      aktions:     this.clientService.getContractsByArticle(code),
     }).pipe(
       takeUntil(this.destroy$),
     ).subscribe({
-      next: ({ info, poids, stocks, movsEntrant, movsSortant, contract }) => {
-        const { itds, unms }             = info;
-        const { aval, av01: alqt, quqt, rjqt } = stocks;
+      next: ({ info, poids, stocks, movsEntrant, movsSortant, contract, aktions }) => {
+        const { itds, unms }              = info;
+        const { aval, alqt, quqt, rjqt } = stocks;
         const { totaux, badges, filtres } = this.traiterMouvements(movsEntrant, movsSortant, contract);
 
-        this.badges      = badges;
+        const totalContrat  = aktions.reduce((s, c) => s + (parseFloat(c.contractQuantity) || 0), 0);
+        const totalReservee = aktions.reduce((s, c) => s + (parseFloat(c.reservedQuantity)  || 0), 0);
+
+        this.badges      = { ...badges, actions: aktions.length };
         this.movsOfPof   = filtres.ofpof;
         this.movsAchats  = filtres.achats;
         this.movsVentes  = contract;
         this.movsActions = filtres.actions;
         this.article     = {
           itno: code, itds, unms, poidsNet: poids,
-          stqt: aval,
           aval,
-          av01: aval - alqt,
+          effec: aval - alqt,
           quqt, rjqt,
           resaVente: alqt,
+          totalContrat, totalReservee,
           ...totaux,
         };
         this.loading = false;
@@ -167,7 +175,7 @@ export class StockComponent implements OnDestroy {
 
     return {
       totaux:  { totalPof, totalOf, totalAchats, totalReservations, totalActions },
-      badges:  { ofpof: ofpof.length, achats: achats.length, ventes: ventes.length, actions: actions.length },
+      badges:  { ofpof: ofpof.length, achats: achats.length, ventes: ventes.length, actions: 0 },
       filtres: { ofpof, achats, actions },
     };
   }

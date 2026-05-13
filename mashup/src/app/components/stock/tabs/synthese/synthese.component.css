@@ -288,6 +288,16 @@
 .flux-whgr-option:hover   { background: #eef4fb; color: #0b6cbb; }
 .flux-whgr-option--active { background: #e4eef9; color: #0b6cbb; font-weight: 700; }
 
+/* ── Ligne différence ── */
+.flux-line--diff {
+  background:  #f8faff;
+  border-left: 3px solid #0b6cbb;
+  cursor:      default;
+}
+.flux-line--diff:hover { background: #f0f5ff; }
+
+.flux-val--neg { color: #b91c1c !important; }
+
 /* ── Cellule / label cliquable ── */
 .synth-link { cursor: pointer; }
 

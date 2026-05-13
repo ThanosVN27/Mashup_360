@@ -31,3 +31,196 @@
   margin:           16px;
   font-size:        14px;
 }
+
+/* ── Totaux ── */
+.actions-totaux {
+  display:      flex;
+  gap:          32px;
+  padding:      12px 20px;
+  background:   #f5f5f5;
+  border-top:   1px solid #e0e0e0;
+  font-size:    13px;
+  color:        #555;
+}
+.actions-total-item strong {
+  color:       #333;
+  font-size:   15px;
+  margin-left: 6px;
+}
+
+/* ── Barre de filtre date ── */
+.date-filter-bar {
+  display:     flex;
+  align-items: center;
+  gap:         16px;
+  padding:     10px 16px;
+  background:  #f5f7fa;
+  border-bottom: 1px solid #e0e0e0;
+  flex-wrap:   wrap;
+}
+
+.date-filter-label {
+  font-size:   13px;
+  font-weight: 600;
+  color:       #555;
+  white-space: nowrap;
+}
+
+.date-filter-inputs {
+  display:     flex;
+  align-items: center;
+  gap:         12px;
+  flex-wrap:   wrap;
+}
+
+.date-filter-field {
+  display:     flex;
+  align-items: center;
+  gap:         6px;
+  font-size:   13px;
+  font-weight: 500;
+  color:       #666;
+}
+
+.date-input {
+  padding:       4px 8px;
+  border:        1px solid #c8c8c8;
+  border-radius: 4px;
+  font-size:     13px;
+  color:         #333;
+  background:    #fff;
+  cursor:        pointer;
+  transition:    border-color 0.15s;
+}
+.date-input:focus {
+  outline:      none;
+  border-color: #0b6cbb;
+  box-shadow:   0 0 0 2px rgba(11,108,187,0.15);
+}
+
+.date-filter-reset {
+  padding:       4px 12px;
+  background:    #fff;
+  border:        1px solid #d0d0d0;
+  border-radius: 4px;
+  font-size:     12px;
+  color:         #666;
+  cursor:        pointer;
+  transition:    all 0.15s;
+}
+.date-filter-reset:hover {
+  border-color: #c40a0a;
+  color:        #c40a0a;
+}
+
+.date-filter-count {
+  font-size:   12px;
+  color:       #0b6cbb;
+  font-weight: 600;
+}
+
+/* ── Bouton colonne Commandes ── */
+.cmd-popup-btn {
+  padding:       4px 12px;
+  background:    #0b6cbb;
+  color:         #fff;
+  border:        none;
+  border-radius: 12px;
+  font-size:     12px;
+  font-weight:   600;
+  cursor:        pointer;
+  white-space:   nowrap;
+  letter-spacing: 0.2px;
+  transition:    background 0.15s, box-shadow 0.15s;
+  box-shadow:    0 1px 4px rgba(11,108,187,0.25);
+}
+.cmd-popup-btn:hover {
+  background:  #0957a0;
+  box-shadow:  0 2px 8px rgba(11,108,187,0.40);
+}
+
+/* ── Badge différence ── */
+.diff-badge {
+  display:       inline-block;
+  padding:       2px 10px;
+  border-radius: 10px;
+  font-size:     12px;
+  font-weight:   600;
+  white-space:   nowrap;
+}
+.diff-badge--pos  { background: #d1fae5; color: #065f46; }
+.diff-badge--zero { background: #f1f5f9; color: #64748b; }
+.diff-badge--neg  { background: #fee2e2; color: #b91c1c; }
+
+/* ── Popup commandes ── */
+.contrat-overlay {
+  position:        fixed;
+  inset:           0;
+  background:      rgba(0, 0, 0, 0.45);
+  z-index:         1000;
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+}
+
+.contrat-modal {
+  background:    #fff;
+  border-radius: 6px;
+  box-shadow:    0 8px 40px rgba(0, 0, 0, 0.25);
+  width:         92vw;
+  max-width:     1300px;
+  max-height:    80vh;
+  display:       flex;
+  flex-direction: column;
+  overflow:      hidden;
+}
+
+.contrat-modal-hd {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  padding:         14px 20px;
+  background:      #f0f0f0;
+  border-bottom:   2px solid #0b6cbb;
+  font-size:       15px;
+  font-weight:     700;
+  color:           #333;
+  text-transform:  uppercase;
+  letter-spacing:  0.6px;
+  flex-shrink:     0;
+}
+
+.contrat-close-btn {
+  background: none;
+  border:     none;
+  font-size:  18px;
+  cursor:     pointer;
+  color:      #666;
+  padding:    0 4px;
+  line-height: 1;
+}
+.contrat-close-btn:hover { color: #c40a0a; }
+
+.contrat-modal-body {
+  flex:     1;
+  overflow: auto;
+}
+
+.contrat-loading {
+  padding:    40px;
+  text-align: center;
+  color:      #94a3b8;
+  font-style: italic;
+}
+
+/* Badges statut contrat */
+.cst-badge {
+  display:       inline-block;
+  padding:       2px 10px;
+  border-radius: 10px;
+  font-size:     12px;
+  font-weight:   600;
+  white-space:   nowrap;
+}
+.cst-badge--actif  { background: #d1fae5; color: #065f46; }
+.cst-badge--prelim { background: #fef3c7; color: #92400e; }

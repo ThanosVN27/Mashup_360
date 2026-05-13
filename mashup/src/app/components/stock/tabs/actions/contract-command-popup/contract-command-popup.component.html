@@ -1,0 +1,59 @@
+<div *ngIf="visible" class="popup-overlay" (click)="onClose()">
+  <div class="popup-content" (click)="$event.stopPropagation()">
+
+    <!-- ── Header ── -->
+    <div class="popup-header">
+      <div class="popup-header-info">
+        <span class="popup-header-title">Commandes liées à l'Aktion</span>
+        <div class="popup-chips">
+          <span class="popup-chip">
+            <span class="chip-label">Contrat :</span>
+            <span class="chip-value">{{ selectedContract?.openOrderNumber }}</span>
+          </span>
+          <span class="popup-chip">
+            <span class="chip-label">Client :</span>
+            <span class="chip-value">{{ selectedContract?.customerCode }}</span>
+          </span>
+          <span class="popup-chip">
+            <span class="chip-label">Désignation :</span>
+            <span class="chip-value">{{ selectedContract?.description }}</span>
+          </span>
+        </div>
+      </div>
+      <button class="popup-close-btn" (click)="onClose()" title="Fermer">&#10005;</button>
+    </div>
+
+    <!-- ── Body ── -->
+    <div class="popup-body">
+
+      <div *ngIf="isLoading" class="popup-loading">
+        <div soho-busyindicator [active]="true" label="Chargement…"></div>
+      </div>
+
+      <div *ngIf="errorMessage" class="popup-error">{{ errorMessage }}</div>
+
+      <ng-container *ngIf="!isLoading && !errorMessage">
+        <div *ngIf="orders.length === 0" class="popup-empty">
+          Aucune commande pour ce contrat.
+        </div>
+        <div *ngIf="orders.length > 0"
+          soho-datagrid
+          [dataset]="orders"
+          [columns]="orderColumns"
+          [filterable]="false"
+          [paging]="true"
+          [pagesize]="10"
+          [pagesizes]="[5, 10, 25, 50]"
+          [rowHeight]="'short'">
+        </div>
+      </ng-container>
+
+    </div>
+
+    <!-- ── Footer ── -->
+    <div class="popup-footer">
+      <button class="popup-close-bar" (click)="onClose()">Fermer</button>
+    </div>
+
+  </div>
+</div>

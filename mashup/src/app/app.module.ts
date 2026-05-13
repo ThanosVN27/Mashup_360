@@ -14,6 +14,7 @@ import { SyntheseComponent } from './components/stock/tabs/synthese/synthese.com
 import { AchatsComponent } from './components/stock/tabs/achats/achats.component';
 import { ReservationsComponent } from './components/stock/tabs/reservations/reservations.component';
 import { ActionsComponent } from './components/stock/tabs/actions/actions.component';
+import { ContractCommandPopupComponent } from './components/stock/tabs/actions/contract-command-popup/contract-command-popup.component';
 import { SohoDataGridModule } from 'ids-enterprise-ng';
 import {OfPofComponent} from './components/stock/tabs/ofpof/ofpof.component';
 @NgModule({
@@ -27,6 +28,7 @@ import {OfPofComponent} from './components/stock/tabs/ofpof/ofpof.component';
       AchatsComponent,
       ReservationsComponent,
       ActionsComponent,
+      ContractCommandPopupComponent,
       OfPofComponent,
 
 
