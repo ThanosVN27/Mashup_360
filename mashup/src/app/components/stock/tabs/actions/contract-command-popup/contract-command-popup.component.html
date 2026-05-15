@@ -7,7 +7,7 @@
         <span class="popup-header-title">Commandes liées à l'Aktion</span>
         <div class="popup-chips">
           <span class="popup-chip">
-            <span class="chip-label">Contrat :</span>
+            <span class="chip-label">N° Cde ouverte : :</span>
             <span class="chip-value">{{ selectedContract?.openOrderNumber }}</span>
           </span>
           <span class="popup-chip">
@@ -32,21 +32,17 @@
 
       <div *ngIf="errorMessage" class="popup-error">{{ errorMessage }}</div>
 
-      <ng-container *ngIf="!isLoading && !errorMessage">
-        <div *ngIf="orders.length === 0" class="popup-empty">
-          Aucune commande pour ce contrat.
-        </div>
-        <div *ngIf="orders.length > 0"
-          soho-datagrid
-          [dataset]="orders"
-          [columns]="orderColumns"
-          [filterable]="false"
-          [paging]="true"
-          [pagesize]="10"
-          [pagesizes]="[5, 10, 25, 50]"
-          [rowHeight]="'short'">
-        </div>
-      </ng-container>
+      <div *ngIf="!isLoading && !errorMessage"
+        soho-datagrid
+        [dataset]="orders"
+        [columns]="orderColumns"
+        [emptyMessage]="emptyMsg"
+        [filterable]="false"
+        [paging]="true"
+        [pagesize]="5"
+        [pagesizes]="[5, 10, 25, 50]"
+        [rowHeight]="'short'">
+      </div>
 
     </div>
 

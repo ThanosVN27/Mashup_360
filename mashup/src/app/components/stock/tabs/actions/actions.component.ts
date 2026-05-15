@@ -120,7 +120,10 @@ export class ActionsComponent implements OnInit, OnChanges {
   fmtQty(v: string): string {
     const n = parseFloat(v);
     if (isNaN(n)) return v ?? '';
-    return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    const val = Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    return this.unms
+      ? `${val} <em style="font-size:11px;color:#94a3b8;font-style:normal">${this.unms}</em>`
+      : val;
   }
 
   private loadContracts(): void {
@@ -158,8 +161,9 @@ export class ActionsComponent implements OnInit, OnChanges {
     const rq   = parseFloat(item?.reservedQuantity ?? '0') || 0;
     const diff = Math.round(cq - rq);
     const val  = Math.abs(diff).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-    if (diff < 0)   return `<span class="diff-badge diff-badge--neg">-${val}</span>`;
-    if (diff === 0) return `<span class="diff-badge diff-badge--zero">${val}</span>`;
-    return `<span class="diff-badge diff-badge--pos">+${val}</span>`;
+    const u    = this.unms ? ` <em style="font-size:10px;font-style:normal;opacity:0.7">${this.unms}</em>` : '';
+    if (diff < 0)   return `<span class="diff-badge diff-badge--neg">-${val}${u}</span>`;
+    if (diff === 0) return `<span class="diff-badge diff-badge--zero">${val}${u}</span>`;
+    return `<span class="diff-badge diff-badge--pos">+${val}${u}</span>`;
   }
 }
