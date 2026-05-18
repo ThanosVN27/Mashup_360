@@ -48,7 +48,7 @@ export class ActionsComponent implements OnInit, OnChanges {
         formatter: (_r: number, _c: number, v: string) => this.fmtQty(v) },
       { id: 'reservedQuantity',name: 'Qté réservée', field: 'reservedQuantity',width: 120, sortable: true, align: 'center', filterType: 'text',
         formatter: (_r: number, _c: number, v: string) => this.fmtQty(v) },
-      { id: 'differenceQty',   name: 'Différence',   field: 'contractQuantity',width: 120, sortable: true, align: 'center', filterType: 'text',
+      { id: 'differenceQty',   name: 'Reste à commander',   field: 'contractQuantity',width: 150, sortable: true, align: 'center', filterType: 'text',
         formatter: (_r: number, _c: number, _v: string, _col: any, item: any) => this.fmtDiff(item) },
     ];
   }

@@ -58,20 +58,8 @@
         <span class="flux-chevron">{{ fluxSortantOpen ? '▲' : '▼' }}</span>
       </div>
       <div class="flux-group-body" *ngIf="fluxSortantOpen">
-        <div class="flux-line synth-link" (click)="tabChange.emit('actions')">
-          <span class="flux-line-label">Total aktions</span>
-          <span class="flux-line-val">{{ fmt(article.totalActions) }} <em>{{ article.unms }}</em></span>
-        </div>
-        <div class="flux-line">
-          <span class="flux-line-label">Total Qté contrat</span>
-          <span class="flux-line-val">{{ fmt(article.totalContrat) }} <em>{{ article.unms }}</em></span>
-        </div>
-        <div class="flux-line">
-          <span class="flux-line-label">Total Qté réservée</span>
-          <span class="flux-line-val">{{ fmt(article.totalReservee) }} <em>{{ article.unms }}</em></span>
-        </div>
-        <div class="flux-line flux-line--diff">
-          <span class="flux-line-label">Différence (contrat − réservé)</span>
+        <div class="flux-line flux-line--diff synth-link" (click)="tabChange.emit('actions')">
+          <span class="flux-line-label">QTE aktions à commander</span>
           <span class="flux-line-val" [class.flux-val--neg]="article.totalContrat - article.totalReservee < 0">
             {{ fmt(article.totalContrat - article.totalReservee) }} <em>{{ article.unms }}</em>
           </span>

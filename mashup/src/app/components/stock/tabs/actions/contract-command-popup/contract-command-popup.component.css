@@ -1,3 +1,17 @@
+/* ── Keyframes ── */
+@keyframes overlay-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes popup-in {
+  from { opacity: 0; transform: scale(0.96) translateY(-10px); }
+  to   { opacity: 1; transform: scale(1)    translateY(0); }
+}
+@keyframes chip-in {
+  from { opacity: 0; transform: translateX(-6px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
 /* ── Overlay ── */
 .popup-overlay {
   position:        fixed;
@@ -8,6 +22,7 @@
   align-items:     center;
   justify-content: center;
   padding:         20px;
+  animation:       overlay-in 0.20s ease;
 }
 
 /* ── Popup container ── */
@@ -22,6 +37,7 @@
   flex-direction: column;
   overflow:       hidden;
   border-top:     3px solid #0b6cbb;
+  animation:      popup-in 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* ── Header ── */
@@ -66,7 +82,12 @@
   border-radius: 20px;
   font-size:     12px;
   white-space:   nowrap;
+  animation:     chip-in 0.25s ease both;
 }
+.popup-chip:nth-child(1) { animation-delay: 0.05s; }
+.popup-chip:nth-child(2) { animation-delay: 0.10s; }
+.popup-chip:nth-child(3) { animation-delay: 0.15s; }
+.popup-chip:nth-child(4) { animation-delay: 0.20s; }
 
 .chip-label {
   font-size:   11px;

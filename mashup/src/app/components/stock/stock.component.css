@@ -36,6 +36,22 @@
   fill:        currentColor;
 }
 
+/* ── Keyframes ── */
+@keyframes slide-down {
+  from { opacity: 0; transform: translateY(-14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
 /* ── En-tête article ── */
 .article-header {
   display:       flex;
@@ -49,6 +65,7 @@
   border-radius: 10px;
   box-shadow:    0 4px 14px rgba(30, 64, 175, 0.2);
   color:         #ffffff;
+  animation:     slide-down 0.30s ease;
 }
 
 .article-code {
@@ -107,6 +124,11 @@
   box-shadow:    0 2px 10px rgba(0, 0, 0, 0.07);
   overflow:      hidden;
   background:    #ffffff;
+  animation:     fade-up 0.35s ease;
+}
+
+.tab-content {
+  animation: fade-in 0.20s ease;
 }
 
 .tab-nav {
