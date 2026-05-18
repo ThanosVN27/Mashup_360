@@ -50,7 +50,10 @@
         Total Qté contrat : <strong>{{ fmt(filteredTotalContrat) }}</strong>
       </span>
       <span class="actions-total-item">
-        Total Qté réservée : <strong>{{ fmt(filteredTotalReservee) }}</strong>
+        Total Qté livrée : <strong>{{ fmt(filteredTotalLivree) }}</strong>
+      </span>
+      <span class="actions-total-item">
+        Total Reste à commander : <strong>{{ fmt(filteredTotalContrat - filteredTotalLivree) }}</strong>
       </span>
     </div>
 

@@ -16,6 +16,6 @@ export interface StockArticle {
   totalReservations: number;
   totalActions:      number;
   // Totaux contrats Aktions (CMS100MI LstBulkLineArt)
-  totalContrat:  number;  // Σ UWAGQT
-  totalReservee: number;  // Σ UXREQT
+  totalContrat: number;  // Σ UWAGQT
+  totalLivree:  number;  // Σ UXDLQT
 }

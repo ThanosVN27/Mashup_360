@@ -19,7 +19,7 @@ export class ActionsComponent implements OnInit, OnChanges {
   contracts:            ContractLine[] = [];
   filteredContracts:    ContractLine[] = [];
   filteredTotalContrat  = 0;
-  filteredTotalReservee = 0;
+  filteredTotalLivree = 0;
 
   dateFrom = '';
   dateTo   = '';
@@ -46,7 +46,7 @@ export class ActionsComponent implements OnInit, OnChanges {
       { id: 'endValidityDate', name: 'Fin validité', field: 'endValidityDate', width: 120, sortable: true, align: 'center', filterType: 'text' },
       { id: 'contractQuantity',name: 'Qté contrat',  field: 'contractQuantity',width: 120, sortable: true, align: 'center', filterType: 'text',
         formatter: (_r: number, _c: number, v: string) => this.fmtQty(v) },
-      { id: 'reservedQuantity',name: 'Qté réservée', field: 'reservedQuantity',width: 120, sortable: true, align: 'center', filterType: 'text',
+      { id: 'deliveredQuantity',name: 'Qté livrée',  field: 'deliveredQuantity',width: 120, sortable: true, align: 'center', filterType: 'text',
         formatter: (_r: number, _c: number, v: string) => this.fmtQty(v) },
       { id: 'differenceQty',   name: 'Reste à commander',   field: 'contractQuantity',width: 150, sortable: true, align: 'center', filterType: 'text',
         formatter: (_r: number, _c: number, _v: string, _col: any, item: any) => this.fmtDiff(item) },
@@ -113,8 +113,8 @@ export class ActionsComponent implements OnInit, OnChanges {
       return da.getTime() - db.getTime();
     });
 
-    this.filteredTotalContrat  = this.filteredContracts.reduce((s, c) => s + (parseFloat(c.contractQuantity) || 0), 0);
-    this.filteredTotalReservee = this.filteredContracts.reduce((s, c) => s + (parseFloat(c.reservedQuantity)  || 0), 0);
+    this.filteredTotalContrat = this.filteredContracts.reduce((s, c) => s + (parseFloat(c.contractQuantity)  || 0), 0);
+    this.filteredTotalLivree  = this.filteredContracts.reduce((s, c) => s + (parseFloat(c.deliveredQuantity) || 0), 0);
   }
 
   fmtQty(v: string): string {
@@ -158,8 +158,8 @@ export class ActionsComponent implements OnInit, OnChanges {
 
   private fmtDiff(item: any): string {
     const cq   = parseFloat(item?.contractQuantity ?? '0') || 0;
-    const rq   = parseFloat(item?.reservedQuantity ?? '0') || 0;
-    const diff = Math.round(cq - rq);
+    const dq   = parseFloat(item?.deliveredQuantity ?? '0') || 0;
+    const diff = Math.round(cq - dq);
     const val  = Math.abs(diff).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
     const u    = this.unms ? ` <em style="font-size:10px;font-style:normal;opacity:0.7">${this.unms}</em>` : '';
     if (diff < 0)   return `<span class="diff-badge diff-badge--neg">-${val}${u}</span>`;

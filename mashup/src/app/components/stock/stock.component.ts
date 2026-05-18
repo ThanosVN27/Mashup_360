@@ -120,8 +120,8 @@ export class StockComponent implements OnDestroy {
         const { aval, alqt, quqt, rjqt } = stocks;
         const { totaux, badges, filtres } = this.traiterMouvements(movsEntrant, movsSortant, contract);
 
-        const totalContrat  = aktions.reduce((s, c) => s + (parseFloat(c.contractQuantity) || 0), 0);
-        const totalReservee = aktions.reduce((s, c) => s + (parseFloat(c.reservedQuantity)  || 0), 0);
+        const totalContrat = aktions.reduce((s, c) => s + (parseFloat(c.contractQuantity)  || 0), 0);
+        const totalLivree  = aktions.reduce((s, c) => s + (parseFloat(c.deliveredQuantity) || 0), 0);
 
         this.badges      = { ...badges, actions: aktions.length };
         this.movsOfPof   = filtres.ofpof;
@@ -134,7 +134,7 @@ export class StockComponent implements OnDestroy {
           effec: aval - alqt,
           quqt, rjqt,
           resaVente: alqt,
-          totalContrat, totalReservee,
+          totalContrat, totalLivree,
           ...totaux,
         };
         this.loading = false;

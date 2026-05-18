@@ -12,6 +12,7 @@ export interface ContractLine {
   endValidityDate:   string;   // UWLVDT — date fin validité
   contractQuantity:  string;   // UWAGQT — quantité contrat
   reservedQuantity:  string;   // UXREQT — quantité réservée
+  deliveredQuantity: string;   // UXDLQT — Qté livrée (issue de la ligne de commande liée)
 }
 
 
