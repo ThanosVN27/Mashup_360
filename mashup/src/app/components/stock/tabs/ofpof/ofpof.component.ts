@@ -29,17 +29,17 @@ export class OfPofComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['unms']) {
       this.colonnes = [
-        { id: 'type', name: 'Type', field: 'orca', width: 150, align: 'center', filterType: 'text',
+        { id: 'type', name: 'Type', field: 'orca', width: 200, align: 'center', filterType: 'text',
           formatter: (_row: number, _cell: number, value: string) => {
             const label    = value === '100' ? 'POF' : 'OF';
             const cssClass = value === '100' ? 'badge-pof' : 'badge-of';
             return `<span class="${cssClass}">${label}</span>`;
           },
         },
-        { id: 'ridn', name: 'Numéro',              field: 'ridn', width: 200, sortable: true, align: 'center', filterType: 'text' },
-        { id: 'trqt', name: 'Quantité à produire', field: 'trqt', width: 200, sortable: true, align: 'center', filterType: 'text',
+        { id: 'ridn', name: 'Numéro',              field: 'ridn', width: 250, sortable: true, align: 'center', filterType: 'text' },
+        { id: 'trqt', name: 'Quantité à produire', field: 'trqt', width: 250, sortable: true, align: 'center', filterType: 'text',
           formatter: (_r: number, _c: number, v: number) => formatM3Qty(v, this.unms) },
-        { id: 'pldt', name: 'Date',   field: 'pldt', width: 200, sortable: true, align: 'center', filterType: 'text',
+        { id: 'pldt', name: 'Date',   field: 'pldt', width: 250, sortable: true, align: 'center', filterType: 'text',
           formatter: (_row: number, _cell: number, value: string) => formatM3Date(value) },
         { id: 'stat', name: 'Statut', field: 'stat', width: 250, align: 'center', filterType: 'text',
           formatter: (_r: number, _c: number, v: string) => formatM3Status(v) },

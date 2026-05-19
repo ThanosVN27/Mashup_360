@@ -36,12 +36,12 @@ export class ActionsComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.colonnesContrat = [
-      { id: 'commandes',        name: '',             field: 'openOrderNumber', width: 150, align: 'center',
+      { id: 'commandes',        name: '',             field: 'openOrderNumber', width: 140, align: 'center',
         formatter: () => `<button style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;background:#fff;color:#0b6cbb;border:1.5px solid #0b6cbb;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;transition:background 0.15s;" onmouseover="this.style.background='#e8f0fb'" onmouseout="this.style.background='#fff'"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Commandes</button>` },
       { id: 'customerCode',    name: 'Client',       field: 'customerCode',    width: 120, sortable: true, align: 'center', filterType: 'text' },
       { id: 'openOrderNumber', name: 'N° contrat',   field: 'openOrderNumber', width: 130, sortable: true, align: 'center', filterType: 'text' },
       { id: 'description',     name: 'Désignation',  field: 'description',     width: 400, sortable: true, align: 'center', filterType: 'text' },
-      { id: 'status',          name: 'Statut',       field: 'status',          width: 160, sortable: true, align: 'center', filterType: 'text',
+      { id: 'status',          name: 'Statut',       field: 'status',          width: 150, sortable: true, align: 'center', filterType: 'text',
         formatter: (_r: number, _c: number, v: string) => this.fmtStatus(v) },
       { id: 'lineStatus',      name: 'Statut ligne', field: 'lineStatus',      width: 120, sortable: true, align: 'center', filterType: 'text' },
       { id: 'startDate',       name: 'Date début',   field: 'startDate',       width: 120, sortable: true, align: 'center', filterType: 'text' },

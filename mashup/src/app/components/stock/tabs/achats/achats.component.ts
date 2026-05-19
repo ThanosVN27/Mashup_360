@@ -18,11 +18,11 @@ export class AchatsComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['unms']) {
       this.colonnes = [
-        { id: 'ridn', name: 'N° Commande',      field: 'ridn', width: 200, sortable: true, align: 'center', filterType: 'text' },
-        { id: 'ridl', name: 'N° Ligne',         field: 'ridl', width: 200, sortable: true, align: 'center', filterType: 'text' },
-        { id: 'trqt', name: 'Quantité achetée', field: 'trqt', width: 200, sortable: true, align: 'center', filterType: 'text',
+        { id: 'ridn', name: 'N° Commande',      field: 'ridn', width: 250, sortable: true, align: 'center', filterType: 'text' },
+        { id: 'ridl', name: 'N° Ligne',         field: 'ridl', width: 250, sortable: true, align: 'center', filterType: 'text' },
+        { id: 'trqt', name: 'Quantité achetée', field: 'trqt', width: 250, sortable: true, align: 'center', filterType: 'text',
           formatter: (_r: number, _c: number, v: number) => formatM3Qty(v, this.unms) },
-        { id: 'pldt', name: 'Date planifiée',   field: 'pldt', width: 200, sortable: true, align: 'center', filterType: 'text',
+        { id: 'pldt', name: 'Date planifiée',   field: 'pldt', width: 250, sortable: true, align: 'center', filterType: 'text',
           formatter: (_r: number, _c: number, v: string) => formatM3Date(v) },
         { id: 'stat', name: 'Statut',           field: 'stat', width: 250, align: 'center', filterType: 'text',
           formatter: (_r: number, _c: number, v: string) => formatM3Status(v) },
