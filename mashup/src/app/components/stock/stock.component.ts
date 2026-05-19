@@ -161,7 +161,7 @@ export class StockComponent implements OnDestroy {
     for (const m of movsEntrant) {
       if      (m.orca === '100' && m.stat !== '10') { totalPof    += m.trqt; ofpof.push(m);  }
       else if (m.orca === '101')                    { totalOf     += m.trqt; ofpof.push(m);  }
-      else if (m.orca === '251' && parseInt(m.stat, 10) <= 50) { totalAchats += m.trqt; achats.push(m); }
+      else if (m.orca === '251' && parseInt(m.stat, 10) < 50) { totalAchats += m.trqt; achats.push(m); }
     }
 
     for (const m of movsSortant) {
