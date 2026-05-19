@@ -21,7 +21,7 @@ export class ActionsComponent implements OnInit, OnChanges {
   filteredTotalContrat  = 0;
   filteredTotalReservee = 0;
   filteredTotalLivree   = 0;
-  get filteredTotalAppelLivreRest(): number { return this.filteredTotalContrat - this.filteredTotalReservee; }
+
 
   dateFrom = '';
   dateTo   = '';
@@ -52,9 +52,7 @@ export class ActionsComponent implements OnInit, OnChanges {
         formatter: (_r: number, _c: number, v: string) => this.fmtQty(v) },
       { id: 'deliveredQuantity',name: 'Qté livrée',  field: 'deliveredQuantity',width: 120, sortable: true, align: 'center', filterType: 'text',
         formatter: (_r: number, _c: number, v: string) => this.fmtQty(v) },
-      { id: 'appelLivreRest',  name: 'Appel livré rest',    field: 'contractQuantity',width: 150, sortable: true, align: 'center', filterType: 'text',
-        formatter: (_r: number, _c: number, _v: string, _col: any, item: any) => this.fmtDiffReserved(item) },
-      { id: 'differenceQty',   name: 'Reste à commander',   field: 'contractQuantity',width: 150, sortable: true, align: 'center', filterType: 'text',
+{ id: 'differenceQty',   name: 'Reste à commander',   field: 'contractQuantity',width: 150, sortable: true, align: 'center', filterType: 'text',
         formatter: (_r: number, _c: number, _v: string, _col: any, item: any) => this.fmtDiff(item) },
     ];
   }
@@ -163,23 +161,9 @@ export class ActionsComponent implements OnInit, OnChanges {
     const map: Record<string, [string, string]> = {
       '10': ['background:#fef3c7;color:#92400e;', '10 - Préliminaire'],
       '20': ['background:#d1fae5;color:#065f46;', '20 - Actif'],
-      '40': ['background:#dbeafe;color:#1e40af;', '40 - Part. livré'],
-      '50': ['background:#ede9fe;color:#5b21b6;', '50 - Livré'],
-      '60': ['background:#f0fdf4;color:#166534;', '60 - Facturé'],
-      '80': ['background:#f1f5f9;color:#475569;', '80 - Fermé'],
-      '90': ['background:#fef2f2;color:#991b1b;', '90 - Annulé'],
     };
     const [colors, label] = map[code] ?? ['background:#f9fafb;color:#374151;', code];
     return `<span style="${style}${colors}">${label}</span>`;
-  }
-
-  private fmtDiffReserved(item: any): string {
-    const cq  = parseFloat(item?.contractQuantity ?? '0') || 0;
-    const rq  = parseFloat(item?.reservedQuantity  ?? '0') || 0;
-    const val = Math.round(cq - rq).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-    return this.unms
-      ? `${val} <em style="font-size:11px;color:#94a3b8;font-style:normal">${this.unms}</em>`
-      : val;
   }
 
   private fmtDiff(item: any): string {
