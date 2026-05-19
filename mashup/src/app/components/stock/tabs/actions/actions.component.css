@@ -1,6 +1,11 @@
+@keyframes fade-in   { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slide-down { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slide-up   { from { opacity: 0; transform: translateY(8px);  } to { opacity: 1; transform: translateY(0); } }
+
 .tab-content {
   padding:          0;
   background-color: #ffffff;
+  animation:        fade-in 0.20s ease;
 }
 
 .tab-content > div[soho-datagrid] {
@@ -34,6 +39,7 @@
 
 /* ── Totaux ── */
 .actions-totaux {
+  animation: slide-up 0.30s ease;
   display:      flex;
   gap:          32px;
   padding:      12px 20px;
@@ -50,6 +56,7 @@
 
 /* ── Barre de filtre date ── */
 .date-filter-bar {
+  animation: slide-down 0.25s ease;
   display:     flex;
   align-items: center;
   gap:         16px;

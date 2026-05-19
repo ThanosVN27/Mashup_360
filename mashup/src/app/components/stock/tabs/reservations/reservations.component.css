@@ -1,6 +1,10 @@
+@keyframes fade-in   { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slide-up  { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
 .tab-content {
   padding:          0;
   background-color: #ffffff;
+  animation:        fade-in 0.20s ease;
 }
 
 .tab-content > div[soho-datagrid] {
