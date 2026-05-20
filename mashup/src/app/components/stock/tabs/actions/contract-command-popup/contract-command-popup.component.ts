@@ -33,16 +33,16 @@ export class ContractCommandPopupComponent implements OnChanges {
   };
 
   readonly orderColumns: SohoDataGridColumn[] = [
-    { id: 'orderNumber',           name: 'N° commande',   field: 'orderNumber',           width: 160, sortable: true, align: 'center', filterType: 'text' },
-    { id: 'lineNumber',            name: 'Ligne',               field: 'lineNumber',            width:  80, sortable: true, align: 'center', filterType: 'text' },
-    { id: 'requestedDeliveryDate', name: 'Date demandée',  field: 'requestedDeliveryDate', width: 140, sortable: true, align: 'center', filterType: 'text' },
+    { id: 'orderNumber',           name: 'N° commande',   field: 'orderNumber',           width: 150, sortable: true, align: 'center', filterType: 'text' },
+    { id: 'lineNumber',            name: 'Ligne',               field: 'lineNumber',            width:  150, sortable: true, align: 'center', filterType: 'text' },
+    { id: 'requestedDeliveryDate', name: 'Date demandée',  field: 'requestedDeliveryDate', width: 150, sortable: true, align: 'center', filterType: 'text' },
     { id: 'orderedQuantity',       name: 'Qté commandée', field: 'orderedQuantity',   width: 150, sortable: true, align: 'center',
       formatter: (_r: number, _c: number, v: string) => this.fmtQty(v) },
-    { id: 'deliveredQuantity',     name: 'Qté livrée',    field: 'deliveredQuantity', width: 140, sortable: true, align: 'center',
+    { id: 'deliveredQuantity',     name: 'Qté livrée',    field: 'deliveredQuantity', width: 150, sortable: true, align: 'center',
       formatter: (_r: number, _c: number, v: string) => this.fmtQty(v) },
-    { id: 'invoicedQuantity',      name: 'Qté facturée',  field: 'invoicedQuantity',  width: 140, sortable: true, align: 'center',
+    { id: 'invoicedQuantity',      name: 'Qté facturée',  field: 'invoicedQuantity',  width: 150, sortable: true, align: 'center',
       formatter: (_r: number, _c: number, v: string) => this.fmtQty(v) },
-    { id: 'orderStatus',           name: 'Statut',              field: 'orderStatus',           width: 200, sortable: true, align: 'center',
+    { id: 'orderStatus',           name: 'Statut',              field: 'orderStatus',           width: 150, sortable: true, align: 'center',
       formatter: (_r: number, _c: number, v: string) => this.fmtStatus(v) },
   ];
 

@@ -18,4 +18,5 @@ export interface StockArticle {
   // Totaux contrats Aktions (CMS100MI LstBulkLineArt)
   totalContrat: number;  // Σ UWAGQT
   totalLivree:  number;  // Σ UXDLQT
+  totalReste:   number;  // Σ max(0, UWAGQT - UXDLQT)
 }

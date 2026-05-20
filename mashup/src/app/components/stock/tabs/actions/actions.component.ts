@@ -21,6 +21,7 @@ export class ActionsComponent implements OnInit, OnChanges {
   filteredTotalContrat  = 0;
   filteredTotalReservee = 0;
   filteredTotalLivree   = 0;
+  filteredTotalReste    = 0;
 
 
   dateFrom = '';
@@ -52,8 +53,8 @@ export class ActionsComponent implements OnInit, OnChanges {
         formatter: (_r: number, _c: number, v: string) => this.fmtQty(v) },
       { id: 'deliveredQuantity',name: 'Qté livrée',  field: 'deliveredQuantity',width: 120, sortable: true, align: 'center', filterType: 'text',
         formatter: (_r: number, _c: number, v: string) => this.fmtQty(v) },
-{ id: 'differenceQty',   name: 'Reste à commander',   field: 'contractQuantity',width: 150, sortable: true, align: 'center', filterType: 'text',
-        formatter: (_r: number, _c: number, _v: string, _col: any, item: any) => this.fmtDiff(item) },
+      { id: 'differenceQty',   name: 'Reste à commander',   field: 'resteACommander',width: 150, sortable: true, align: 'center', filterType: 'text',
+        formatter: (_r: number, _c: number, v: string) => this.fmtQty(v) },
     ];
   }
 
@@ -120,6 +121,7 @@ export class ActionsComponent implements OnInit, OnChanges {
     this.filteredTotalContrat  = this.filteredContracts.reduce((s, c) => s + (parseFloat(c.contractQuantity)  || 0), 0);
     this.filteredTotalReservee = this.filteredContracts.reduce((s, c) => s + (parseFloat(c.reservedQuantity)  || 0), 0);
     this.filteredTotalLivree   = this.filteredContracts.reduce((s, c) => s + (parseFloat(c.deliveredQuantity) || 0), 0);
+    this.filteredTotalReste    = this.filteredContracts.reduce((s, c) => s + Math.max(0, parseFloat(c.resteACommander) || 0), 0);
   }
 
   fmtQty(v: string): string {
@@ -167,12 +169,10 @@ export class ActionsComponent implements OnInit, OnChanges {
   }
 
   private fmtDiff(item: any): string {
-    const cq   = parseFloat(item?.contractQuantity ?? '0') || 0;
-    const dq   = parseFloat(item?.deliveredQuantity ?? '0') || 0;
-    const diff = Math.round(cq - dq);
-    const val  = Math.abs(diff).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    const raw  = parseFloat(item?.resteACommander ?? '0') || 0;
+    const diff = Math.max(0, Math.round(raw));
+    const val  = diff.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
     const u    = this.unms ? ` <em style="font-size:10px;font-style:normal;opacity:0.7">${this.unms}</em>` : '';
-    if (diff < 0)   return `<span class="diff-badge diff-badge--neg">-${val}${u}</span>`;
     if (diff === 0) return `<span class="diff-badge diff-badge--zero">${val}${u}</span>`;
     return `<span class="diff-badge diff-badge--pos">+${val}${u}</span>`;
   }

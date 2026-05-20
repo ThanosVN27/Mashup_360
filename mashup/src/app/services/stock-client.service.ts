@@ -45,7 +45,7 @@ export class StockClientService {
         F_AGST: '10',
         T_AGST: '20',
       },
-      outputFields:       ['UWCUNO', 'UWAGNO', 'UYTX40', 'UYAGST', 'UWOBV1', 'UWAGST', 'UWSTDT', 'UWLVDT', 'UWAGQT', 'UXREQT','UXDLQT'],
+      outputFields:       ['UWCUNO', 'UWAGNO', 'UYTX40', 'UYAGST', 'UWOBV1', 'UWAGST', 'UWSTDT', 'UWLVDT', 'UWAGQT', 'UXREQT','UXDLQT',"V_RQCO"],
       maxReturnedRecords: 500,
     };
 
@@ -77,6 +77,7 @@ export class StockClientService {
       contractQuantity: item['UWAGQT'] ?? '',
       reservedQuantity: item['UXREQT'] ?? '',
       deliveredQuantity: item['UXDLQT'] ?? '',
+      resteACommander: item['V_RQCO'] ?? '',
     };
   }
 
