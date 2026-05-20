@@ -76,8 +76,8 @@ export class StockClientService {
       endValidityDate:  formatM3Date(item['UWLVDT'] ?? ''),
       contractQuantity: item['UWAGQT'] ?? '',
       reservedQuantity: item['UXREQT'] ?? '',
-      deliveredQuantity: item['UXDLQT'] ?? '',
-      resteACommander: item['V_RQCO'] ?? '',
+      deliveredQuantity:item['UXDLQT'] ?? '',
+      resteACommander:  item['V_RQCO'] ?? '',
     };
   }
 

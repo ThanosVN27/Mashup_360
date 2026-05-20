@@ -13,7 +13,7 @@ export interface ContractLine {
   contractQuantity:  string;   // UWAGQT — quantité contrat
   reservedQuantity:  string;   // UXREQT — quantité réservée
   deliveredQuantity: string;   // UXDLQT — Qté livrée (issue de la ligne de commande liée)
-  resteACommander:     string; // V_RQCO - reste à commander = contractQuantity - reservedQuantity
+  resteACommander:   string;   // V_RQCO — reste à commander (calculé côté M3)
 }
 
 

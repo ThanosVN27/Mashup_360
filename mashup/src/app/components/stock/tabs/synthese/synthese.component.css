@@ -306,11 +306,9 @@
 
 /* ── Ligne différence ── */
 .flux-line--diff {
-  background:  #f8faff;
-  border-left: 3px solid #0b6cbb;
-  cursor:      pointer;
+  cursor: pointer;
 }
-.flux-line--diff:hover { background: #dbeafe; }
+.flux-line--diff:hover { background: #f8f8f8; }
 
 .flux-val--neg { color: #b91c1c !important; }
 
