@@ -19,7 +19,8 @@ export class AchatsComponent implements OnChanges {
     if (changes['unms']) {
       this.colonnes = [
         { id: 'ridn', name: 'N° Commande',      field: 'ridn', width: 250, sortable: true, align: 'center', filterType: 'text' },
-        { id: 'ridl', name: 'N° Ligne',         field: 'ridl', width: 250, sortable: true, align: 'center', filterType: 'text' },
+        { id: 'ridl', name: 'N° Ligne',         field: 'ridl', width: 125, sortable: true, align: 'center', filterType: 'text' },
+        { id: 'whlo', name: 'Entrepôt',          field: 'whlo', width: 250, sortable: true, align: 'center', filterType: 'text' },
         { id: 'trqt', name: 'Quantité achetée', field: 'trqt', width: 250, sortable: true, align: 'center', filterType: 'text',
           formatter: (_r: number, _c: number, v: number) => formatM3Qty(v, this.unms) },
         { id: 'pldt', name: 'Date planifiée',   field: 'pldt', width: 250, sortable: true, align: 'center', filterType: 'text',

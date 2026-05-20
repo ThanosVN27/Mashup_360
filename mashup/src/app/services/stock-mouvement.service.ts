@@ -19,7 +19,7 @@ export class StockMouvementService {
         program:            'MMS080MI',
         transaction:        'SelMtrlTrans',
         record:             { ITNO: itno, WHLO: 'E01', WHGR: whgr, CONO: 100 },
-        outputFields:       ['ORCA', 'RIDN', 'RIDL', 'RIDS', 'TRQT', 'PLDT', 'CODT', 'RFTX', 'STAT', 'AGNO', 'ORI1'],
+        outputFields:       ['ORCA', 'RIDN', 'RIDL', 'RIDS', 'TRQT', 'PLDT', 'CODT', 'RFTX', 'STAT', 'AGNO', 'ORI1', 'WHLO'],
         maxReturnedRecords: 999,
       };
       const obs = this.mi.execute(req).pipe(
@@ -36,6 +36,7 @@ export class StockMouvementService {
             stat: item['STAT'] ?? '',
             agno: item['AGNO']?.trim() || '--',
             ori1: item['ORI1'] ?? '',
+            whlo: item['WHLO'] ?? '',
           }))
         ),
         catchError(() => of([])),

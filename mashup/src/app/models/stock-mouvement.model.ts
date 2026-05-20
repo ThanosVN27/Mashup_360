@@ -10,4 +10,5 @@ export interface StockMouvement {
   rids: string;   // N ligne  (Achats Reservations et aktions)
   agno: string;   // Numéro contrat (pour réservations)
   ori1: string;   // Origine du mouvement (ex: "RES" ou "BLK")
+  whlo: string;   // Entrepôt
 }
