@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { StockMouvement } from '../../../../models/stock-mouvement.model';
-import { formatM3Date, formatM3Qty } from '../../../../shared/utils/m3-date.util';
+import { formatM3Date, formatM3Num, formatM3Qty, formatM3QtyHtml } from '../../../../shared/utils/m3-date.util';
 import { formatM3VenteStatus } from '../../../../shared/utils/m3-status.util';
 
 @Component({
@@ -18,9 +18,7 @@ export class ReservationsComponent implements OnChanges {
 
   get totalQty(): number { return this.lignes.reduce((s, l) => s + l.trqt, 0); }
 
-  fmt(n: number): string {
-    return Math.round(n || 0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-  }
+  readonly fmt = formatM3Num;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['unms']) {
@@ -30,7 +28,7 @@ export class ReservationsComponent implements OnChanges {
         { id: 'rftx', name: 'Client',         field: 'rftx', width: 200, sortable: true, align: 'center', filterType: 'text' },
         { id: 'agno', name: 'Contrat',        field: 'agno', width: 200, sortable: true, align: 'center', filterType: 'text' },
         { id: 'trqt', name: 'Total réservé',  field: 'trqt', width: 200, sortable: true, align: 'center', filterType: 'text',
-          formatter: (_r: number, _c: number, v: number) => formatM3Qty(v, this.unms) },
+          formatter: (_r: number, _c: number, v: string) => this.fmtQty(v) },
         { id: 'pldt', name: 'Date planifiée', field: 'pldt', width: 200, sortable: true, align: 'center', filterType: 'text',
           formatter: (_r: number, _c: number, v: string) => formatM3Date(v) },
         { id: 'stat', name: 'Statut de vente', field: 'stat', width: 200, align: 'center', filterType: 'text',
@@ -38,4 +36,6 @@ export class ReservationsComponent implements OnChanges {
       ];
     }
   }
+
+  fmtQty(v: string): string { return formatM3QtyHtml(v, this.unms); }
 }

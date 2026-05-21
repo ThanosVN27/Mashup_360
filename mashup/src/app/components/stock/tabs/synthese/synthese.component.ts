@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { StockArticle } from '../../../../models/stock-article.model';
+import { formatM3Num } from '../../../../shared/utils/m3-date.util';
 
 @Component({
   selector:    'app-tab-synthese',
@@ -15,7 +16,5 @@ export class SyntheseComponent {
   fluxEntrantOpen = true;
   fluxSortantOpen = true;
 
-  fmt(v: number): string {
-    return Math.round(v || 0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-  }
+  readonly fmt = formatM3Num;
 }

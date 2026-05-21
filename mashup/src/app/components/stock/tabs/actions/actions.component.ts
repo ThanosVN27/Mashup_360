@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { ContractLine, OrderLine } from '../../../../models/stock-aktions.model';
 import { StockClientService } from '../../../../services/stock-client.service';
+import { formatM3Num, formatM3QtyHtml } from '../../../../shared/utils/m3-date.util';
 
 @Component({
   selector:    'app-tab-actions',
@@ -91,9 +92,7 @@ export class ActionsComponent implements OnInit, OnChanges {
 
   closePopup(): void { this.popupVisible = false; }
 
-  fmt(n: number): string {
-    return Math.round(n || 0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-  }
+  readonly fmt = formatM3Num;
 
   applyFilter(): void {
     const from = this.dateFrom ? new Date(this.dateFrom) : null;
@@ -131,14 +130,7 @@ export class ActionsComponent implements OnInit, OnChanges {
     this.filteredTotalReste    = reste;
   }
 
-  fmtQty(v: string): string {
-    const n = parseFloat(v);
-    if (isNaN(n)) return v ?? '';
-    const val = Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-    return this.unms
-      ? `${val} <em style="font-size:11px;color:#94a3b8;font-style:normal">${this.unms}</em>`
-      : val;
-  }
+  fmtQty(v: string): string { return formatM3QtyHtml(v, this.unms); }
 
   private loadContracts(): void {
     this.loadingContracts  = true;

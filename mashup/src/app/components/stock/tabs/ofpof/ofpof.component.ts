@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { StockMouvement } from '../../../../models/stock-mouvement.model';
-import { formatM3Date, formatM3Qty } from '../../../../shared/utils/m3-date.util';
+import { formatM3Date, formatM3Num, formatM3Qty, formatM3QtyHtml } from '../../../../shared/utils/m3-date.util';
 import { formatM3Status } from '../../../../shared/utils/m3-status.util';
 
 
@@ -31,9 +31,7 @@ export class OfPofComponent implements OnChanges {
   get totalOfQty():  number { return this.toutesLignes.filter(l => l.orca === '101').reduce((s, l) => s + l.trqt, 0); }
   get totalPofQty(): number { return this.toutesLignes.filter(l => l.orca === '100').reduce((s, l) => s + l.trqt, 0); }
 
-  fmt(n: number): string {
-    return Math.round(n || 0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-  }
+  readonly fmt = formatM3Num;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['unms']) {
@@ -47,7 +45,7 @@ export class OfPofComponent implements OnChanges {
         },
         { id: 'ridn', name: 'Numéro',              field: 'ridn', width: 250, sortable: true, align: 'center', filterType: 'text' },
         { id: 'trqt', name: 'Quantité à produire', field: 'trqt', width: 250, sortable: true, align: 'center', filterType: 'text',
-          formatter: (_r: number, _c: number, v: number) => formatM3Qty(v, this.unms) },
+          formatter: (_r: number, _c: number, v: string) => this.fmtQty(v) },
         { id: 'pldt', name: 'Date',   field: 'pldt', width: 250, sortable: true, align: 'center', filterType: 'text',
           formatter: (_row: number, _cell: number, value: string) => formatM3Date(value) },
         { id: 'stat', name: 'Statut', field: 'stat', width: 250, align: 'center', filterType: 'text',
@@ -68,5 +66,5 @@ export class OfPofComponent implements OnChanges {
     return [...data];
   }
 
-
+  fmtQty(v: string): string { return formatM3QtyHtml(v, this.unms); }
 }
