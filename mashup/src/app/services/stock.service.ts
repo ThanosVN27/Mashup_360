@@ -73,6 +73,24 @@ export class StockService {
     return parseInt(String(value ?? '0')) || 0;
   }
 
-
+  getConversionFactor(itno: string): Observable<{ cofa: string; alun: string }> {
+    const req: IMIRequest = {
+      program:      'MMS015MI',
+      transaction:  'Get',
+      record:       { ITNO: itno, AUTP: 1, ALUN: 'UVC' },
+      outputFields: ['COFA', 'ALUN'],
+    };
+    return this.mi.execute(req).pipe(
+      map((res: IMIResponse) => {
+        const raw = res.item?.['COFA'];
+        const n   = raw ? parseFloat(String(raw)) : NaN;
+        return {
+          cofa: isNaN(n) || n === 0 ? '' : n.toString(),
+          alun: res.item?.['ALUN'] ?? '',
+        };
+      }),
+      catchError(() => of({ cofa: '', alun: '' }))
+    );
+  }
 
 }

@@ -14,11 +14,15 @@
       <span class="synth-label">Stock affectable</span>
       <span class="synth-val">{{ fmt(article.effec) }} <em>{{ article.unms }}</em></span>
     </div>
+   <div class="synth-cell synth-l synth-last" *ngIf="article.cofa">
+      <span class="synth-label">Conditionnement</span>
+      <span class="synth-val">{{ fmt(article.cofa) }} <em>{{ article.alun }}</em></span>
+    </div>
     <div class="synth-cell synth-l synth-warning">
       <span class="synth-label">Stock sous contrôle</span>
       <span class="synth-val synth-val--warn">{{ fmt(article.quqt) }} <em>{{ article.unms }}</em></span>
     </div>
-    <div class="synth-cell synth-l synth-last synth-danger">
+    <div class="synth-cell synth-l" [class.synth-last]="!article.cofa" [class.synth-danger]="true">
       <span class="synth-label">Stock non conforme</span>
       <span class="synth-val synth-val--danger">{{ fmt(article.rjqt) }} <em>{{ article.unms }}</em></span>
     </div>

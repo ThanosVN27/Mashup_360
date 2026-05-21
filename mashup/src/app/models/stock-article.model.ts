@@ -9,6 +9,8 @@ export interface StockArticle {
   quqt:      number;  // Stock sous contrôle qualité
   rjqt:      number;  // Stock non conforme
   resaVente: number;  // Quantité allouée       = ALQT
+  cofa:     string;  // Conditionnement formaté (MMS015MI COFA )
+  alun:    string;  // Unité de conditionnement (MMS015MI ALUN)
   // Totaux flux mouvements (MMS080MI SelMtrlTrans)
   totalPof:          number;
   totalOf:           number;

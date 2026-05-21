@@ -111,11 +111,13 @@ export class StockComponent implements OnDestroy {
       movsEntrant: this.mouvementService.getAll(code, whgr),
       movsSortant: this.mouvementService.getAll(code, this.whgrSortant),
       contract:    this.clientService.getReservations(code, this.whgrSortant),
-      aktions:     this.clientService.getContractsByArticle(code),
+      aktions:         this.clientService.getContractsByArticle(code),
+      conditionnement: this.stockService.getConversionFactor(code),
     }).pipe(
       takeUntil(this.destroy$),
     ).subscribe({
-      next: ({ info, poids, stocks, movsEntrant, movsSortant, contract, aktions }) => {
+      next: ({ info, poids, stocks, movsEntrant, movsSortant, contract, aktions, conditionnement }) => {
+        const { cofa, alun } = conditionnement;
         const { itds, unms }              = info;
         const { aval, alqt, quqt, rjqt } = stocks;
         const { totaux, badges, filtres } = this.traiterMouvements(movsEntrant, movsSortant, contract);
@@ -138,6 +140,7 @@ export class StockComponent implements OnDestroy {
           effec: aval - alqt,
           quqt, rjqt,
           resaVente: alqt,
+          cofa, alun,
           totalContrat, totalLivree, totalReste,
           ...totaux,
         };
