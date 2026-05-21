@@ -20,8 +20,7 @@
     style="width: 100%">
   </div>
 
-  <div *ngIf="lignes.length > 0"
-       style="display:flex;gap:24px;padding:10px 16px;background:#f8fafc;border-top:1px solid #e2e8f0;font-size:13px;">
-    <span>Total réservé : <strong> {{ fmt(totalQty) }} <em style="font-size:13px;color:#94a3b8;font-style:normal">{{ unms }}</em></strong></span>
+  <div *ngIf="lignes.length > 0" class="totaux-bar">
+    <span>Total réservé : <strong>{{ fmt(totalQty) }} <em>{{ unms }}</em></strong></span>
   </div>
 </div>

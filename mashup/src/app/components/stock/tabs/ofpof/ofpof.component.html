@@ -45,13 +45,12 @@
     style="width: 100%">
   </div>
 
-  <div *ngIf="!isLoading && toutesLignes.length > 0"
-       style="display:flex;gap:24px;padding:10px 16px;background:#f8fafc;border-top:1px solid #e2e8f0;font-size:13px;flex-wrap:wrap;">
-    <span *ngIf="filtre !== 'of'">
-      Total POF : <strong>{{ fmt(totalPofQty) }} <em style="font-size:13px;color:#94a3b8;font-style:normal">{{ unms }}</em></strong>
+  <div *ngIf="!isLoading && toutesLignes.length > 0" class="totaux-bar">
+    <span *ngIf="filtre !== 'pof'">
+      Total OF : <strong>{{ fmt(totalOfQty) }} <em>{{ unms }}</em></strong>
     </span>
-   <span *ngIf="filtre !== 'pof'">
-      Total OF : <strong>{{ fmt(totalOfQty) }} <em style="font-size:13px;color:#94a3b8;font-style:normal">{{ unms }}</em></strong>
+    <span *ngIf="filtre !== 'of'">
+      Total POF : <strong>{{ fmt(totalPofQty) }} <em>{{ unms }}</em></strong>
     </span>
   </div>
 

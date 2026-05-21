@@ -32,6 +32,7 @@
       </div>
       <div class="article-libelle">{{ article.itds }}</div>
       <div class="article-poids">Poids net : <strong>{{ article.poidsNet }} kg</strong></div>
+      <span class="article-tag" *ngIf="article.cofa">{{ article.cofa }} {{ article.alun }}</span>
     </div>
 
     <!-- Onglets -->

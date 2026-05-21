@@ -39,19 +39,21 @@
 
 /* ── Totaux ── */
 .actions-totaux {
-  animation: slide-up 0.30s ease;
-  display:      flex;
-  gap:          35px;
-  padding:      12px 20px;
-  background:   #f5f5f5;
-  border-top:   1px solid #e0e0e0;
-  font-size:    13px;
-  color:        #494949;
+  animation:  slide-up 0.30s ease;
+  display:    flex;
+  gap:        32px;
+  padding:    12px 20px;
+  background: #f5f5f5;
+  border-top: 1px solid #e0e0e0;
+  font-size:  13px;
+  color:      #555;
+  flex-wrap:  wrap;
 }
 .actions-total-item strong {
-  color:       #000000;
   font-size:   15px;
-  margin-left: 6px;
+  font-weight: 700;
+  color:       #111;
+  margin-left: 4px;
 }
 
 /* ── Barre de filtre date ── */

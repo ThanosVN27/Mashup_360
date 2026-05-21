@@ -158,12 +158,17 @@ export class ActionsComponent implements OnInit, OnChanges {
   private fmtStatus(v: string): string {
     const code = (v ?? '').trim();
     if (!code) return '';
-    const style = 'display:inline-block;padding:2px 10px;border-radius:10px;font-size:12px;font-weight:600;white-space:nowrap;';
+    const s = 'display:inline-block;padding:2px 10px;border-radius:10px;font-size:12px;font-weight:600;white-space:nowrap;';
     const map: Record<string, [string, string]> = {
-      '10': ['background:#fef3c7;color:#92400e;', '10 - Préliminaire'],
-      '20': ['background:#d1fae5;color:#065f46;', '20 - Actif'],
+      '10': ['background:#fef3c7;color:#92400e;', '10 – Préliminaire'],
+      '20': ['background:#d1fae5;color:#065f46;', '20 – Actif'],
+      '40': ['background:#dbeafe;color:#1e40af;', '40 – Part. livré'],
+      '50': ['background:#ede9fe;color:#5b21b6;', '50 – Livré'],
+      '60': ['background:#f0fdf4;color:#166534;', '60 – Facturé'],
+      '80': ['background:#f1f5f9;color:#475569;', '80 – Fermé'],
+      '90': ['background:#fef2f2;color:#991b1b;', '90 – Annulé'],
     };
     const [colors, label] = map[code] ?? ['background:#f9fafb;color:#374151;', code];
-    return `<span style="${style}${colors}">${label}</span>`;
+    return `<span style="${s}${colors}">${label}</span>`;
   }
 }
