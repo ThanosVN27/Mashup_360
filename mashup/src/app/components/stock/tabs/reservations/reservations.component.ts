@@ -16,6 +16,12 @@ export class ReservationsComponent implements OnChanges {
   readonly sortDate = { sortId: 'pldt', ascending: true };
   colonnes: SohoDataGridColumn[] = [];
 
+  get totalQty(): number { return this.lignes.reduce((s, l) => s + l.trqt, 0); }
+
+  fmt(n: number): string {
+    return Math.round(n || 0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['unms']) {
       this.colonnes = [

@@ -3,6 +3,8 @@ import { StockMouvement } from '../../../../models/stock-mouvement.model';
 import { formatM3Date, formatM3Qty } from '../../../../shared/utils/m3-date.util';
 import { formatM3Status } from '../../../../shared/utils/m3-status.util';
 
+
+
 @Component({
   selector:    'app-tab-ofpof',
   templateUrl: './ofpof.component.html',
@@ -25,6 +27,13 @@ export class OfPofComponent implements OnChanges {
 
   get countOf():  number { return this.toutesLignes.filter(l => l.orca === '101').length; }
   get countPof(): number { return this.toutesLignes.filter(l => l.orca === '100').length; }
+
+  get totalOfQty():  number { return this.toutesLignes.filter(l => l.orca === '101').reduce((s, l) => s + l.trqt, 0); }
+  get totalPofQty(): number { return this.toutesLignes.filter(l => l.orca === '100').reduce((s, l) => s + l.trqt, 0); }
+
+  fmt(n: number): string {
+    return Math.round(n || 0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['unms']) {
@@ -58,4 +67,6 @@ export class OfPofComponent implements OnChanges {
     if (this.filtre === 'pof') return data.filter(l => l.orca === '100');
     return [...data];
   }
+
+
 }

@@ -41,15 +41,15 @@
 .actions-totaux {
   animation: slide-up 0.30s ease;
   display:      flex;
-  gap:          32px;
+  gap:          35px;
   padding:      12px 20px;
   background:   #f5f5f5;
   border-top:   1px solid #e0e0e0;
   font-size:    13px;
-  color:        #555;
+  color:        #494949;
 }
 .actions-total-item strong {
-  color:       #333;
+  color:       #000000;
   font-size:   15px;
   margin-left: 6px;
 }
