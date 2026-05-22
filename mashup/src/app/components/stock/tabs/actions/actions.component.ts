@@ -1,7 +1,9 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+
 import { ContractLine, OrderLine } from '../../../../models/stock-aktions.model';
 import { StockClientService } from '../../../../services/stock-client.service';
 import { formatM3Num, formatM3QtyHtml } from '../../../../shared/utils/m3-date.util';
+
 
 @Component({
   selector:    'app-tab-actions',
@@ -33,29 +35,70 @@ export class ActionsComponent implements OnInit, OnChanges {
   popupError        = '';
   selectedContract: ContractLine | null = null;
 
+  readonly fmt = formatM3Num;
+
   constructor(private readonly clientService: StockClientService) {}
+
 
   ngOnInit(): void {
     this.colonnesContrat = [
-      { id: 'commandes',        name: '',             field: 'openOrderNumber', width: 130, align: 'center',
-        formatter: () => `<button style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;background:#fff;color:#0b6cbb;border:1.5px solid #0b6cbb;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;transition:background 0.15s;" onmouseover="this.style.background='#e8f0fb'" onmouseout="this.style.background='#fff'"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Commandes</button>` },
-      { id: 'customerCode',    name: 'Client',       field: 'customerCode',    width: 120, sortable: true, align: 'center', filterType: 'text' },
-      { id: 'openOrderNumber', name: 'N° Cde ouverte',   field: 'openOrderNumber', width: 120, sortable: true, align: 'center', filterType: 'text' },
-      { id: 'description',     name: 'Désignation',  field: 'description',     width: 400, sortable: true, align: 'center', filterType: 'text' },
-      { id: 'status',          name: 'Statut',       field: 'status',          width: 120, sortable: true, align: 'center', filterType: 'text',
-        formatter: (_r: number, _c: number, v: string) => this.fmtStatus(v) },
-      { id: 'lineStatus',      name: 'Statut ligne', field: 'lineStatus',      width: 120, sortable: true, align: 'center', filterType: 'text' ,
-        formatter: (_r: number, _c: number, v: string) => this.fmtStatus(v) },
-      { id: 'startDate',       name: 'Date début',   field: 'startDate',       width: 120, sortable: true, align: 'center', filterType: 'text' },
-      { id: 'endValidityDate', name: 'Fin validité', field: 'endValidityDate', width: 120, sortable: true, align: 'center', filterType: 'text' },
-      { id: 'contractQuantity',name: 'Qté contrat',  field: 'contractQuantity',width: 120, sortable: true, align: 'center', filterType: 'text',
-        formatter: (_r: number, _c: number, v: string) => this.fmtQty(v) },
-      { id: 'reservedQuantity', name: 'Qté réservée', field: 'reservedQuantity', width: 120, sortable: true, align: 'center', filterType: 'text',
-        formatter: (_r: number, _c: number, v: string) => this.fmtQty(v) },
-      { id: 'deliveredQuantity',name: 'Qté livrée',  field: 'deliveredQuantity',width: 120, sortable: true, align: 'center', filterType: 'text',
-        formatter: (_r: number, _c: number, v: string) => this.fmtQty(v) },
-      { id: 'differenceQty',   name: 'Reste à commander',   field: 'resteACommander',width: 150, sortable: true, align: 'center', filterType: 'text',
-        formatter: (_r: number, _c: number, v: string) => this.fmtQty(String(Math.max(0, parseFloat(v) || 0))) },
+      {
+        id: 'commandes', name: '', field: 'openOrderNumber',
+        width: 130, align: 'center',
+        formatter: () => this.btnCommandes(),
+      },
+      {
+        id: 'customerCode', name: 'Client', field: 'customerCode',
+        width: 120, sortable: true, align: 'center', filterType: 'text',
+      },
+      {
+        id: 'openOrderNumber', name: 'N° Cde ouverte', field: 'openOrderNumber',
+        width: 120, sortable: true, align: 'center', filterType: 'text',
+      },
+      {
+        id: 'description', name: 'Désignation', field: 'description',
+        width: 400, sortable: true, align: 'center', filterType: 'text',
+      },
+      {
+        id: 'status', name: 'Statut', field: 'status',
+        width: 120, sortable: true, align: 'center', filterType: 'text',
+        formatter: (_r: number, _c: number, v: string) => this.fmtStatus(v),
+      },
+      {
+        id: 'lineStatus', name: 'Statut ligne', field: 'lineStatus',
+        width: 120, sortable: true, align: 'center', filterType: 'text',
+        formatter: (_r: number, _c: number, v: string) => this.fmtStatus(v),
+      },
+      {
+        id: 'startDate', name: 'Date début', field: 'startDate',
+        width: 120, sortable: true, align: 'center', filterType: 'text',
+      },
+      {
+        id: 'endValidityDate', name: 'Fin validité', field: 'endValidityDate',
+        width: 120, sortable: true, align: 'center', filterType: 'text',
+      },
+      {
+        id: 'contractQuantity', name: 'Qté contrat', field: 'contractQuantity',
+        width: 120, sortable: true, align: 'center', filterType: 'text',
+        formatter: (_r: number, _c: number, v: string) => this.fmtQty(v),
+      },
+      {
+        id: 'reservedQuantity', name: 'Qté réservée', field: 'reservedQuantity',
+        width: 120, sortable: true, align: 'center', filterType: 'text',
+        formatter: (_r: number, _c: number, v: string) => this.fmtQty(v),
+      },
+      {
+        id: 'deliveredQuantity', name: 'Qté livrée', field: 'deliveredQuantity',
+        width: 120, sortable: true, align: 'center', filterType: 'text',
+        formatter: (_r: number, _c: number, v: string) => this.fmtQty(v),
+      },
+      {
+        id: 'differenceQty', name: 'Reste à commander', field: 'resteACommander',
+        width: 150, sortable: true, align: 'center', filterType: 'text',
+        // V_RQCO peut être négatif côté M3, on affiche 0 dans ce cas
+        formatter: (_r: number, _c: number, v: string) =>
+          this.fmtQty(String(Math.max(0, parseFloat(v) || 0))),
+      },
     ];
   }
 
@@ -67,8 +110,10 @@ export class ActionsComponent implements OnInit, OnChanges {
     }
   }
 
+
   onRowClicked(event: any): void {
     if (event?.cell !== 0) return;
+
     const contract = event?.item as ContractLine;
     if (!contract?.openOrderNumber) return;
 
@@ -84,16 +129,6 @@ export class ActionsComponent implements OnInit, OnChanges {
     });
   }
 
-  resetDates(): void {
-    this.dateFrom = '';
-    this.dateTo   = '';
-    this.applyFilter();
-  }
-
-  closePopup(): void { this.popupVisible = false; }
-
-  readonly fmt = formatM3Num;
-
   applyFilter(): void {
     const from = this.dateFrom ? new Date(this.dateFrom) : null;
     const to   = this.dateTo   ? new Date(this.dateTo)   : null;
@@ -102,7 +137,7 @@ export class ActionsComponent implements OnInit, OnChanges {
       ? [...this.contracts]
       : this.contracts.filter(c => {
           const d = this.parseContractDate(c.startDate);
-          if (!d) return true;
+          if (!d)               return true;
           if (from && d < from) return false;
           if (to   && d > to)   return false;
           return true;
@@ -112,25 +147,40 @@ export class ActionsComponent implements OnInit, OnChanges {
       const da = this.parseContractDate(a.startDate);
       const db = this.parseContractDate(b.startDate);
       if (!da && !db) return 0;
-      if (!da) return 1;
-      if (!db) return -1;
+      if (!da)        return 1;
+      if (!db)        return -1;
       return da.getTime() - db.getTime();
     });
 
     let contrat = 0, reservee = 0, livree = 0, reste = 0;
+
     for (const c of this.filteredContracts) {
       contrat  += parseFloat(c.contractQuantity)  || 0;
       reservee += parseFloat(c.reservedQuantity)  || 0;
       livree   += parseFloat(c.deliveredQuantity) || 0;
       reste    += Math.max(0, parseFloat(c.resteACommander) || 0);
     }
+
     this.filteredTotalContrat  = contrat;
     this.filteredTotalReservee = reservee;
     this.filteredTotalLivree   = livree;
     this.filteredTotalReste    = reste;
   }
 
-  fmtQty(v: string): string { return formatM3QtyHtml(v, this.unms); }
+  resetDates(): void {
+    this.dateFrom = '';
+    this.dateTo   = '';
+    this.applyFilter();
+  }
+
+  closePopup(): void {
+    this.popupVisible = false;
+  }
+
+  fmtQty(v: string): string {
+    return formatM3QtyHtml(v, this.unms);
+  }
+
 
   private loadContracts(): void {
     this.loadingContracts  = true;
@@ -144,7 +194,9 @@ export class ActionsComponent implements OnInit, OnChanges {
         this.contractsLoaded.emit(data.length);
         this.applyFilter();
       },
-      error: () => { this.loadingContracts = false; },
+      error: () => {
+        this.loadingContracts = false;
+      },
     });
   }
 
@@ -155,9 +207,34 @@ export class ActionsComponent implements OnInit, OnChanges {
     return isNaN(dt.getTime()) ? null : dt;
   }
 
+  // Génère le bouton HTML "Commandes" affiché dans la première colonne
+  private btnCommandes(): string {
+    const style =
+      'display:inline-flex;align-items:center;gap:5px;padding:4px 10px;' +
+      'background:#fff;color:#0b6cbb;border:1.5px solid #0b6cbb;border-radius:6px;' +
+      'font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;';
+
+    const icon =
+      '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" ' +
+      'stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">' +
+      '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>' +
+      '<polyline points="14 2 14 8 20 8"/>' +
+      '<line x1="16" y1="13" x2="8" y2="13"/>' +
+      '<line x1="16" y1="17" x2="8" y2="17"/>' +
+      '<polyline points="10 9 9 9 8 9"/></svg>';
+
+    return (
+      `<button style="${style}" ` +
+      `onmouseover="this.style.background='#e8f0fb'" ` +
+      `onmouseout="this.style.background='#fff'">${icon}Commandes</button>`
+    );
+  }
+
+  // Badge coloré selon le statut du contrat (10 à 90)
   private fmtStatus(v: string): string {
     const code = (v ?? '').trim();
     if (!code) return '';
+
     const s = 'display:inline-block;padding:2px 10px;border-radius:10px;font-size:12px;font-weight:600;white-space:nowrap;';
     const map: Record<string, [string, string]> = {
       '10': ['background:#fef3c7;color:#92400e;', '10 – Préliminaire'],
@@ -168,6 +245,7 @@ export class ActionsComponent implements OnInit, OnChanges {
       '80': ['background:#f1f5f9;color:#475569;', '80 – Fermé'],
       '90': ['background:#fef2f2;color:#991b1b;', '90 – Annulé'],
     };
+
     const [colors, label] = map[code] ?? ['background:#f9fafb;color:#374151;', code];
     return `<span style="${s}${colors}">${label}</span>`;
   }
