@@ -1,50 +1,49 @@
-@keyframes fade-in   { from { opacity: 0; } to { opacity: 1; } }
-@keyframes slide-up  { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fade-in  { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slide-up { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 
 .tab-content {
-  padding:          0;
-  background-color: #ffffff;
-  animation:        fade-in 0.20s ease;
+  padding:    0;
+  background: #ffffff;
+  animation:  fade-in 0.20s ease;
 }
 
-/* Badges OF / POF dans la grille */
-.badge-of  { color: #15803d; font-weight: 700; }
-.badge-pof { color: #0b6cbb; font-weight: 700; }
+.tab-content > div[soho-datagrid] {
+  overflow-x:               auto;
+  -webkit-overflow-scrolling: touch;
+}
 
-/* ── Barre de filtre ── */
+/* Badges dans la grille */
+.badge-of  { color: #15803d; font-weight: 700; }
+.badge-pof { color: #1d4ed8; font-weight: 700; }
+
+/* Barre de filtre */
 .ofpof-toolbar {
-  display:     flex;
-  gap:         6px;
-  padding:     12px 16px 8px;
+  display: flex;
+  gap:     6px;
+  padding: 12px 16px 8px;
 }
 
 .ofpof-btn {
-  display:       inline-flex;
-  align-items:   center;
-  gap:           6px;
-  padding:       5px 14px;
-  border:        1px solid #d8d8d8;
-  border-radius: 3px;
-  background:    #f0f0f0;
-  color:         #767676;
-  font-size:     12px;
-  font-weight:   700;
-  cursor:        pointer;
+  display:        inline-flex;
+  align-items:    center;
+  gap:            6px;
+  padding:        5px 14px;
+  border:         1px solid #e2e8f0;
+  border-radius:  6px;
+  background:     #f8fafc;
+  color:          #64748b;
+  font-size:      12px;
+  font-weight:    700;
+  cursor:         pointer;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  transition:    all 0.15s ease;
+  transition:     all 0.15s ease;
 }
+.ofpof-btn:hover { background: #e2e8f0; color: #334155; }
 
-.ofpof-btn:hover { background: #e0e0e0; color: #333333; }
-
-.ofpof-btn--active {
-  background: #0b6cbb;
-  border-color: #0b6cbb;
-  color: #ffffff;
-}
-
+.ofpof-btn--active      { background: #0b6cbb; border-color: #0b6cbb; color: #ffffff; }
 .badge-of-btn.ofpof-btn--active  { background: #15803d; border-color: #15803d; }
-.badge-pof-btn.ofpof-btn--active { background: #0b6cbb; border-color: #0b6cbb; }
+.badge-pof-btn.ofpof-btn--active { background: #1d4ed8; border-color: #1d4ed8; }
 
 .ofpof-count {
   display:         inline-flex;
@@ -54,33 +53,27 @@
   height:          16px;
   padding:         0 4px;
   border-radius:   8px;
-  background:      rgba(255,255,255,0.25);
+  background:      rgba(255, 255, 255, 0.25);
   font-size:       10px;
   font-weight:     800;
 }
 
-/* Wrapper scrollable sur mobile */
-.tab-content > div[soho-datagrid] {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* ── Barre de totaux ── */
 .totaux-bar {
-  animation:   slide-up 0.30s ease;
-  display:     flex;
-  gap:         32px;
-  padding:     12px 20px;
-  background:  #f5f5f5;
-  border-top:  1px solid #e0e0e0;
-  font-size:   13px;
-  color:       #555;
-  flex-wrap:   wrap;
+  display:      flex;
+  gap:          32px;
+  padding:      13px 22px;
+  background:   #f8fafc;
+  border-top:   1px solid #e2e8f0;
+  border-left:  3px solid #16a34a;
+  font-size:    13px;
+  color:        #64748b;
+  flex-wrap:    wrap;
+  animation:    slide-up 0.25s ease;
 }
 .totaux-bar strong {
   font-size:   15px;
   font-weight: 700;
-  color:       #111;
+  color:       #1e293b;
   margin-left: 4px;
 }
 .totaux-bar em {
@@ -92,25 +85,24 @@
 }
 
 .empty-msg {
-  padding:       48px 20px;
+  padding:       56px 20px;
   text-align:    center;
   color:         #94a3b8;
-  font-size:     15px;
-  font-style:    italic;
+  font-size:     14px;
   border:        2px dashed #e2e8f0;
-  border-radius: 8px;
+  border-radius: 10px;
   margin:        16px;
 }
 
 .error-msg {
-  display:          flex;
-  align-items:      center;
-  gap:              10px;
-  color:            #b91c1c;
-  padding:          14px 16px;
-  border:           1px solid #fca5a5;
-  border-radius:    8px;
-  background-color: #fef2f2;
-  margin:           16px;
-  font-size:        14px;
+  display:       flex;
+  align-items:   center;
+  gap:           10px;
+  color:         #b91c1c;
+  padding:       14px 16px;
+  border:        1px solid #fca5a5;
+  border-radius: 8px;
+  background:    #fef2f2;
+  margin:        16px;
+  font-size:     14px;
 }

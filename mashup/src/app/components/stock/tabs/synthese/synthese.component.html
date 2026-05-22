@@ -1,34 +1,40 @@
 <div class="synth-grid">
 
-  <!-- ── En-têtes ── -->
+  <!-- En-têtes -->
   <div class="synth-head">Stock actuel</div>
   <div class="synth-head">Flux à venir</div>
 
-  <!-- ── Colonne gauche : Stock actuel ── -->
+  <!-- Colonne gauche : Stock actuel -->
   <div class="synth-col">
-    <div class="synth-cell synth-l">
+
+    <div class="synth-cell synth-cell--primary">
       <span class="synth-label">Stock disponible</span>
       <span class="synth-val">{{ fmt(article.aval) }} <em>{{ article.unms }}</em></span>
     </div>
-    <div class="synth-cell synth-l">
+
+    <div class="synth-cell synth-cell--slate">
       <span class="synth-label">Stock affectable</span>
       <span class="synth-val">{{ fmt(article.effec) }} <em>{{ article.unms }}</em></span>
     </div>
-   <div class="synth-cell synth-l synth-last" *ngIf="article.cofa">
+
+    <div class="synth-cell synth-cell--purple" *ngIf="article.cofa">
       <span class="synth-label">Conditionnement</span>
-      <span class="synth-val">{{ fmt(article.cofa) }} <em>{{ article.alun }}</em></span>
+      <span class="synth-val">{{ article.cofa }} <em>{{ article.alun }}</em></span>
     </div>
-    <div class="synth-cell synth-l synth-warning">
+
+    <div class="synth-cell synth-warning">
       <span class="synth-label">Stock sous contrôle</span>
       <span class="synth-val synth-val--warn">{{ fmt(article.quqt) }} <em>{{ article.unms }}</em></span>
     </div>
-    <div class="synth-cell synth-l" [class.synth-last]="!article.cofa" [class.synth-danger]="true">
+
+    <div class="synth-cell synth-danger">
       <span class="synth-label">Stock non conforme</span>
       <span class="synth-val synth-val--danger">{{ fmt(article.rjqt) }} <em>{{ article.unms }}</em></span>
     </div>
+
   </div>
 
-  <!-- ── Colonne droite : Flux à venir ── -->
+  <!-- Colonne droite : Flux à venir -->
   <div class="synth-col synth-col-flux">
 
     <!-- Flux entrant : OF + POF + Achats -->
@@ -36,7 +42,7 @@
       <div class="flux-group-hd synth-link" (click)="fluxEntrantOpen = !fluxEntrantOpen">
         <span class="flux-icon flux-icon--in">↓</span>
         <span class="flux-group-title">Flux entrant</span>
-        <span class="flux-chevron">{{ fluxEntrantOpen ? '▲' : '▼' }}</span>
+        <span class="flux-chevron">{{ fluxEntrantOpen ? '▴' : '▾' }}</span>
       </div>
       <div class="flux-group-body" *ngIf="fluxEntrantOpen">
         <div class="flux-line synth-link" (click)="tabChange.emit('ofpof')">
@@ -59,14 +65,12 @@
       <div class="flux-group-hd synth-link" (click)="fluxSortantOpen = !fluxSortantOpen">
         <span class="flux-icon flux-icon--out">↑</span>
         <span class="flux-group-title">Flux sortant</span>
-        <span class="flux-chevron">{{ fluxSortantOpen ? '▲' : '▼' }}</span>
+        <span class="flux-chevron">{{ fluxSortantOpen ? '▴' : '▾' }}</span>
       </div>
       <div class="flux-group-body" *ngIf="fluxSortantOpen">
         <div class="flux-line flux-line--diff synth-link" (click)="tabChange.emit('actions')">
           <span class="flux-line-label">QTE aktions à commander</span>
-          <span class="flux-line-val">
-            {{ fmt(article.totalReste) }} <em>{{ article.unms }}</em>
-          </span>
+          <span class="flux-line-val">{{ fmt(article.totalReste) }} <em>{{ article.unms }}</em></span>
         </div>
         <div class="flux-line synth-link" (click)="tabChange.emit('ventes')">
           <span class="flux-line-label">Réservations clients</span>

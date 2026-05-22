@@ -1,33 +1,33 @@
-@keyframes fade-in   { from { opacity: 0; } to { opacity: 1; } }
-@keyframes slide-up  { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fade-in  { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slide-up { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 
 .tab-content {
-  padding:          0;
-  background-color: #ffffff;
-  animation:        fade-in 0.20s ease;
+  padding:    0;
+  background: #ffffff;
+  animation:  fade-in 0.20s ease;
 }
 
 .tab-content > div[soho-datagrid] {
-  overflow-x: auto;
+  overflow-x:               auto;
   -webkit-overflow-scrolling: touch;
 }
 
-/* ── Barre de totaux ── */
 .totaux-bar {
-  animation:   slide-up 0.30s ease;
-  display:     flex;
-  gap:         32px;
-  padding:     12px 20px;
-  background:  #f5f5f5;
-  border-top:  1px solid #e0e0e0;
-  font-size:   13px;
-  color:       #555;
-  flex-wrap:   wrap;
+  display:      flex;
+  gap:          32px;
+  padding:      13px 22px;
+  background:   #f8fafc;
+  border-top:   1px solid #e2e8f0;
+  border-left:  3px solid #dc2626;
+  font-size:    13px;
+  color:        #64748b;
+  flex-wrap:    wrap;
+  animation:    slide-up 0.25s ease;
 }
 .totaux-bar strong {
   font-size:   15px;
   font-weight: 700;
-  color:       #111;
+  color:       #1e293b;
   margin-left: 4px;
 }
 .totaux-bar em {
@@ -39,25 +39,24 @@
 }
 
 .empty-msg {
-  padding:       48px 20px;
+  padding:       56px 20px;
   text-align:    center;
   color:         #94a3b8;
-  font-size:     15px;
-  font-style:    italic;
+  font-size:     14px;
   border:        2px dashed #e2e8f0;
-  border-radius: 8px;
+  border-radius: 10px;
   margin:        16px;
 }
 
 .error-msg {
-  display:          flex;
-  align-items:      center;
-  gap:              10px;
-  color:            #b91c1c;
-  padding:          14px 16px;
-  border:           1px solid #fca5a5;
-  border-radius:    8px;
-  background-color: #fef2f2;
-  margin:           16px;
-  font-size:        14px;
+  display:       flex;
+  align-items:   center;
+  gap:           10px;
+  color:         #b91c1c;
+  padding:       14px 16px;
+  border:        1px solid #fca5a5;
+  border-radius: 8px;
+  background:    #fef2f2;
+  margin:        16px;
+  font-size:     14px;
 }

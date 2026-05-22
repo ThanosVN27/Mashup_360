@@ -26,13 +26,18 @@
 
     <!-- En-tête article -->
     <div class="article-header">
-      <div class="article-code">
-        <span class="article-code__label">Code P.F.</span>
-        <strong class="article-code__value">{{ article.itno }}</strong>
+      <div class="article-header-main">
+        <div class="article-code">
+          <span class="article-code__label">Code P.F.</span>
+          <strong class="article-code__value">{{ article.itno }}</strong>
+        </div>
+        <div class="article-divider"></div>
+        <div class="article-libelle">{{ article.itds }}</div>
       </div>
-      <div class="article-libelle">{{ article.itds }}</div>
-      <div class="article-poids">Poids net : <strong>{{ article.poidsNet }} kg</strong></div>
-      <span class="article-tag" *ngIf="article.cofa">{{ article.cofa }} {{ article.alun }}</span>
+      <div class="article-meta">
+        <span class="article-tag" *ngIf="article.cofa">{{ article.cofa }} {{ article.alun }}</span>
+        <div class="article-poids">Poids net&nbsp;: <strong>{{ article.poidsNet }} kg</strong></div>
+      </div>
     </div>
 
     <!-- Onglets -->
@@ -47,8 +52,6 @@
           {{ tab.label }}
           <span *ngIf="tab.badge" class="tab-count">{{ badgeFor(tab.id) }}</span>
         </button>
-
-
       </nav>
 
       <!-- Contenu des onglets -->

@@ -1,254 +1,258 @@
 /* ── Keyframes ── */
 @keyframes cell-in {
-  from { opacity: 0; transform: translateY(8px); }
+  from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 @keyframes fade-in {
   from { opacity: 0; }
   to   { opacity: 1; }
 }
+@keyframes expand {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 
-/* ── Grid principal : 2 colonnes, lignes partagées → hauteurs identiques ── */
+/* ── Grid principal : 2 colonnes ── */
 .synth-grid {
   display:               grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows:    auto 1fr;
-  gap:                   0 24px;
+  gap:                   0 20px;
 }
 
 @media (max-width: 800px) {
-  .synth-grid { grid-template-columns: 1fr; }
+  .synth-grid {
+    grid-template-columns: 1fr;
+    gap: 16px 0;
+  }
 }
 
-/* ── En-têtes ── */
+/* ── En-têtes de colonne ── */
 .synth-head {
-  padding:        13px 17px;
-  font-size:      15px;
-  font-weight:    700;
-  color:          #333333;
-  background:     #f0f0f0;
+  padding:        12px 18px;
+  font-size:      13px;
+  font-weight:    700px;
+  color:          #64748b;
+  background:     #f8fafc;
   text-transform: uppercase;
-  letter-spacing: 0.8px;
-  border:         1px solid #d8d8d8;
+  letter-spacing: 1px;
+  border:         1px solid #e2e8f0;
   border-bottom:  2px solid #0b6cbb;
-  border-radius:  4px 4px 0 0;
+  border-radius:  8px 8px 0 0;
   animation:      fade-in 0.25s ease;
 }
 
-/* ── Cellules de données ── */
+/* ── Colonnes ── */
+.synth-col {
+  display:        flex;
+  flex-direction: column;
+  align-self:     stretch;
+  border:         1px solid #e2e8f0;
+  border-top:     none;
+  border-radius:  0 0 8px 8px;
+  overflow:       hidden;
+}
+
+.synth-col .synth-cell { flex: 1; }
+
+.synth-col-flux {
+  border-top:  none;
+  height:      100%;
+  box-sizing:  border-box;
+}
+
+/* ── Cellules ── */
 .synth-cell {
   display:         flex;
   justify-content: space-between;
   align-items:     center;
-  padding:         19px 20px;
-  border-bottom:   1px solid #f0f0f0;
+  padding:         18px 20px;
+  border-bottom:   1px solid #f1f5f9;
+  background:      #ffffff;
   transition:      background-color 0.15s ease;
-  animation:       cell-in 0.30s ease both;
-}
-.synth-cell:nth-child(1) { animation-delay: 0.05s; }
-.synth-cell:nth-child(2) { animation-delay: 0.10s; }
-.synth-cell:nth-child(3) { animation-delay: 0.15s; }
-.synth-cell:nth-child(4) { animation-delay: 0.20s; }
-
-.synth-cell:hover { background: #f8f8f8; }
-
-.synth-l {
-  border-left:  1px solid #d8d8d8;
-  border-right: 1px solid #d8d8d8;
+  animation:       cell-in 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.synth-r {
-  border-left:  1px solid #d8d8d8;
-  border-right: 1px solid #d8d8d8;
+.synth-cell:nth-child(1) { animation-delay: 0.04s; }
+.synth-cell:nth-child(2) { animation-delay: 0.08s; }
+.synth-cell:nth-child(3) { animation-delay: 0.12s; }
+.synth-cell:nth-child(4) { animation-delay: 0.16s; }
+.synth-cell:nth-child(5) { animation-delay: 0.20s; }
+
+.synth-cell:last-child { border-bottom: none; }
+.synth-cell:hover      { background: #f8fafc; }
+
+/* Accent gauche selon type de cellule */
+.synth-cell--primary { border-left: 3px solid #0b6cbb; }
+.synth-cell--slate   { border-left: 3px solid #94a3b8; }
+.synth-cell--purple  { border-left: 3px solid #8b5cf6; }
+
+/* ── Layout gauche de la cellule ── */
+.synth-cell-left {
+  display:     flex;
+  align-items: center;
+  gap:         10px;
 }
 
-/* Dernière ligne */
-.synth-last {
-  border-bottom: 1px solid #d8d8d8;
-  border-radius: 0 0 4px 4px;
+/* ── Dot indicateur ── */
+.synth-dot {
+  width:        8px;
+  height:       8px;
+  border-radius: 50%;
+  flex-shrink:  0;
 }
+.synth-dot--blue   { background: #0b6cbb; }
+.synth-dot--slate  { background: #94a3b8; }
+.synth-dot--purple { background: #8b5cf6; }
+.synth-dot--amber  { background: #f59e0b; }
+.synth-dot--red    { background: #ef4444; }
 
 /* ── Variantes de fond ── */
-.synth-warning { background: #fff8e6; border-left: 4px solid #f0a500 !important; }
-.synth-danger  { background: #fdf1f1; border-left: 4px solid #c40a0a !important; }
-.synth-check   { background: #f1f8ee; border-left: 4px solid #2d8600 !important; }
+.synth-warning { background: #fffbeb !important; border-left: 3px solid #f59e0b !important; }
+.synth-danger  { background: #fff5f5 !important; border-left: 3px solid #ef4444 !important; }
+.synth-check   { background: #f0fdf4 !important; border-left: 3px solid #22c55e !important; }
+
+.synth-warning:hover { background: #fef3c7 !important; }
+.synth-danger:hover  { background: #fee2e2 !important; }
 
 /* ── Labels ── */
 .synth-label {
   font-size:      13px;
   font-weight:    600;
-  color:          #767676;
+  color:          #94a3b8;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.synth-label small {
-  display:        block;
-  font-size:      1px;
-  font-weight:    400;
-  color:          #b3b3b3;
-  margin-top:     3px;
-  text-transform: none;
-  letter-spacing: 0;
+  letter-spacing: 0.6px;
+  line-height:    1.4;
 }
 
 /* ── Valeurs ── */
 .synth-val {
   font-size:   17px;
   font-weight: 700;
-  color:       #333333;
+  color:       #1e293b;
   text-align:  right;
+  line-height: 1;
 }
 
 .synth-val em {
   font-style:  normal;
-  font-size:   15px;
+  font-size:   13px;
   font-weight: 400;
-  color:       #b3b3b3;
-  margin-left: 5px;
+  color:       #94a3b8;
+  margin-left: 4px;
 }
 
-.synth-val--warn   { color: #a56200; }
-.synth-val--danger { color: #c40a0a; }
-
-.synth-val--with-badge {
-  display:     flex;
-  align-items: center;
-  gap:         10px;
-}
-
-/* ── Tags ── */
-.tag {
-  font-size:      10px;
-  font-weight:    700;
-  padding:        3px 7px;
-  border-radius:  3px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  white-space:    nowrap;
-}
-
-.tag-ok  { background: #e1f2d6; color: #1f5c00; }
-.tag-err { background: #fce8e8; color: #8f0000; }
-
-/* ── Colonnes internes ── */
-.synth-col {
-  display:        flex;
-  flex-direction: column;
-  align-self:     stretch;
-}
-
-/* Les cellules gauches se répartissent également dans la hauteur disponible */
-.synth-col .synth-cell {
-  flex: 1;
-}
-
-/* Colonne flux : bordure globale qui reprend celle du header */
-.synth-col-flux {
-  border:        1px solid #d8d8d8;
-  border-top:    none;
-  border-radius: 0 0 4px 4px;
-  overflow:      visible;
-  height:        100%;
-  box-sizing:    border-box;
-}
+.synth-val--warn   { color: #b45309; }
+.synth-val--danger { color: #dc2626; }
 
 /* ── Groupes accordéon ── */
 .flux-group {
-  flex:          1;
-  display:       flex;
+  flex:           1;
+  display:        flex;
   flex-direction: column;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom:  1px solid #e2e8f0;
 }
 .flux-group--last { border-bottom: none; }
 
 .flux-group-body {
   flex:       1;
-  background: #fff;
+  background: #ffffff;
+  animation:  expand 0.18s ease;
 }
 
 .flux-group-hd {
-  display:        flex;
-  align-items:    center;
-  gap:            10px;
-  padding:        15px 18px;
-  background:     #f5f5f5;
-  cursor:         pointer;
-  transition:     background 0.15s;
+  display:     flex;
+  align-items: center;
+  gap:         10px;
+  padding:     14px 18px;
+  background:  #f8fafc;
+  cursor:      pointer;
+  transition:  background 0.15s;
+  user-select: none;
 }
-.flux-group-hd:hover { background: #eef4fb; }
+.flux-group-hd:hover { background: #eff6ff; }
 
+/* ── Icône flux (cercle coloré) ── */
 .flux-icon {
-  font-size:   18px;
-  font-weight: 700;
-  line-height: 1;
+  font-size:       15px;
+  font-weight:     700;
+  line-height:     1;
+  width:           24px;
+  height:          24px;
+  display:         inline-flex;
+  align-items:     center;
+  justify-content: center;
+  border-radius:   50%;
+  flex-shrink:     0;
 }
-.flux-icon--in  { color: #2d8600; }
-.flux-icon--out { color: #c40a0a; }
+.flux-icon--in  { color: #16a34a; background: #dcfce7; }
+.flux-icon--out { color: #dc2626; background: #fee2e2; }
 
 .flux-group-title {
   flex:           1;
   font-size:      13px;
   font-weight:    700;
-  color:          #444;
+  color:          #475569;
   text-transform: uppercase;
-  letter-spacing: 0.6px;
+  letter-spacing: 0.7px;
 }
 
-.flux-group-total {
-  font-size:   17px;
+/* ── Total visible dans le header accordéon ── */
+.flux-header-total {
+  font-size:   15px;
   font-weight: 700;
-  color:       #333;
+  margin-right: 8px;
 }
-.flux-group-total em {
+.flux-header-total em {
   font-style:  normal;
-  font-size:   12px;
+  font-size:   11px;
   font-weight: 400;
-  color:       #b3b3b3;
-  margin-left: 4px;
+  color:       #94a3b8;
+  margin-left: 3px;
 }
+.flux-header-total--in  { color: #16a34a; }
+.flux-header-total--out { color: #dc2626; }
 
 .flux-chevron {
   font-size: 10px;
-  color:     #999;
+  color:     #94a3b8;
 }
 
 /* ── Lignes dans le groupe ── */
-
 .flux-line {
   display:         flex;
   justify-content: space-between;
   align-items:     center;
-  padding:         17px 22px;
-  border-bottom:   1px solid #f0f0f0;
+  padding:         16px 22px;
+  border-bottom:   1px solid #f1f5f9;
   cursor:          pointer;
   transition:      background 0.15s;
 }
 .flux-line:last-child { border-bottom: none; }
-.flux-line:hover      { background: #eef4fb; }
+.flux-line:hover      { background: #eff6ff; }
 
 .flux-line-label {
   font-size:      13px;
   font-weight:    600;
-  color:          #767676;
+  color:          #94a3b8;
   text-transform: uppercase;
-  letter-spacing: 0.4px;
+  letter-spacing: 0.5px;
 }
 
 .flux-line-val {
   font-size:   17px;
   font-weight: 700;
-  color:       #333;
+  color:       #1e293b;
 }
 .flux-line-val em {
   font-style:  normal;
-  font-size:   14px;
+  font-size:   13px;
   font-weight: 400;
-  color:       #b3b3b3;
+  color:       #94a3b8;
   margin-left: 4px;
 }
 
-/* ── Toggle + dropdown côte à côte dans le header flux sortant ── */
+/* ── Dropdown groupe de dépôts ── */
 .flux-hd-toggle {
   flex:        1;
   display:     flex;
@@ -257,64 +261,60 @@
   cursor:      pointer;
 }
 
-/* ── Dropdown groupe de dépôts (flux sortant) ── */
 .flux-whgr-dropdown { position: relative; }
 
 .flux-whgr-btn {
   display:       flex;
   align-items:   center;
   gap:           6px;
-  padding:       5px 10px;
-  border:        1px solid #c8c8c8;
-  border-radius: 4px;
-  background:    #fff;
-  color:         #333;
+  padding:       5px 12px;
+  border:        1px solid #e2e8f0;
+  border-radius: 6px;
+  background:    #ffffff;
+  color:         #475569;
   font-size:     12px;
   font-weight:   600;
   cursor:        pointer;
   white-space:   nowrap;
-  transition:    border-color 0.15s;
+  transition:    border-color 0.15s, box-shadow 0.15s;
 }
-.flux-whgr-btn:hover { border-color: #0b6cbb; }
+.flux-whgr-btn:hover {
+  border-color: #0b6cbb;
+  box-shadow:   0 0 0 3px rgba(11, 108, 187, 0.1);
+}
 
-.flux-whgr-arrow { font-size: 8px; color: #999; }
+.flux-whgr-arrow { font-size: 8px; color: #94a3b8; }
 
 .flux-whgr-list {
   position:      absolute;
   right:         0;
-  bottom:        calc(100% + 4px);
-  background:    #fff;
-  border:        1px solid #d8d8d8;
-  border-radius: 6px;
-  box-shadow:    0 6px 20px rgba(0,0,0,0.15);
+  bottom:        calc(100% + 6px);
+  background:    #ffffff;
+  border:        1px solid #e2e8f0;
+  border-radius: 8px;
+  box-shadow:    0 8px 24px rgba(0, 0, 0, 0.12);
   z-index:       200;
-  min-width:     220px;
+  min-width:     230px;
   max-height:    420px;
   overflow-y:    auto;
 }
 
 .flux-whgr-option {
-  padding:     12px 18px;
-  font-size:   14px;
+  padding:     11px 16px;
+  font-size:   13px;
   font-weight: 500;
-  color:       #333;
+  color:       #334155;
   cursor:      pointer;
   transition:  background 0.12s;
 }
-.flux-whgr-option:hover   { background: #eef4fb; color: #0b6cbb; }
-.flux-whgr-option--active { background: #e4eef9; color: #0b6cbb; font-weight: 700; }
+.flux-whgr-option:hover   { background: #eff6ff; color: #0b6cbb; }
+.flux-whgr-option--active { background: #dbeafe; color: #1d4ed8; font-weight: 700; }
 
 /* ── Ligne différence ── */
-.flux-line--diff {
-  cursor: pointer;
-}
-.flux-line--diff:hover { background: #f8f8f8; }
+.flux-line--diff { cursor: pointer; }
+.flux-val--neg   { color: #dc2626 !important; }
 
-.flux-val--neg { color: #b91c1c !important; }
-
-/* ── Cellule / label cliquable ── */
+/* ── Cellule cliquable ── */
 .synth-link { cursor: pointer; }
-
-.synth-cell.synth-link:hover { background: #eef4fb !important; }
-
+.synth-cell.synth-link:hover { background: #eff6ff !important; }
 .synth-label.synth-link:hover { color: #0b6cbb; text-decoration: underline; }
