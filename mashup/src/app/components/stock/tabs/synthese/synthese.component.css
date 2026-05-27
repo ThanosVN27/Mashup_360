@@ -28,8 +28,8 @@
 
 /* En-tête de colonne — le trait bleu rappelle la couleur primaire */
 .synth-head {
-  padding:        12px 18px;
-  font-size:      15px;
+  padding:        14px 22px;
+  font-size:      16px;
   font-weight:    700;
   color:          #111827;
   background:     #f8fafc;
@@ -67,7 +67,7 @@
   display:         flex;
   justify-content: space-between;
   align-items:     center;
-  padding:         16px 20px;
+  padding:         22px 26px;
   border-bottom:   1px solid #f1f5f9;
   background:      #ffffff;
   position:        relative;
@@ -87,10 +87,10 @@
 
 /* Levée 3D au survol — la cellule sort légèrement du plan */
 .synth-cell:hover {
-  background:  #f8fafc;
-  transform:   translateY(-3px) scale(1.01);
-  box-shadow:  0 8px 24px rgba(11, 108, 187, 0.12), 0 2px 6px rgba(0, 0, 0, 0.06);
-  z-index:     2;
+  background:        #f8fafc;
+  transform:         translateY(-3px) scale(1.01);
+  box-shadow:        0 8px 24px rgba(11, 108, 187, 0.12), 0 2px 6px rgba(0, 0, 0, 0.06);
+  z-index:           2;
   border-left-width: 4px;
 }
 
@@ -103,13 +103,13 @@
 .synth-cell-left {
   display:     flex;
   align-items: center;
-  gap:         10px;
+  gap:         12px;
 }
 
 /* Icône SVG dans chaque cellule */
 .synth-icon {
-  width:       16px;
-  height:      16px;
+  width:       20px;
+  height:      20px;
   flex-shrink: 0;
 }
 .synth-icon--blue   { color: #0b6cbb; }
@@ -131,7 +131,7 @@
 
 /* Label en petites majuscules grises */
 .synth-label {
-  font-size:      12px;
+  font-size:      13px;
   font-weight:    600;
   color:          #94a3b8;
   text-transform: uppercase;
@@ -141,7 +141,7 @@
 
 /* Valeur principale — grosse et grasse */
 .synth-val {
-  font-size:   17px;
+  font-size:   18px;
   font-weight: 700;
   color:       #1e293b;
   text-align:  right;
@@ -150,7 +150,7 @@
 
 .synth-val em {
   font-style:  normal;
-  font-size:   12px;
+  font-size:   14px;
   font-weight: 400;
   color:       #94a3b8;
   margin-left: 4px;
@@ -178,8 +178,8 @@
 .flux-group-hd {
   display:     flex;
   align-items: center;
-  gap:         10px;
-  padding:     14px 18px;
+  gap:         12px;
+  padding:     18px 24px;
   background:  #f8fafc;
   cursor:      pointer;
   transition:  background 0.18s, transform 0.18s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.18s;
@@ -193,22 +193,22 @@
 
 /* Icône ronde colorée — SVG entouré d'un fond */
 .flux-icon {
-  width:           28px;
-  height:          28px;
+  width:           36px;
+  height:          36px;
   display:         inline-flex;
   align-items:     center;
   justify-content: center;
   border-radius:   50%;
   flex-shrink:     0;
 }
-.flux-icon svg { width: 14px; height: 14px; }
+.flux-icon svg { width: 18px; height: 18px; }
 
 .flux-icon--in  { color: #16a34a; background: #dcfce7; }
 .flux-icon--out { color: #dc2626; background: #fee2e2; }
 
 .flux-group-title {
   flex:           1;
-  font-size:      12px;
+  font-size:      13px;
   font-weight:    700;
   color:          #475569;
   text-transform: uppercase;
@@ -217,23 +217,23 @@
 
 /* Chevron SVG qui pivote de 180° quand le groupe est ouvert */
 .flux-chevron {
-  width:      16px;
-  height:     16px;
-  color:      #94a3b8;
+  width:       18px;
+  height:      18px;
+  color:       #94a3b8;
   flex-shrink: 0;
-  transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  transition:  transform 0.22s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .flux-chevron--open { transform: rotate(180deg); }
 
 /* Ligne de détail cliquable pour naviguer vers l'onglet */
 .flux-line {
-  display:         flex;
-  align-items:     center;
-  gap:             8px;
-  padding:         15px 22px;
-  border-bottom:   1px solid #f1f5f9;
-  cursor:          pointer;
-  transition:      background 0.18s, transform 0.18s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.18s;
+  display:       flex;
+  align-items:   center;
+  gap:           10px;
+  padding:       19px 28px;
+  border-bottom: 1px solid #f1f5f9;
+  cursor:        pointer;
+  transition:    background 0.18s, transform 0.18s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.18s;
 }
 .flux-line:last-child { border-bottom: none; }
 .flux-line:hover {
@@ -247,7 +247,7 @@
 
 .flux-line-label {
   flex:           1;
-  font-size:      12px;
+  font-size:      13px;
   font-weight:    600;
   color:          #94a3b8;
   text-transform: uppercase;
@@ -255,13 +255,13 @@
 }
 
 .flux-line-val {
-  font-size:   16px;
+  font-size:   17px;
   font-weight: 700;
   color:       #1e293b;
 }
 .flux-line-val em {
   font-style:  normal;
-  font-size:   12px;
+  font-size:   14px;
   font-weight: 400;
   color:       #94a3b8;
   margin-left: 4px;
@@ -269,12 +269,12 @@
 
 /* Petite flèche droite — invisible par défaut, apparaît au hover */
 .flux-line-arrow {
-  width:      14px;
-  height:     14px;
-  color:      #0b6cbb;
-  opacity:    0;
+  width:       16px;
+  height:      16px;
+  color:       #0b6cbb;
+  opacity:     0;
   flex-shrink: 0;
-  transition: opacity 0.15s, transform 0.15s;
+  transition:  opacity 0.15s, transform 0.15s;
 }
 
 /* Dropdown groupe de dépôts */
