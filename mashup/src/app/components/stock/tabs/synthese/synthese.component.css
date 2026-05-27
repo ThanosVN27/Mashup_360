@@ -1,4 +1,4 @@
-/* ── Keyframes ── */
+/* Entrée des cellules depuis le bas — décalé par enfant pour un effet cascade */
 @keyframes cell-in {
   from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -7,12 +7,13 @@
   from { opacity: 0; }
   to   { opacity: 1; }
 }
+/* Ouverture du corps d'un accordéon */
 @keyframes expand {
-  from { opacity: 0; transform: translateY(-4px); }
+  from { opacity: 0; transform: translateY(-6px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ── Grid principal : 2 colonnes ── */
+/* Deux colonnes égales — stock à gauche, flux à droite */
 .synth-grid {
   display:               grid;
   grid-template-columns: 1fr 1fr;
@@ -20,18 +21,16 @@
   gap:                   0 20px;
 }
 
+/* Sur mobile on empile les colonnes */
 @media (max-width: 800px) {
-  .synth-grid {
-    grid-template-columns: 1fr;
-    gap: 16px 0;
-  }
+  .synth-grid { grid-template-columns: 1fr; gap: 16px 0; }
 }
 
-/* ── En-têtes de colonne ── */
+/* En-tête de colonne — le trait bleu rappelle la couleur primaire */
 .synth-head {
   padding:        12px 18px;
   font-size:      15px;
-  font-weight:    700px;
+  font-weight:    700;
   color:          #111827;
   background:     #f8fafc;
   text-transform: uppercase;
@@ -42,7 +41,7 @@
   animation:      fade-in 0.25s ease;
 }
 
-/* ── Colonnes ── */
+/* La colonne est un flex vertical — cellules se partagent la hauteur */
 .synth-col {
   display:        flex;
   flex-direction: column;
@@ -61,18 +60,19 @@
   box-sizing:  border-box;
 }
 
-/* ── Cellules ── */
+/* Chaque ligne de stock */
 .synth-cell {
   display:         flex;
   justify-content: space-between;
   align-items:     center;
-  padding:         18px 20px;
+  padding:         16px 20px;
   border-bottom:   1px solid #f1f5f9;
   background:      #ffffff;
   transition:      background-color 0.15s ease;
   animation:       cell-in 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+/* Délais échelonnés pour l'effet cascade */
 .synth-cell:nth-child(1) { animation-delay: 0.04s; }
 .synth-cell:nth-child(2) { animation-delay: 0.08s; }
 .synth-cell:nth-child(3) { animation-delay: 0.12s; }
@@ -82,32 +82,34 @@
 .synth-cell:last-child { border-bottom: none; }
 .synth-cell:hover      { background: #f8fafc; }
 
-/* Accent gauche selon type de cellule */
+/* Trait coloré gauche pour identifier le type au premier coup d'œil */
 .synth-cell--primary { border-left: 3px solid #0b6cbb; }
 .synth-cell--slate   { border-left: 3px solid #94a3b8; }
 .synth-cell--purple  { border-left: 3px solid #8b5cf6; }
 
-/* ── Layout gauche de la cellule ── */
+/* Icône + label côte à côte */
 .synth-cell-left {
   display:     flex;
   align-items: center;
   gap:         10px;
 }
 
-/* ── Dot indicateur ── */
-.synth-dot {
-  width:        8px;
-  height:       8px;
-  border-radius: 50%;
-  flex-shrink:  0;
+/* Icône SVG dans chaque cellule */
+.synth-icon {
+  width:       16px;
+  height:      16px;
+  flex-shrink: 0;
 }
-.synth-dot--blue   { background: #0b6cbb; }
-.synth-dot--slate  { background: #94a3b8; }
-.synth-dot--purple { background: #8b5cf6; }
-.synth-dot--amber  { background: #f59e0b; }
-.synth-dot--red    { background: #ef4444; }
+.synth-icon--blue   { color: #0b6cbb; }
+.synth-icon--slate  { color: #94a3b8; }
+.synth-icon--purple { color: #8b5cf6; }
+.synth-icon--amber  { color: #f59e0b; }
+.synth-icon--red    { color: #ef4444; }
 
-/* ── Variantes de fond ── */
+/* Classes conservées si réutilisées ailleurs */
+.synth-dot { display: none; }
+
+/* Stocks dégradés — fond coloré + trait gauche épais */
 .synth-warning { background: #fffbeb !important; border-left: 3px solid #f59e0b !important; }
 .synth-danger  { background: #fff5f5 !important; border-left: 3px solid #ef4444 !important; }
 .synth-check   { background: #f0fdf4 !important; border-left: 3px solid #22c55e !important; }
@@ -115,9 +117,9 @@
 .synth-warning:hover { background: #fef3c7 !important; }
 .synth-danger:hover  { background: #fee2e2 !important; }
 
-/* ── Labels ── */
+/* Label en petites majuscules grises */
 .synth-label {
-  font-size:      13px;
+  font-size:      12px;
   font-weight:    600;
   color:          #94a3b8;
   text-transform: uppercase;
@@ -125,7 +127,7 @@
   line-height:    1.4;
 }
 
-/* ── Valeurs ── */
+/* Valeur principale — grosse et grasse */
 .synth-val {
   font-size:   17px;
   font-weight: 700;
@@ -136,7 +138,7 @@
 
 .synth-val em {
   font-style:  normal;
-  font-size:   13px;
+  font-size:   12px;
   font-weight: 400;
   color:       #94a3b8;
   margin-left: 4px;
@@ -145,7 +147,7 @@
 .synth-val--warn   { color: #b45309; }
 .synth-val--danger { color: #dc2626; }
 
-/* ── Groupes accordéon ── */
+/* Chaque groupe accordéon prend la moitié de la colonne */
 .flux-group {
   flex:           1;
   display:        flex;
@@ -157,9 +159,10 @@
 .flux-group-body {
   flex:       1;
   background: #ffffff;
-  animation:  expand 0.18s ease;
+  animation:  expand 0.20s ease;
 }
 
+/* En-tête cliquable du groupe */
 .flux-group-hd {
   display:     flex;
   align-items: center;
@@ -172,58 +175,46 @@
 }
 .flux-group-hd:hover { background: #eff6ff; }
 
-/* ── Icône flux (cercle coloré) ── */
+/* Icône ronde colorée — SVG entouré d'un fond */
 .flux-icon {
-  font-size:       15px;
-  font-weight:     700;
-  line-height:     1;
-  width:           24px;
-  height:          24px;
+  width:           28px;
+  height:          28px;
   display:         inline-flex;
   align-items:     center;
   justify-content: center;
   border-radius:   50%;
   flex-shrink:     0;
 }
+.flux-icon svg { width: 14px; height: 14px; }
+
 .flux-icon--in  { color: #16a34a; background: #dcfce7; }
 .flux-icon--out { color: #dc2626; background: #fee2e2; }
 
 .flux-group-title {
   flex:           1;
-  font-size:      13px;
+  font-size:      12px;
   font-weight:    700;
   color:          #475569;
   text-transform: uppercase;
   letter-spacing: 0.7px;
 }
 
-/* ── Total visible dans le header accordéon ── */
-.flux-header-total {
-  font-size:   15px;
-  font-weight: 700;
-  margin-right: 8px;
-}
-.flux-header-total em {
-  font-style:  normal;
-  font-size:   11px;
-  font-weight: 400;
-  color:       #94a3b8;
-  margin-left: 3px;
-}
-.flux-header-total--in  { color: #16a34a; }
-.flux-header-total--out { color: #dc2626; }
-
+/* Chevron SVG qui pivote de 180° quand le groupe est ouvert */
 .flux-chevron {
-  font-size: 10px;
-  color:     #94a3b8;
+  width:      16px;
+  height:     16px;
+  color:      #94a3b8;
+  flex-shrink: 0;
+  transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1);
 }
+.flux-chevron--open { transform: rotate(180deg); }
 
-/* ── Lignes dans le groupe ── */
+/* Ligne de détail cliquable pour naviguer vers l'onglet */
 .flux-line {
   display:         flex;
-  justify-content: space-between;
   align-items:     center;
-  padding:         16px 22px;
+  gap:             8px;
+  padding:         15px 22px;
   border-bottom:   1px solid #f1f5f9;
   cursor:          pointer;
   transition:      background 0.15s;
@@ -231,8 +222,12 @@
 .flux-line:last-child { border-bottom: none; }
 .flux-line:hover      { background: #eff6ff; }
 
+/* La flèche droite apparaît au hover pour indiquer la navigation */
+.flux-line:hover .flux-line-arrow { opacity: 1; transform: translateX(2px); }
+
 .flux-line-label {
-  font-size:      13px;
+  flex:           1;
+  font-size:      12px;
   font-weight:    600;
   color:          #94a3b8;
   text-transform: uppercase;
@@ -240,19 +235,29 @@
 }
 
 .flux-line-val {
-  font-size:   17px;
+  font-size:   16px;
   font-weight: 700;
   color:       #1e293b;
 }
 .flux-line-val em {
   font-style:  normal;
-  font-size:   13px;
+  font-size:   12px;
   font-weight: 400;
   color:       #94a3b8;
   margin-left: 4px;
 }
 
-/* ── Dropdown groupe de dépôts ── */
+/* Petite flèche droite — invisible par défaut, apparaît au hover */
+.flux-line-arrow {
+  width:      14px;
+  height:     14px;
+  color:      #0b6cbb;
+  opacity:    0;
+  flex-shrink: 0;
+  transition: opacity 0.15s, transform 0.15s;
+}
+
+/* Dropdown groupe de dépôts */
 .flux-hd-toggle {
   flex:        1;
   display:     flex;
@@ -285,6 +290,7 @@
 
 .flux-whgr-arrow { font-size: 8px; color: #94a3b8; }
 
+/* Liste déroulante positionnée au-dessus pour ne pas sortir de l'écran */
 .flux-whgr-list {
   position:      absolute;
   right:         0;
@@ -310,11 +316,9 @@
 .flux-whgr-option:hover   { background: #eff6ff; color: #0b6cbb; }
 .flux-whgr-option--active { background: #dbeafe; color: #1d4ed8; font-weight: 700; }
 
-/* ── Ligne différence ── */
 .flux-line--diff { cursor: pointer; }
 .flux-val--neg   { color: #dc2626 !important; }
 
-/* ── Cellule cliquable ── */
 .synth-link { cursor: pointer; }
-.synth-cell.synth-link:hover { background: #eff6ff !important; }
+.synth-cell.synth-link:hover  { background: #eff6ff !important; }
 .synth-label.synth-link:hover { color: #0b6cbb; text-decoration: underline; }
