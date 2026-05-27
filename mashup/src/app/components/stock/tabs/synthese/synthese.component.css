@@ -43,13 +43,15 @@
 
 /* La colonne est un flex vertical — cellules se partagent la hauteur */
 .synth-col {
-  display:        flex;
-  flex-direction: column;
-  align-self:     stretch;
-  border:         1px solid #e2e8f0;
-  border-top:     none;
-  border-radius:  0 0 8px 8px;
-  overflow:       hidden;
+  display:         flex;
+  flex-direction:  column;
+  align-self:      stretch;
+  border:          1px solid #e2e8f0;
+  border-top:      none;
+  border-radius:   0 0 8px 8px;
+  overflow:        hidden;
+  box-shadow:      0 4px 16px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.04);
+  transform-style: preserve-3d;
 }
 
 .synth-col .synth-cell { flex: 1; }
@@ -68,8 +70,10 @@
   padding:         16px 20px;
   border-bottom:   1px solid #f1f5f9;
   background:      #ffffff;
-  transition:      background-color 0.15s ease;
+  position:        relative;
+  transition:      background-color 0.22s ease, transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.22s ease, z-index 0s;
   animation:       cell-in 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
+  z-index:         0;
 }
 
 /* Délais échelonnés pour l'effet cascade */
@@ -80,7 +84,15 @@
 .synth-cell:nth-child(5) { animation-delay: 0.20s; }
 
 .synth-cell:last-child { border-bottom: none; }
-.synth-cell:hover      { background: #f8fafc; }
+
+/* Levée 3D au survol — la cellule sort légèrement du plan */
+.synth-cell:hover {
+  background:  #f8fafc;
+  transform:   translateY(-3px) scale(1.01);
+  box-shadow:  0 8px 24px rgba(11, 108, 187, 0.12), 0 2px 6px rgba(0, 0, 0, 0.06);
+  z-index:     2;
+  border-left-width: 4px;
+}
 
 /* Trait coloré gauche pour identifier le type au premier coup d'œil */
 .synth-cell--primary { border-left: 3px solid #0b6cbb; }
@@ -170,10 +182,14 @@
   padding:     14px 18px;
   background:  #f8fafc;
   cursor:      pointer;
-  transition:  background 0.15s;
+  transition:  background 0.18s, transform 0.18s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.18s;
   user-select: none;
 }
-.flux-group-hd:hover { background: #eff6ff; }
+.flux-group-hd:hover {
+  background:  #eff6ff;
+  transform:   translateX(2px);
+  box-shadow:  inset 3px 0 0 #0b6cbb;
+}
 
 /* Icône ronde colorée — SVG entouré d'un fond */
 .flux-icon {
@@ -217,10 +233,14 @@
   padding:         15px 22px;
   border-bottom:   1px solid #f1f5f9;
   cursor:          pointer;
-  transition:      background 0.15s;
+  transition:      background 0.18s, transform 0.18s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.18s;
 }
 .flux-line:last-child { border-bottom: none; }
-.flux-line:hover      { background: #eff6ff; }
+.flux-line:hover {
+  background:  #eff6ff;
+  transform:   translateX(4px);
+  box-shadow:  inset 3px 0 0 #0b6cbb;
+}
 
 /* La flèche droite apparaît au hover pour indiquer la navigation */
 .flux-line:hover .flux-line-arrow { opacity: 1; transform: translateX(2px); }
