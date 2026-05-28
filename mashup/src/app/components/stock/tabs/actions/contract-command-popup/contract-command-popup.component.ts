@@ -33,16 +33,16 @@ export class ContractCommandPopupComponent implements OnChanges {
   };
 
   readonly orderColumns: SohoDataGridColumn[] = [
-    { id: 'orderNumber',           name: 'N° commande',   field: 'orderNumber',           width: 150, sortable: true, align: 'center', filterType: 'text' },
-    { id: 'lineNumber',            name: 'Ligne',         field: 'lineNumber',            width: 150, sortable: true, align: 'center', filterType: 'text' },
-    { id: 'requestedDeliveryDate', name: 'Date demandée', field: 'requestedDeliveryDate', width: 150, sortable: true, align: 'center', filterType: 'text' },
-    { id: 'orderedQuantity',       name: 'Qté commandée', field: 'orderedQuantity',        width: 150, sortable: true, align: 'center',filterType: 'text',
+    { id: 'orderNumber',           name: 'N° commande',   field: 'orderNumber',           width: 175, sortable: true, align: 'center', filterType: 'text' },
+    { id: 'lineNumber',            name: 'Ligne',         field: 'lineNumber',            width: 175, sortable: true, align: 'center', filterType: 'text' },
+    { id: 'requestedDeliveryDate', name: 'Date demandée', field: 'requestedDeliveryDate', width: 175, sortable: true, align: 'center', filterType: 'text' },
+    { id: 'orderedQuantity',       name: 'Qté commandée', field: 'orderedQuantity',        width: 175, sortable: true, align: 'center',filterType: 'text',
       formatter: (_r: number, _c: number, v: string) => this.fmtQty(v) },
-    { id: 'deliveredQuantity',     name: 'Qté livrée',    field: 'deliveredQuantity',      width: 150, sortable: true, align: 'center',filterType: 'text',
+    { id: 'deliveredQuantity',     name: 'Qté livrée',    field: 'deliveredQuantity',      width: 175, sortable: true, align: 'center',filterType: 'text',
       formatter: (_r: number, _c: number, v: string) => this.fmtQty(v) },
-    { id: 'invoicedQuantity',      name: 'Qté facturée',  field: 'invoicedQuantity',       width: 150, sortable: true, align: 'center',filterType: 'text',
+    { id: 'invoicedQuantity',      name: 'Qté facturée',  field: 'invoicedQuantity',       width: 175, sortable: true, align: 'center',filterType: 'text',
       formatter: (_r: number, _c: number, v: string) => this.fmtQty(v) },
-    { id: 'orderStatus',           name: 'Statut',        field: 'orderStatus',            width: 150, sortable: true, align: 'center', filterType: 'text',
+    { id: 'orderStatus',           name: 'Statut',        field: 'orderStatus',            width: 175, sortable: true, align: 'center', filterType: 'text',
       formatter: (_r: number, _c: number, v: string) => this.fmtStatus(v) },
   ];
 
