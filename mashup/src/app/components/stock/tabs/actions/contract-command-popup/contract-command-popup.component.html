@@ -7,7 +7,7 @@
         <span class="popup-header-title">Commandes liées à l'Aktion</span>
         <div class="popup-chips">
           <span class="popup-chip">
-            <span class="chip-label">N° Cde ouverte : :</span>
+            <span class="chip-label">N° Cde ouverte :</span>
             <span class="chip-value">{{ selectedContract?.openOrderNumber }}</span>
           </span>
           <span class="popup-chip">
@@ -37,7 +37,7 @@
         [dataset]="orders"
         [columns]="orderColumns"
         [emptyMessage]="emptyMsg"
-        [filterable]="false"
+        [filterable]="true"
         [paging]="true"
         [pagesize]="5"
         [pagesizes]="[5, 10, 25, 50, 100]"

@@ -29,7 +29,7 @@
 /* En-tête de colonne — le trait bleu rappelle la couleur primaire */
 .synth-head {
   padding:        14px 22px;
-  font-size:      16px;
+  font-size:      15px;
   font-weight:    700;
   color:          #111827;
   background:     #f8fafc;
@@ -131,7 +131,7 @@
 
 /* Label en petites majuscules grises */
 .synth-label {
-  font-size:      13px;
+  font-size:      12px;
   font-weight:    600;
   color:          #94a3b8;
   text-transform: uppercase;
@@ -141,7 +141,7 @@
 
 /* Valeur principale — grosse et grasse */
 .synth-val {
-  font-size:   18px;
+  font-size:   17px;
   font-weight: 700;
   color:       #1e293b;
   text-align:  right;
@@ -150,7 +150,7 @@
 
 .synth-val em {
   font-style:  normal;
-  font-size:   14px;
+  font-size:   13px;
   font-weight: 400;
   color:       #94a3b8;
   margin-left: 4px;
@@ -208,7 +208,7 @@
 
 .flux-group-title {
   flex:           1;
-  font-size:      13px;
+  font-size:      12px;
   font-weight:    700;
   color:          #475569;
   text-transform: uppercase;
@@ -247,7 +247,7 @@
 
 .flux-line-label {
   flex:           1;
-  font-size:      13px;
+  font-size:      12px;
   font-weight:    600;
   color:          #94a3b8;
   text-transform: uppercase;
@@ -255,13 +255,13 @@
 }
 
 .flux-line-val {
-  font-size:   17px;
+  font-size:   16px;
   font-weight: 700;
   color:       #1e293b;
 }
 .flux-line-val em {
   font-style:  normal;
-  font-size:   14px;
+  font-size:   13px;
   font-weight: 400;
   color:       #94a3b8;
   margin-left: 4px;

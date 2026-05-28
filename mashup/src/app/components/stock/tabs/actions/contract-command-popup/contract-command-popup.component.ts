@@ -34,15 +34,15 @@ export class ContractCommandPopupComponent implements OnChanges {
 
   readonly orderColumns: SohoDataGridColumn[] = [
     { id: 'orderNumber',           name: 'N° commande',   field: 'orderNumber',           width: 150, sortable: true, align: 'center', filterType: 'text' },
-    { id: 'lineNumber',            name: 'Ligne',               field: 'lineNumber',            width:  150, sortable: true, align: 'center', filterType: 'text' },
-    { id: 'requestedDeliveryDate', name: 'Date demandée',  field: 'requestedDeliveryDate', width: 150, sortable: true, align: 'center', filterType: 'text' },
-    { id: 'orderedQuantity',       name: 'Qté commandée', field: 'orderedQuantity',   width: 150, sortable: true, align: 'center',
+    { id: 'lineNumber',            name: 'Ligne',         field: 'lineNumber',            width: 150, sortable: true, align: 'center', filterType: 'text' },
+    { id: 'requestedDeliveryDate', name: 'Date demandée', field: 'requestedDeliveryDate', width: 150, sortable: true, align: 'center', filterType: 'text' },
+    { id: 'orderedQuantity',       name: 'Qté commandée', field: 'orderedQuantity',        width: 150, sortable: true, align: 'center',filterType: 'text',
       formatter: (_r: number, _c: number, v: string) => this.fmtQty(v) },
-    { id: 'deliveredQuantity',     name: 'Qté livrée',    field: 'deliveredQuantity', width: 150, sortable: true, align: 'center',
+    { id: 'deliveredQuantity',     name: 'Qté livrée',    field: 'deliveredQuantity',      width: 150, sortable: true, align: 'center',filterType: 'text',
       formatter: (_r: number, _c: number, v: string) => this.fmtQty(v) },
-    { id: 'invoicedQuantity',      name: 'Qté facturée',  field: 'invoicedQuantity',  width: 150, sortable: true, align: 'center',
+    { id: 'invoicedQuantity',      name: 'Qté facturée',  field: 'invoicedQuantity',       width: 150, sortable: true, align: 'center',filterType: 'text',
       formatter: (_r: number, _c: number, v: string) => this.fmtQty(v) },
-    { id: 'orderStatus',           name: 'Statut',              field: 'orderStatus',           width: 150, sortable: true, align: 'center',
+    { id: 'orderStatus',           name: 'Statut',        field: 'orderStatus',            width: 150, sortable: true, align: 'center', filterType: 'text',
       formatter: (_r: number, _c: number, v: string) => this.fmtStatus(v) },
   ];
 
@@ -57,7 +57,7 @@ export class ContractCommandPopupComponent implements OnChanges {
   fmtQty(v: string): string {
     const n = parseFloat(v);
     if (isNaN(n)) return v ?? '';
-    const val = Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    const val = Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
     return this.unms
       ? `${val} <em style="font-size:11px;color:#94a3b8;font-style:normal">${this.unms}</em>`
       : val;
