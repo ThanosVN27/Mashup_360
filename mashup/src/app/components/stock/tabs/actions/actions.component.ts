@@ -95,9 +95,7 @@ export class ActionsComponent implements OnInit, OnChanges {
       {
         id: 'differenceQty', name: 'Reste à commander', field: 'resteACommander',
         width: 150, sortable: true, align: 'center', filterType: 'text',
-        // V_RQCO peut être négatif côté M3, on affiche 0 dans ce cas
-        formatter: (_r: number, _c: number, v: string) =>
-          this.fmtQty(String(Math.max(0, parseFloat(v) || 0))),
+        formatter: (_r: number, _c: number, v: string) => this.fmtQty(v),
       },
     ];
   }
