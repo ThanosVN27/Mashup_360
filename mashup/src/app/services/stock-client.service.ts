@@ -45,7 +45,7 @@ export class StockClientService {
         F_AGST: '10',
         T_AGST: '20',
       },
-      outputFields:       ['UWCUNO', 'UWAGNO', 'UYTX40', 'UYAGST', 'UWOBV1', 'UWAGST', 'UWSTDT', 'UWLVDT', 'UWAGQT', 'UXREQT','UXDLQT',"V_RQCO"],
+      outputFields:       ['UWCUNO', 'UWAGNO', 'UYTX40', 'UYAGST', 'UWOBV1', 'UWAGST', 'UWSTDT', 'UWLVDT', 'UWAGQT', 'UXREQT','UXDLQT',"V_RQCO", 'UXIVQT'],
       maxReturnedRecords: 500,
     };
 
@@ -74,10 +74,11 @@ export class StockClientService {
       startValue1:      item['UWOBV1'] ?? '',
       startDate:        formatM3Date(startDate),
       endValidityDate:  formatM3Date(item['UWLVDT'] ?? ''),
-      contractQuantity: item['UWAGQT'] ?? '',
-      reservedQuantity: item['UXREQT'] ?? '',
-      deliveredQuantity:item['UXDLQT'] ?? '',
-      resteACommander:  item['V_RQCO'] ?? '',
+      contractQuantity: parseFloat(item['UWAGQT'] ?? '0') || 0,
+      reservedQuantity: parseFloat(item['UXREQT'] ?? '0') || 0,
+      deliveredQuantity: parseFloat(item['UXDLQT'] ?? '0') || 0,
+      facturedQuantity:  parseFloat(item['UXIVQT'] ?? '0') || 0,
+      resteACommander:   parseFloat(item['V_RQCO'] ?? '0') || 0,
     };
   }
 

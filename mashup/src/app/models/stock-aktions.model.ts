@@ -10,10 +10,12 @@ export interface ContractLine {
   startValue1:       string;   // UWOBV1 — code article
   startDate:         string;   // UWSTDT — date début
   endValidityDate:   string;   // UWLVDT — date fin validité
-  contractQuantity:  string;   // UWAGQT — quantité contrat
-  reservedQuantity:  string;   // UXREQT — quantité réservée
-  deliveredQuantity: string;   // UXDLQT — Qté livrée (issue de la ligne de commande liée)
-  resteACommander:   string;   // V_RQCO — reste à commander (calculé côté M3)
+  contractQuantity:  number;   // UWAGQT — quantité contrat
+  reservedQuantity:  number;   // UXREQT — quantité réservée
+  deliveredQuantity: number;   // UXDLQT — Qté livrée (issue de la ligne de commande liée)
+  facturedQuantity:  number;   // UXIVQT — Qté facturée (issue de la ligne de commande liée)
+  resteACommander:   number;   // V_RQCO — reste à commander (calculé côté M3)
+
 }
 
 

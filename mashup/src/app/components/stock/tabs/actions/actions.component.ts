@@ -24,6 +24,7 @@ export class ActionsComponent implements OnInit, OnChanges {
   filteredTotalContrat  = 0;
   filteredTotalReservee = 0;
   filteredTotalLivree   = 0;
+  filteredTotalFacture  = 0;
   filteredTotalReste    = 0;
 
   dateFrom = '';
@@ -57,7 +58,7 @@ export class ActionsComponent implements OnInit, OnChanges {
       },
       {
         id: 'description', name: 'Désignation', field: 'description',
-        width: 400, sortable: true, align: 'center', filterType: 'text',
+        width: 350, sortable: true, align: 'center', filterType: 'text',
       },
       {
         id: 'status', name: 'Statut', field: 'status',
@@ -93,8 +94,13 @@ export class ActionsComponent implements OnInit, OnChanges {
         formatter: (_r: number, _c: number, v: string) => this.fmtQty(v),
       },
       {
+        id: 'facturedQuantity', name: 'Qté facturée', field: 'facturedQuantity',
+        width: 120, sortable: true, align: 'center', filterType: 'text',
+        formatter: (_r: number, _c: number, v: string) => this.fmtQty(v),
+      },
+      {
         id: 'differenceQty', name: 'Reste à commander', field: 'resteACommander',
-        width: 150, sortable: true, align: 'center', filterType: 'text',
+        width: 140, sortable: true, align: 'center', filterType: 'text',
         formatter: (_r: number, _c: number, v: string) => this.fmtQty(v),
       },
     ];
@@ -150,18 +156,20 @@ export class ActionsComponent implements OnInit, OnChanges {
       return da.getTime() - db.getTime();
     });
 
-    let contrat = 0, reservee = 0, livree = 0, reste = 0;
+    let contrat = 0, reservee = 0, livree = 0, facture = 0, reste = 0;
 
     for (const c of this.filteredContracts) {
-      contrat  += parseFloat(c.contractQuantity)  || 0;
-      reservee += parseFloat(c.reservedQuantity)  || 0;
-      livree   += parseFloat(c.deliveredQuantity) || 0;
-      reste    += Math.max(0, parseFloat(c.resteACommander) || 0);
+      contrat  += Math.max(0, parseFloat(c.contractQuantity.toString())  || 0);
+      reservee += Math.max(0, parseFloat(c.reservedQuantity.toString())  || 0);
+      livree   += Math.max(0, parseFloat(c.deliveredQuantity.toString()) || 0);
+      facture  += Math.max(0, parseFloat(c.facturedQuantity.toString())  || 0);
+      reste    += Math.max(0, parseFloat(c.resteACommander.toString())   || 0);
     }
 
     this.filteredTotalContrat  = contrat;
     this.filteredTotalReservee = reservee;
     this.filteredTotalLivree   = livree;
+    this.filteredTotalFacture  = facture;
     this.filteredTotalReste    = reste;
   }
 

@@ -133,9 +133,9 @@ export class StockComponent implements OnDestroy {
         let totalContrat = 0, totalLivree = 0, totalReste = 0;
 
         for (const c of aktions) {
-          totalContrat += parseFloat(c.contractQuantity)  || 0;
-          totalLivree  += parseFloat(c.deliveredQuantity) || 0;
-          totalReste   += Math.max(0, parseFloat(c.resteACommander) || 0);
+          totalContrat += parseFloat(c.contractQuantity.toString())  || 0;
+          totalLivree  += parseFloat(c.deliveredQuantity.toString()) || 0;
+          totalReste   += Math.max(0, parseFloat(c.resteACommander.toString()) || 0);
         }
 
         this.badges      = { ...badges, actions: aktions.length };
