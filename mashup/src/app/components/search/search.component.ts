@@ -39,7 +39,7 @@ export class SearchComponent implements OnInit {
   }
 
   lancer(): void {
-    const itno = this.itno.trim();
+    const itno = this.itno.trim().toUpperCase();
     if (itno && this.whgr) {
       this.recherche.emit({ itno, whgr: this.whgr });
     }
