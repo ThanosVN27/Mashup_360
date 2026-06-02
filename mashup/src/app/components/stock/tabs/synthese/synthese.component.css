@@ -118,13 +118,9 @@
 .synth-icon--amber  { color: #f59e0b; }
 .synth-icon--red    { color: #ef4444; }
 
-/* Classes conservées si réutilisées ailleurs */
-.synth-dot { display: none; }
-
 /* Stocks dégradés — fond coloré + trait gauche épais */
 .synth-warning { background: #fffbeb !important; border-left: 3px solid #f59e0b !important; }
 .synth-danger  { background: #fff5f5 !important; border-left: 3px solid #ef4444 !important; }
-.synth-check   { background: #f0fdf4 !important; border-left: 3px solid #22c55e !important; }
 
 .synth-warning:hover { background: #fef3c7 !important; }
 .synth-danger:hover  { background: #fee2e2 !important; }
