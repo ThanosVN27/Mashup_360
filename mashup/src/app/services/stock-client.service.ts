@@ -45,7 +45,7 @@ export class StockClientService {
         F_AGST: '10',
         T_AGST: '20',
       },
-      outputFields:       ['UWCUNO', 'UWAGNO', 'UYTX40', 'UYAGST', 'UWOBV1', 'UWAGST', 'UWSTDT', 'UWLVDT', 'UWAGQT', 'UXREQT','UXDLQT',"V_RQCO", 'UXIVQT'],
+      outputFields:       ['UWCUNO', 'UWAGNO', 'UYTX40', 'UYAGST', 'UWOBV1', 'UWAGST', 'UWSTDT', 'UWLVDT', 'UWAGQT', 'UXREQT', 'UXDLQT', 'V_RQCO', 'UXIVQT', 'F1CHB2'],
       maxReturnedRecords: 500,
     };
 
@@ -78,7 +78,9 @@ export class StockClientService {
       reservedQuantity: parseFloat(item['UXREQT'] ?? '0') || 0,
       deliveredQuantity: parseFloat(item['UXDLQT'] ?? '0') || 0,
       facturedQuantity:  parseFloat(item['UXIVQT'] ?? '0') || 0,
-      resteACommander:   parseFloat(item['V_RQCO'] ?? '0') || 0,
+      resteACommander:   parseFloat(item['V_RQCO']  ?? '0') || 0,
+      aktionTerminee:      parseInt(item['F1CHB2'] ?? '0') || 0,
+      aktionTermineeLabel: parseInt(item['F1CHB2'] ?? '0') === 1 ? 'Oui' : 'Non',
     };
   }
 

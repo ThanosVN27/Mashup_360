@@ -27,7 +27,8 @@ export class ActionsComponent implements OnInit, OnChanges {
   filteredTotalFacture  = 0;
   filteredTotalReste    = 0;
 
-  dateFrom = '';
+  dateFrom    = '';
+  filterAktion: '' | 'Oui' | 'Non' = '';
   dateTo   = '';
 
   popupVisible      = false;
@@ -103,6 +104,14 @@ export class ActionsComponent implements OnInit, OnChanges {
         width: 140, sortable: true, align: 'center', filterType: 'text',
         formatter: (_r: number, _c: number, v: string) => this.fmtQty(v),
       },
+      {
+        id: 'aktionTerminee', name: 'Aktion terminée', field: 'aktionTermineeLabel',
+        width: 130, sortable: true, align: 'center',filterType: 'text',
+        formatter: (_r: number, _c: number, v: string) =>
+          v === 'Oui'
+            ? '<span>Oui</span>'
+            : '<span>Non</span>',
+      },
     ];
   }
 
@@ -137,15 +146,14 @@ export class ActionsComponent implements OnInit, OnChanges {
     const from = this.dateFrom ? new Date(this.dateFrom) : null;
     const to   = this.dateTo   ? new Date(this.dateTo)   : null;
 
-    this.filteredContracts = (!from && !to)
-      ? [...this.contracts]
-      : this.contracts.filter(c => {
-          const d = this.parseContractDate(c.startDate);
-          if (!d)               return true;
-          if (from && d < from) return false;
-          if (to   && d > to)   return false;
-          return true;
-        });
+    this.filteredContracts = this.contracts.filter(c => {
+      if (this.filterAktion && c.aktionTermineeLabel !== this.filterAktion) return false;
+      const d = this.parseContractDate(c.startDate);
+      if (!d)               return true;
+      if (from && d < from) return false;
+      if (to   && d > to)   return false;
+      return true;
+    });
 
     this.filteredContracts.sort((a, b) => {
       const da = this.parseContractDate(a.startDate);
@@ -159,11 +167,13 @@ export class ActionsComponent implements OnInit, OnChanges {
     let contrat = 0, reservee = 0, livree = 0, facture = 0, reste = 0;
 
     for (const c of this.filteredContracts) {
-      contrat  += parseFloat(c.contractQuantity.toString()) ;
-      reservee += parseFloat(c.reservedQuantity.toString()) ;
-      livree   += parseFloat(c.deliveredQuantity.toString());
+      contrat  += Math.max(0, parseFloat(c.contractQuantity.toString())  || 0);
+      reservee += Math.max(0, parseFloat(c.reservedQuantity.toString())  || 0);
+      livree   += Math.max(0, parseFloat(c.deliveredQuantity.toString()) || 0);
       facture  += Math.max(0, parseFloat(c.facturedQuantity.toString())  || 0);
-      reste    += Math.max(0, parseFloat(c.resteACommander.toString())   || 0);
+      if (!c.aktionTerminee) {
+        reste  += Math.max(0, parseFloat(c.resteACommander.toString())   || 0);
+      }
     }
 
     this.filteredTotalContrat  = contrat;
@@ -245,11 +255,6 @@ export class ActionsComponent implements OnInit, OnChanges {
     const map: Record<string, [string, string]> = {
       '10': ['background:#fef3c7;color:#92400e;', '10 – Préliminaire'],
       '20': ['background:#d1fae5;color:#065f46;', '20 – Actif'],
-      '40': ['background:#dbeafe;color:#1e40af;', '40 – Part. livré'],
-      '50': ['background:#ede9fe;color:#5b21b6;', '50 – Livré'],
-      '60': ['background:#f0fdf4;color:#166534;', '60 – Facturé'],
-      '80': ['background:#f1f5f9;color:#475569;', '80 – Fermé'],
-      '90': ['background:#fef2f2;color:#991b1b;', '90 – Annulé'],
     };
 
     const [colors, label] = map[code] ?? ['background:#f9fafb;color:#374151;', code];

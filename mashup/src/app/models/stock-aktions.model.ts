@@ -12,10 +12,11 @@ export interface ContractLine {
   endValidityDate:   string;   // UWLVDT — date fin validité
   contractQuantity:  number;   // UWAGQT — quantité contrat
   reservedQuantity:  number;   // UXREQT — quantité réservée
-  deliveredQuantity: number;   // UXDLQT — Qté livrée (issue de la ligne de commande liée)
-  facturedQuantity:  number;   // UXIVQT — Qté facturée (issue de la ligne de commande liée)
+  deliveredQuantity: number;   // UXDLQT — Qté livrée
+  facturedQuantity:  number;   // UXIVQT — Qté facturée
   resteACommander:   number;   // V_RQCO — reste à commander (calculé côté M3)
-
+  aktionTerminee:    number;   // F1CHB2 — 1 = aktion terminée (reste à commander exclu du total)
+  aktionTermineeLabel: string;   // 'Oui' | 'Non' — champ texte pour le filtre SoHo
 }
 
 

@@ -6,9 +6,9 @@
 
   <ng-container *ngIf="!loadingContracts && contracts.length > 0">
 
-    <!-- Filtre date début -->
+    <!-- Filtre date début + Aktion terminée -->
     <div class="date-filter-bar">
-      <span class="date-filter-label">Filtrer par Date début :</span>
+      <span class="date-filter-label">Date début :</span>
       <div class="date-filter-inputs">
         <label class="date-filter-field">
           <span>Du</span>
@@ -23,8 +23,15 @@
         </button>
       </div>
       <span *ngIf="dateFrom || dateTo" class="date-filter-count">
-        {{ filteredContracts.length }} / {{ contracts.length }} contrat(s)
+        {{ filteredContracts.length }} / {{ contracts.length }}
       </span>
+
+      <div class="aktion-pills">
+        <span class="aktion-pills-label">Aktion terminée :</span>
+        <button class="aktion-pill" [class.aktion-pill--active]="filterAktion === ''"    (click)="filterAktion = '';    applyFilter()">Tous</button>
+        <button class="aktion-pill" [class.aktion-pill--active]="filterAktion === 'Oui'" (click)="filterAktion = 'Oui'; applyFilter()">Oui</button>
+        <button class="aktion-pill" [class.aktion-pill--active]="filterAktion === 'Non'" (click)="filterAktion = 'Non'; applyFilter()">Non</button>
+      </div>
     </div>
 
     <div

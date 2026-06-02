@@ -136,6 +136,34 @@
   font-weight: 600;
 }
 
+.aktion-pills {
+  display:     flex;
+  align-items: center;
+  gap:         5px;
+  margin-left: 8px;
+}
+
+.aktion-pills-label {
+  font-size:   13px;
+  font-weight: 600;
+  color:       #47576d;
+  white-space: nowrap;
+}
+
+.aktion-pill {
+  padding:       3px 10px;
+  border:        1px solid #e2e8f0;
+  border-radius: 20px;
+  background:    #fff;
+  font-size:     12px;
+  font-weight:   600;
+  color:         #64748b;
+  cursor:        pointer;
+  transition:    all 0.15s;
+}
+.aktion-pill:hover        { border-color: #0b6cbb; color: #0b6cbb; }
+.aktion-pill--active      { background: #eff6ff; border-color: #0b6cbb; color: #0b6cbb; }
+
 /* Bouton colonne Commandes */
 .cmd-popup-btn {
   padding:        4px 12px;
