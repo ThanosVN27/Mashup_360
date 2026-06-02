@@ -159,9 +159,9 @@ export class ActionsComponent implements OnInit, OnChanges {
     let contrat = 0, reservee = 0, livree = 0, facture = 0, reste = 0;
 
     for (const c of this.filteredContracts) {
-      contrat  += Math.max(0, parseFloat(c.contractQuantity.toString())  || 0);
-      reservee += Math.max(0, parseFloat(c.reservedQuantity.toString())  || 0);
-      livree   += Math.max(0, parseFloat(c.deliveredQuantity.toString()) || 0);
+      contrat  += parseFloat(c.contractQuantity.toString()) ;
+      reservee += parseFloat(c.reservedQuantity.toString()) ;
+      livree   += parseFloat(c.deliveredQuantity.toString());
       facture  += Math.max(0, parseFloat(c.facturedQuantity.toString())  || 0);
       reste    += Math.max(0, parseFloat(c.resteACommander.toString())   || 0);
     }
