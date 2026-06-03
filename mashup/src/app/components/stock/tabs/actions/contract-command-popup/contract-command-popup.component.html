@@ -34,7 +34,7 @@
 
       <div *ngIf="!isLoading && !errorMessage"
         soho-datagrid
-        [dataset]="orders"
+        [dataset]="sortedOrders"
         [columns]="orderColumns"
         [emptyMessage]="emptyMsg"
         [filterable]="true"
@@ -50,6 +50,5 @@
     <div class="popup-footer">
       <button class="popup-close-bar" (click)="onClose()">Fermer</button>
     </div>
-
   </div>
 </div>

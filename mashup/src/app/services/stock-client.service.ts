@@ -160,7 +160,7 @@ export class StockClientService {
       orderNumber:           record['OBORNO'] ?? '',
       lineNumber:            record['OBPONR'] ?? '',
       orderedQuantity:       this.roundQty(record['OBORQT'] ?? ''),
-      requestedDeliveryDate: this.formatDate(record['OBDWDZ'] ?? ''),
+      requestedDeliveryDate: this.formatDateISO(record['OBDWDZ'] ?? ''),
       deliveredQuantity:     this.roundQty(record['OBDLQT'] ?? ''),
       invoicedQuantity:      this.roundQty(record['OBIVQT'] ?? ''),
       orderStatus:           record['OBORST'] ?? '',
@@ -174,7 +174,7 @@ export class StockClientService {
       orderNumber:           parts[0]?.trim() ?? '',
       lineNumber:            parts[1]?.trim() ?? '',
       orderedQuantity:       this.roundQty(parts[2]?.trim() ?? ''),
-      requestedDeliveryDate: this.formatDate(parts[3]?.trim() ?? ''),
+      requestedDeliveryDate: this.formatDateISO(parts[3]?.trim() ?? ''),
       deliveredQuantity:     this.roundQty(parts[4]?.trim() ?? ''),
       invoicedQuantity:      this.roundQty(parts[5]?.trim() ?? ''),
       orderStatus:           parts[6]?.trim() ?? '',
@@ -202,8 +202,9 @@ export class StockClientService {
     });
   }
 
-  private formatDate(raw: string): string {
+  // ISO YYYY-MM-DD — tri lexicographique correct dans SoHo
+  private formatDateISO(raw: string): string {
     if (!raw || raw.length !== 8) return raw;
-    return `${raw.slice(6, 8)}/${raw.slice(4, 6)}/${raw.slice(0, 4)}`;
+    return `${raw.slice(0, 4)}-${raw.slice(4, 6)}-${raw.slice(6, 8)}`;
   }
 }

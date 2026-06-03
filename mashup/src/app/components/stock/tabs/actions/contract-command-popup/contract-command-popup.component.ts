@@ -27,6 +27,8 @@ export class ContractCommandPopupComponent implements OnChanges {
   @Input()  unms:             string              = '';
   @Output() close = new EventEmitter<void>();
 
+  sortedOrders: OrderLine[] = [];
+
   readonly emptyMsg = {
     title: 'Aucune commande trouvée',
     info:  'Aucune commande liée à cet aktion.',
@@ -35,7 +37,12 @@ export class ContractCommandPopupComponent implements OnChanges {
   readonly orderColumns: SohoDataGridColumn[] = [
     { id: 'orderNumber',           name: 'N° commande',   field: 'orderNumber',           width: 175, sortable: true, align: 'center', filterType: 'text' },
     { id: 'lineNumber',            name: 'Ligne',         field: 'lineNumber',            width: 175, sortable: true, align: 'center', filterType: 'text' },
-    { id: 'requestedDeliveryDate', name: 'Date demandée', field: 'requestedDeliveryDate', width: 175, sortable: true, align: 'center', filterType: 'text' },
+    { id: 'requestedDeliveryDate', name: 'Date demandée', field: 'requestedDeliveryDate', width: 175, sortable: true, align: 'center', filterType: 'text',
+      formatter: (_r: number, _c: number, v: string) => {
+        if (!v || v.length !== 10) return v ?? '';
+        const [y, m, d] = v.split('-');
+        return `${d}/${m}/${y}`;
+      } },
     { id: 'orderedQuantity',       name: 'Qté commandée', field: 'orderedQuantity',        width: 175, sortable: true, align: 'center',filterType: 'text',
       formatter: (_r: number, _c: number, v: string) => this.fmtQty(v) },
     { id: 'deliveredQuantity',     name: 'Qté livrée',    field: 'deliveredQuantity',      width: 175, sortable: true, align: 'center',filterType: 'text',
@@ -49,6 +56,11 @@ export class ContractCommandPopupComponent implements OnChanges {
   constructor(private readonly cdr: ChangeDetectorRef) {}
 
   ngOnChanges(changes: SimpleChanges): void {
+    if (changes['orders']) {
+      this.sortedOrders = [...this.orders].sort((a, b) =>
+        a.requestedDeliveryDate.localeCompare(b.requestedDeliveryDate)
+      );
+    }
     if (changes['orders'] || changes['visible'] || changes['isLoading'] || changes['errorMessage']) {
       this.cdr.markForCheck();
     }
