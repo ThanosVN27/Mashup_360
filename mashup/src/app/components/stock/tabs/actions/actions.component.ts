@@ -51,11 +51,11 @@ export class ActionsComponent implements OnInit, OnChanges {
       },
       {
         id: 'customerCode', name: 'Client', field: 'customerCode',
-        width: 120, sortable: true, align: 'center', filterType: 'text',
+        width: 100, sortable: true, align: 'center', filterType: 'text',
       },
       {
         id: 'openOrderNumber', name: 'N° Cde ouverte', field: 'openOrderNumber',
-        width: 120, sortable: true, align: 'center', filterType: 'text',
+        width: 100, sortable: true, align: 'center', filterType: 'text',
       },
       {
         id: 'description', name: 'Désignation', field: 'description',
@@ -73,30 +73,30 @@ export class ActionsComponent implements OnInit, OnChanges {
       },
       {
         id: 'startDate', name: 'Date début', field: 'startDate',
-        width: 120, sortable: true, align: 'center', filterType: 'text',
+        width: 100, sortable: true, align: 'center', filterType: 'text',
       },
       {
         id: 'endValidityDate', name: 'Fin validité', field: 'endValidityDate',
-        width: 120, sortable: true, align: 'center', filterType: 'text',
+        width: 100, sortable: true, align: 'center', filterType: 'text',
       },
       {
         id: 'contractQuantity', name: 'Qté contrat', field: 'contractQuantity',
-        width: 120, sortable: true, align: 'center', filterType: 'text',
+        width: 100, sortable: true, align: 'center', filterType: 'text',
         formatter: (_r: number, _c: number, v: string) => this.fmtQty(v),
       },
       {
         id: 'reservedQuantity', name: 'Qté réservée', field: 'reservedQuantity',
-        width: 120, sortable: true, align: 'center', filterType: 'text',
+        width: 100, sortable: true, align: 'center', filterType: 'text',
         formatter: (_r: number, _c: number, v: string) => this.fmtQty(v),
       },
       {
         id: 'deliveredQuantity', name: 'Qté livrée', field: 'deliveredQuantity',
-        width: 120, sortable: true, align: 'center', filterType: 'text',
+        width: 100, sortable: true, align: 'center', filterType: 'text',
         formatter: (_r: number, _c: number, v: string) => this.fmtQty(v),
       },
       {
         id: 'facturedQuantity', name: 'Qté facturée', field: 'facturedQuantity',
-        width: 120, sortable: true, align: 'center', filterType: 'text',
+        width: 100, sortable: true, align: 'center', filterType: 'text',
         formatter: (_r: number, _c: number, v: string) => this.fmtQty(v),
       },
       {
@@ -106,7 +106,7 @@ export class ActionsComponent implements OnInit, OnChanges {
       },
       {
         id: 'aktionTerminee', name: 'Aktion terminée', field: 'aktionTermineeLabel',
-        width: 130, sortable: true, align: 'center',filterType: 'text',
+        width: 120, sortable: true, align: 'center',filterType: 'text',
         formatter: (_r: number, _c: number, v: string) =>
           v === 'Oui'
             ? '<span>Oui</span>'
