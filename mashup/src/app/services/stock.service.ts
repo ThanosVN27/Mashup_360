@@ -28,20 +28,20 @@ export class StockService {
     );
   }
 
-  // Poids net : d'abord le champ personnalisé N796, sinon NEWE sur MMS200MI
+  // Poids net : d'abord le champ personnalisé N496, sinon NEWE sur MMS200MI
   getPoidsNet(itno: string): Observable<string> {
     const req: IMIRequest = {
       program:      'CUSEXTMI',
       transaction:  'GetFieldValue',
       record:       { FILE: 'MITMAS', PK01: itno },
-      outputFields: ['N796'],
+      outputFields: ['N496'],
     };
 
     return this.mi.execute(req).pipe(
-      map((res: IMIResponse) => res.item?.['N796'] ?? '0'),
+      map((res: IMIResponse) => res.item?.['N496'] ?? '0'),
       catchError(() => of('0')),
-      switchMap(n796 => {
-        if (parseFloat(n796) !== 0) return of(n796);
+      switchMap(n496 => {
+        if (parseFloat(n496) !== 0) return of(n496);
 
         const req2: IMIRequest = {
           program:      'MMS200MI',
