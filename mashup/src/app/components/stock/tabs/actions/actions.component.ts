@@ -101,7 +101,7 @@ export class ActionsComponent implements OnInit, OnChanges {
       },
       {
         id: 'differenceQty', name: 'Reste à commander', field: 'resteACommander',
-        width: 127, sortable: true, align: 'center', filterType: 'text',
+        width: 128, sortable: true, align: 'center', filterType: 'text',
         formatter: (_r: number, _c: number, v: string) => this.fmtQty(v),
       },
       {
