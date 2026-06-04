@@ -14,3 +14,51 @@ body {
   color:      #888;
   font-style: italic;
 }
+
+/* ── SoHo Datagrid ── */
+
+.datagrid-wrapper .datagrid-header th {
+  background-color: #f1f5f9 !important;
+  border-bottom:    2px solid #cbd5e1 !important;
+  vertical-align:   middle !important;
+}
+
+.datagrid-wrapper .datagrid-header th .datagrid-column-wrapper,
+.datagrid-wrapper .datagrid-header th .datagrid-header-btn {
+  font-size:      13px !important;
+  font-weight:    600 !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+  color:          #334155 !important;
+}
+
+.datagrid-wrapper tbody tr:nth-child(even) td {
+  background-color: #f8fafc !important;
+}
+
+.datagrid-wrapper tr.datagrid-row:hover td {
+  background-color: #eff6ff !important;
+  transition:       background-color 0.1s ease;
+}
+
+.datagrid-wrapper tr.datagrid-row td {
+  border-bottom:  1px solid #f1f5f9 !important;
+  vertical-align: middle !important;
+  text-align:     center !important;
+}
+
+.datagrid-wrapper .datagrid-cell-wrapper {
+  display:         flex !important;
+  align-items:     center !important;
+  justify-content: center !important;
+}
+
+.datagrid-wrapper .pager-toolbar {
+  background: #f8fafc !important;
+  border-top: 1px solid #e2e8f0 !important;
+}
+
+.datagrid-wrapper .datagrid-filter-row th {
+  background-color: #ffffff !important;
+  border-bottom:    1px solid #e2e8f0 !important;
+}

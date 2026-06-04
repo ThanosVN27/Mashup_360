@@ -12,7 +12,7 @@ export function formatM3QtyHtml(v: string | number, unms: string): string {
   if (isNaN(n)) return String(v ?? '');
   const formatted = formatM3Num(n);
   return unms
-    ? `${formatted} <em style="font-size:11px;color:#94a3b8;font-style:normal">${unms}</em>`
+    ? `<span style="white-space:nowrap">${formatted}&nbsp;<em style="font-size:11px;color:#94a3b8;font-style:normal">${unms}</em></span>`
     : formatted;
 }
 

@@ -36,11 +36,11 @@
         </span>
         <span class="cumul-sep">|</span>
         <span class="cumul-total-item">
-          Qté totale facturée&nbsp;: <strong>{{ totalQuantite }}</strong><em *ngIf="unms">&nbsp;{{ unms }}</em>
+          Qté totale facturée&nbsp;: <strong>{{ fmt(totalQuantite) }}</strong><em *ngIf="unms">&nbsp;{{ unms }}</em>
         </span>
         <span class="cumul-sep">|</span>
         <span class="cumul-total-item">
-          Nb de lignes&nbsp;: <strong>{{ totalLignes }}</strong>
+          Nb de lignes&nbsp;: <strong>{{ fmt(totalLignes) }}</strong>
         </span>
       </div>
 

@@ -4,6 +4,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { StockClientService } from '../../../../services/stock-client.service';
 import { VenteMois } from '../../../../models/stock-aktions.model';
+import { formatM3Num } from '../../../../shared/utils/m3-date.util';
 
 @Component({
   selector:    'app-tab-cumul',
@@ -19,6 +20,8 @@ export class CumulComponent implements OnChanges, OnDestroy {
   erreur:  string | null = null;
   ventes:  VenteMois[]         = [];
   colonnes: SohoDataGridColumn[] = [];
+
+  readonly fmt = formatM3Num;
 
   get totalQuantite(): number { return this.ventes.reduce((s, v) => s + v.quantite, 0); }
   get totalLignes():   number { return this.ventes.reduce((s, v) => s + v.nbLignes,  0); }
@@ -70,7 +73,7 @@ export class CumulComponent implements OnChanges, OnDestroy {
         id: 'quantite', name: `Qté facturée${unms}`, field: 'quantite',
         width: 220, sortable: true, align: 'right', filterType: 'integer',
         formatter: (_r: number, _c: number, v: number) =>
-          `<strong style="color:#1e293b">${Math.round(v).toLocaleString('fr-FR')}</strong>`,
+          `<strong style="color:#1e293b">${formatM3Num(v)}</strong>`,
       },
       {
         id: 'nbLignes', name: 'Nb de lignes', field: 'nbLignes',

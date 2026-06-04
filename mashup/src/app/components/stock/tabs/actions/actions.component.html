@@ -43,10 +43,9 @@
       [rowHeight]="'short'"
       [paging]="true"
       [pagesize]="10"
-      [pagesizes]="[10, 25, 50 , 100]"
+      [pagesizes]="[10, 25, 50, 100]"
       [enableTooltips]="true"
-      (rowClicked)="onRowClicked($event)"
-      style="width: 100%">
+      (rowClicked)="onRowClicked($event)">
     </div>
 
     <!-- Totaux -->
@@ -67,7 +66,6 @@
         Total Reste à commander : <strong>{{ fmt(filteredTotalReste) }} <em>{{ unms }}</em></strong>
       </span>
     </div>
-
   </ng-container>
 
 </div>

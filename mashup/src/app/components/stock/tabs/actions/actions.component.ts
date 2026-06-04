@@ -39,6 +39,14 @@ export class ActionsComponent implements OnInit, OnChanges {
 
   readonly fmt = formatM3Num;
 
+  private readonly STATUS_MAP: Record<string, [string, string]> = {
+    '10': ['background:#fef9c3;color:#854d0e;border:1px solid #fde68a;', 'Préliminaire'],
+    '20': ['background:#dcfce7;color:#166534;border:1px solid #86efac;', 'Actif'],
+    '40': ['background:#dbeafe;color:#1e40af;border:1px solid #93c5fd;', 'En cours'],
+    '80': ['background:#f1f5f9;color:#475569;border:1px solid #cbd5e1;', 'Clôturé'],
+    '90': ['background:#fee2e2;color:#991b1b;border:1px solid #fca5a5;', 'Annulé'],
+  };
+
   constructor(private readonly clientService: StockClientService) {}
 
 
@@ -46,79 +54,79 @@ export class ActionsComponent implements OnInit, OnChanges {
     this.colonnesContrat = [
       {
         id: 'commandes', name: '', field: 'openOrderNumber',
-        width: 120, align: 'center',
+        width: 130, align: 'center',
         formatter: () => this.btnCommandes(),
       },
       {
         id: 'customerCode', name: 'Client', field: 'customerCode',
-        width: 100, sortable: true, align: 'center', filterType: 'text',
+        width: 120, sortable: true, align: 'center', filterType: 'text',
       },
       {
         id: 'openOrderNumber', name: 'N°Cde ouverte', field: 'openOrderNumber',
-        width: 100, sortable: true, align: 'center', filterType: 'text',
+        width: 120, sortable: true, align: 'center', filterType: 'text',
       },
       {
         id: 'description', name: 'Désignation', field: 'description',
-        width: 330, sortable: true, align: 'center', filterType: 'text',
+        width: 350, sortable: true, align: 'center', filterType: 'text',
       },
       {
         id: 'status', name: 'Statut', field: 'status',
-        width: 115, sortable: true, align: 'center', filterType: 'text',
+        width: 120, sortable: true, align: 'center', filterType: 'text',
         formatter: (_r: number, _c: number, v: string) => this.fmtStatus(v),
       },
       {
         id: 'lineStatus', name: 'Statut ligne', field: 'lineStatus',
-        width: 115, sortable: true, align: 'center', filterType: 'text',
+        width: 120, sortable: true, align: 'center', filterType: 'text',
         formatter: (_r: number, _c: number, v: string) => this.fmtStatus(v),
       },
       {
         id: 'startDate', name: 'Date début', field: 'startDate',
-        width: 100, sortable: true, align: 'center', filterType: 'text',
+        width: 120, sortable: true, align: 'center', filterType: 'text',
       },
       {
         id: 'endValidityDate', name: 'Fin validité', field: 'endValidityDate',
-        width: 100, sortable: true, align: 'center', filterType: 'text',
+        width: 120, sortable: true, align: 'center', filterType: 'text',
       },
       {
         id: 'contractQuantity', name: 'Qté contrat', field: 'contractQuantity',
-        width: 100, sortable: true, align: 'center', filterType: 'text',
+        width: 120, sortable: true, align: 'center', filterType: 'text',
         formatter: (_r: number, _c: number, v: string) => this.fmtQty(v),
       },
       {
         id: 'reservedQuantity', name: 'Qté réservée', field: 'reservedQuantity',
-        width: 100, sortable: true, align: 'center', filterType: 'text',
+        width: 120, sortable: true, align: 'center', filterType: 'text',
         formatter: (_r: number, _c: number, v: string) => this.fmtQty(v),
       },
       {
         id: 'deliveredQuantity', name: 'Qté livrée', field: 'deliveredQuantity',
-        width: 100, sortable: true, align: 'center', filterType: 'text',
+        width: 120, sortable: true, align: 'center', filterType: 'text',
         formatter: (_r: number, _c: number, v: string) => this.fmtQty(v),
       },
       {
         id: 'facturedQuantity', name: 'Qté facturée', field: 'facturedQuantity',
-        width: 100, sortable: true, align: 'center', filterType: 'text',
+        width: 120, sortable: true, align: 'center', filterType: 'text',
         formatter: (_r: number, _c: number, v: string) => this.fmtQty(v),
       },
       {
         id: 'differenceQty', name: 'Reste à commander', field: 'resteACommander',
-        width: 128, sortable: true, align: 'center', filterType: 'text',
+        width: 150, sortable: true, align: 'center', filterType: 'text',
         formatter: (_r: number, _c: number, v: string) => this.fmtQty(v),
       },
       {
-        id: 'qtDefinitive', name: 'Qté Définitive', field: 'qtDefinitiveLabel',
-        width: 105, sortable: true, align: 'center', filterType: 'text',
+        id: 'qtDefinitive', name: 'Qté définitive', field: 'qtDefinitiveLabel',
+        width: 150, sortable: true, align: 'center', filterType: 'text',
         formatter: (_r: number, _c: number, v: string) =>
           v === 'Qté Définitive'
-            ? '<span style="display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700;background:#dcfce7;color:#166534;">Qté Définitive</span>'
-            : '<span style="display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700;background:#fef9c3;color:#854d0e;">Qté Préliminaire</span>',
+            ? this.badge('#dcfce7', '#166534', '#86efac', 'Qté Définitive')
+            : this.badge('#fef9c3', '#854d0e', '#fde68a', 'Qté Préliminaire'),
       },
       {
         id: 'aktionTerminee', name: 'Aktion terminée', field: 'aktionTermineeLabel',
-        width: 110, sortable: true, align: 'center', filterType: 'text',
+        width: 150, sortable: true, align: 'center', filterType: 'text',
         formatter: (_r: number, _c: number, v: string) =>
           v === 'Oui'
-            ? '<span>Oui</span>'
-            : '<span>Non</span>',
+            ? this.badge('#dcfce7', '#166534', '#86efac', 'Oui')
+            : this.badge('#f1f5f9', '#475569', '#cbd5e1', 'Non'),
       },
     ];
   }
@@ -254,18 +262,15 @@ export class ActionsComponent implements OnInit, OnChanges {
     );
   }
 
-  // Badge coloré selon le statut du contrat (10 à 90)
+  private badge(bg: string, color: string, border: string, text: string): string {
+    return `<span style="display:inline-block;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600;background:${bg};color:${color};border:1px solid ${border};">${text}</span>`;
+  }
+
   private fmtStatus(v: string): string {
     const code = (v ?? '').trim();
     if (!code) return '';
-
-    const s = 'display:inline-block;padding:2px 10px;border-radius:10px;font-size:12px;font-weight:600;white-space:nowrap;';
-    const map: Record<string, [string, string]> = {
-      '10': ['background:#fef3c7;color:#92400e;', '10 – Préliminaire'],
-      '20': ['background:#d1fae5;color:#065f46;', '20 – Actif'],
-    };
-
-    const [colors, label] = map[code] ?? ['background:#f9fafb;color:#374151;', code];
-    return `<span style="${s}${colors}">${label}</span>`;
+    const [colors, label] = this.STATUS_MAP[code] ?? ['background:#f9fafb;color:#374151;border:1px solid #e5e7eb;', ''];
+    const display = label ? `${code}&nbsp;–&nbsp;${label}` : code;
+    return `<span style="display:inline-block;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;${colors}">${display}</span>`;
   }
 }
