@@ -1,0 +1,51 @@
+<div class="tab-content">
+
+  <div *ngIf="loading" class="cumul-loading">
+    <span soho-busy-indicator displayDelay="0"></span>
+  </div>
+
+  <div *ngIf="erreur" class="error-msg">
+    <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
+      <path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm.75 10.5h-1.5v-1.5h1.5v1.5zm0-3h-1.5v-4h1.5v4z"/>
+    </svg>
+    {{ erreur }}
+  </div>
+
+  <ng-container *ngIf="!loading && !erreur">
+
+    <div *ngIf="ventes.length === 0" class="empty-msg">
+      Aucune vente en statut 77 pour cet article.
+    </div>
+
+    <ng-container *ngIf="ventes.length > 0">
+
+      <div
+        soho-datagrid
+        [dataset]="ventes"
+        [columns]="colonnes"
+        [filterable]="true"
+        [rowHeight]="'short'"
+        [pagesize]="24"
+        [pagesizes]="[12, 24, 48]"
+        selectionMode="none">
+      </div>
+
+      <div class="cumul-totaux">
+        <span class="cumul-total-item">
+          Nb de mois&nbsp;: <strong>{{ ventes.length }}</strong>
+        </span>
+        <span class="cumul-sep">|</span>
+        <span class="cumul-total-item">
+          Qté totale facturée&nbsp;: <strong>{{ totalQuantite }}</strong><em *ngIf="unms">&nbsp;{{ unms }}</em>
+        </span>
+        <span class="cumul-sep">|</span>
+        <span class="cumul-total-item">
+          Nb de lignes&nbsp;: <strong>{{ totalLignes }}</strong>
+        </span>
+      </div>
+
+    </ng-container>
+
+  </ng-container>
+
+</div>

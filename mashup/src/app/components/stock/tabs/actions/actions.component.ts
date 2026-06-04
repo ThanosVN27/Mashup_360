@@ -46,7 +46,7 @@ export class ActionsComponent implements OnInit, OnChanges {
     this.colonnesContrat = [
       {
         id: 'commandes', name: '', field: 'openOrderNumber',
-        width: 130, align: 'center',
+        width: 120, align: 'center',
         formatter: () => this.btnCommandes(),
       },
       {
@@ -54,21 +54,21 @@ export class ActionsComponent implements OnInit, OnChanges {
         width: 100, sortable: true, align: 'center', filterType: 'text',
       },
       {
-        id: 'openOrderNumber', name: 'N° Cde ouverte', field: 'openOrderNumber',
+        id: 'openOrderNumber', name: 'N°Cde ouverte', field: 'openOrderNumber',
         width: 100, sortable: true, align: 'center', filterType: 'text',
       },
       {
         id: 'description', name: 'Désignation', field: 'description',
-        width: 350, sortable: true, align: 'center', filterType: 'text',
+        width: 330, sortable: true, align: 'center', filterType: 'text',
       },
       {
         id: 'status', name: 'Statut', field: 'status',
-        width: 120, sortable: true, align: 'center', filterType: 'text',
+        width: 115, sortable: true, align: 'center', filterType: 'text',
         formatter: (_r: number, _c: number, v: string) => this.fmtStatus(v),
       },
       {
         id: 'lineStatus', name: 'Statut ligne', field: 'lineStatus',
-        width: 120, sortable: true, align: 'center', filterType: 'text',
+        width: 115, sortable: true, align: 'center', filterType: 'text',
         formatter: (_r: number, _c: number, v: string) => this.fmtStatus(v),
       },
       {
@@ -101,12 +101,20 @@ export class ActionsComponent implements OnInit, OnChanges {
       },
       {
         id: 'differenceQty', name: 'Reste à commander', field: 'resteACommander',
-        width: 140, sortable: true, align: 'center', filterType: 'text',
+        width: 127, sortable: true, align: 'center', filterType: 'text',
         formatter: (_r: number, _c: number, v: string) => this.fmtQty(v),
       },
       {
+        id: 'qtDefinitive', name: 'Qté Définitive', field: 'qtDefinitiveLabel',
+        width: 105, sortable: true, align: 'center', filterType: 'text',
+        formatter: (_r: number, _c: number, v: string) =>
+          v === 'Qté Définitive'
+            ? '<span style="display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700;background:#dcfce7;color:#166534;">Qté Définitive</span>'
+            : '<span style="display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700;background:#fef9c3;color:#854d0e;">Qté Préliminaire</span>',
+      },
+      {
         id: 'aktionTerminee', name: 'Aktion terminée', field: 'aktionTermineeLabel',
-        width: 120, sortable: true, align: 'center',filterType: 'text',
+        width: 110, sortable: true, align: 'center', filterType: 'text',
         formatter: (_r: number, _c: number, v: string) =>
           v === 'Oui'
             ? '<span>Oui</span>'

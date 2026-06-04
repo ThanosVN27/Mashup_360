@@ -15,8 +15,17 @@ export interface ContractLine {
   deliveredQuantity: number;   // UXDLQT — Qté livrée
   facturedQuantity:  number;   // UXIVQT — Qté facturée
   resteACommander:   number;   // V_RQCO — reste à commander (calculé côté M3)
+  qtDefinitive:      number;   // F1CHB1 — 0 = Préliminaire, 1 = Définitive
+  qtDefinitiveLabel: string;   // 'Qté Définitive' | 'Qté Préliminaire'
   aktionTerminee:    number;   // F1CHB2 — 1 = aktion terminée (reste à commander exclu du total)
   aktionTermineeLabel: string;   // 'Oui' | 'Non' — champ texte pour le filtre SoHo
+}
+
+export interface VenteMois {
+  moisKey:   string;   // YYYYMM — clé de tri
+  moisLabel: string;   // "Janvier 2026"
+  quantite:  number;   // Qté facturée cumulée (OBIVQT)
+  nbLignes:  number;   // Nb de lignes OOLINE
 }
 
 

@@ -16,7 +16,8 @@ import { ReservationsComponent } from './components/stock/tabs/reservations/rese
 import { ActionsComponent } from './components/stock/tabs/actions/actions.component';
 import { ContractCommandPopupComponent } from './components/stock/tabs/actions/contract-command-popup/contract-command-popup.component';
 import { SohoDataGridModule } from 'ids-enterprise-ng';
-import {OfPofComponent} from './components/stock/tabs/ofpof/ofpof.component';
+import { OfPofComponent } from './components/stock/tabs/ofpof/ofpof.component';
+import { CumulComponent } from './components/stock/tabs/cumul/cumul.component';
 @NgModule({
    declarations: [
       AppComponent,
@@ -30,6 +31,7 @@ import {OfPofComponent} from './components/stock/tabs/ofpof/ofpof.component';
       ActionsComponent,
       ContractCommandPopupComponent,
       OfPofComponent,
+      CumulComponent,
 
 
    ],

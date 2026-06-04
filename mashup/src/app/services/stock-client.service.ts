@@ -5,7 +5,7 @@ import { IMIRequest, IMIResponse } from '@infor-up/m3-odin';
 import { MIService } from '@infor-up/m3-odin-angular';
 import { StockMouvementService } from './stock-mouvement.service';
 import { StockMouvement } from '../models/stock-mouvement.model';
-import { ContractLine,OrderLine } from '../models/stock-aktions.model';
+import { ContractLine, OrderLine, VenteMois } from '../models/stock-aktions.model';
 import { formatM3Date } from '../shared/utils/m3-date.util';
 
 @Injectable({ providedIn: 'root' })
@@ -45,7 +45,7 @@ export class StockClientService {
         F_AGST: '10',
         T_AGST: '20',
       },
-      outputFields:       ['UWCUNO', 'UWAGNO', 'UYTX40', 'UYAGST', 'UWOBV1', 'UWAGST', 'UWSTDT', 'UWLVDT', 'UWAGQT', 'UXREQT', 'UXDLQT', 'V_RQCO', 'UXIVQT', 'F1CHB2'],
+      outputFields:       ['UWCUNO', 'UWAGNO', 'UYTX40', 'UYAGST', 'UWOBV1', 'UWAGST', 'UWSTDT', 'UWLVDT', 'UWAGQT', 'UXREQT', 'UXDLQT', 'V_RQCO', 'UXIVQT', 'F1CHB1', 'F1CHB2'],
       maxReturnedRecords: 500,
     };
 
@@ -79,6 +79,8 @@ export class StockClientService {
       deliveredQuantity: parseFloat(item['UXDLQT'] ?? '0') || 0,
       facturedQuantity:  parseFloat(item['UXIVQT'] ?? '0') || 0,
       resteACommander:   parseFloat(item['V_RQCO']  ?? '0') || 0,
+      qtDefinitive:        parseInt(item['F1CHB1'] ?? '0') || 0,
+      qtDefinitiveLabel:   parseInt(item['F1CHB1'] ?? '0') === 1 ? 'Qté Définitive' : 'Qté Préliminaire',
       aktionTerminee:      parseInt(item['F1CHB2'] ?? '0') || 0,
       aktionTermineeLabel: parseInt(item['F1CHB2'] ?? '0') === 1 ? 'Oui' : 'Non',
     };
@@ -200,6 +202,69 @@ export class StockClientService {
       seen.add(key);
       return true;
     });
+  }
+
+  // Cumul des ventes facturées (statut 77) par mois, pour un article
+  getVentesStatut77(itno: string): Observable<VenteMois[]> {
+    const safeItno = itno.trim().toUpperCase().replace(/'/g, "''");
+    if (!safeItno) return of([]);
+
+    const request: IMIRequest = {
+      program:     'EXPORTMI',
+      transaction: 'SelectPad',
+      record: {
+        SEPC: ';',
+        HDRS: '0',
+        QERY: `OBIVQT,OBDWDZ from OOLINE where OBCONO = 100 and OBITNO = '${safeItno}' and OBORST = 77`,
+      },
+    };
+
+    return this.mi.execute(request).pipe(
+      map(response => response.errorMessage ? [] : this.parseVentesStatut77(response)),
+      catchError(() => of([]))
+    );
+  }
+
+  private parseVentesStatut77(response: IMIResponse): VenteMois[] {
+    const items = (response.items ?? []) as Array<Record<string, string | undefined>>;
+    const byMois = new Map<string, { quantite: number; nbLignes: number }>();
+
+    const addLine = (ivqt: string, dateRaw: string) => {
+      const moisKey = dateRaw.length >= 6 ? dateRaw.slice(0, 6) : '';
+      if (!moisKey) return;
+      const cur = byMois.get(moisKey) ?? { quantite: 0, nbLignes: 0 };
+      cur.quantite += Math.round(parseFloat(ivqt) || 0);
+      cur.nbLignes += 1;
+      byMois.set(moisKey, cur);
+    };
+
+    if (items.length && items.some(i => 'OBIVQT' in i || 'OBDWDZ' in i)) {
+      for (const item of items) {
+        addLine(item['OBIVQT'] ?? '0', item['OBDWDZ'] ?? '');
+      }
+    } else {
+      const rawLines = [
+        ...items.flatMap(i => this.extractDelimitedLines(i)),
+        ...this.extractDelimitedLines((response.item ?? {}) as Record<string, string | undefined>),
+      ];
+      for (const line of rawLines.map(l => l.trim()).filter(Boolean)) {
+        const parts = line.split(';');
+        addLine(parts[0]?.trim() ?? '0', parts[1]?.trim() ?? '');
+      }
+    }
+
+    const noms = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+    return [...byMois.entries()]
+      .sort(([a], [b]) => b.localeCompare(a))
+      .map(([moisKey, { quantite, nbLignes }]) => {
+        const m = parseInt(moisKey.slice(4, 6), 10);
+        return {
+          moisKey,
+          moisLabel: `${m >= 1 && m <= 12 ? noms[m - 1] : moisKey.slice(4, 6)} ${moisKey.slice(0, 4)}`,
+          quantite,
+          nbLignes,
+        };
+      });
   }
 
   // ISO YYYY-MM-DD — tri lexicographique correct dans SoHo
