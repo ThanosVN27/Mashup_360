@@ -23,8 +23,11 @@ export class StockClientService {
         if (lines.length === 0) return of([]);
         return forkJoin(
           lines.map(line =>
-            this.fetchAgno(line.ridn, line.ridl).pipe(
-              map(agno => ({ ...line, agno })),
+            forkJoin([
+              this.fetchAgno(line.ridn, line.ridl),
+              this.fetchLineAddress(line.ridn, line.ridl),
+            ]).pipe(
+              map(([agno, addr]) => ({ ...line, agno, pono: addr.pono, town: addr.town })),
             )
           )
         );
@@ -84,6 +87,22 @@ export class StockClientService {
       aktionTerminee:      parseInt(item['F1CHB2'] ?? '0') || 0,
       aktionTermineeLabel: parseInt(item['F1CHB2'] ?? '0') === 1 ? 'Oui' : 'Non',
     };
+  }
+
+  private fetchLineAddress(orno: string, ponr: string): Observable<{ pono: string; town: string }> {
+    const req: IMIRequest = {
+      program:      'OIS100MI',
+      transaction:  'GetLineAddress',
+      record:       { CONO: 100, ORNO: orno, PONR: ponr },
+      outputFields: ['PONO', 'TOWN'],
+    };
+    return this.mi.execute(req).pipe(
+      map((res: IMIResponse) => ({
+        pono: (res.item?.['PONO'] ?? '').trim(),
+        town: (res.item?.['TOWN'] ?? '').trim(),
+      })),
+      catchError(() => of({ pono: '', town: '' }))
+    );
   }
 
   private fetchAgno(orno: string, ponr: string): Observable<string> {

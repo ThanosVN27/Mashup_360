@@ -38,10 +38,18 @@ export class ReservationsComponent implements OnChanges {
       },
       {
         id: 'ridl', name: 'N° Ligne', field: 'ridl',
-        width: 200, sortable: true, align: 'center', filterType: 'text',
+        width: 100, sortable: true, align: 'center', filterType: 'text',
       },
       {
         id: 'rftx', name: 'Client', field: 'rftx',
+        width: 150, sortable: true, align: 'center', filterType: 'text',
+      },
+      {
+        id: 'pono', name: 'CP livraison', field: 'pono',
+        width: 200, sortable: true, align: 'center', filterType: 'text',
+      },
+      {
+        id: 'town', name: 'Ville livraison', field: 'town',
         width: 200, sortable: true, align: 'center', filterType: 'text',
       },
       {
@@ -60,7 +68,7 @@ export class ReservationsComponent implements OnChanges {
       },
       {
         id: 'stat', name: 'Statut de vente', field: 'stat',
-        width: 200, align: 'center', filterType: 'text',
+        width: 150, align: 'center', filterType: 'text',
         formatter: (_r: number, _c: number, v: string) => formatM3VenteStatus(v),
       },
     ];

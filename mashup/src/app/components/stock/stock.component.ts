@@ -41,6 +41,7 @@ export class StockComponent implements OnDestroy {
     { id: 'achats',  label: 'Achats',              badge: true  },
     { id: 'ventes',  label: 'Réservations client', badge: true  },
     { id: 'actions', label: 'Aktions',             badge: true  },
+
   ];
 
   private readonly destroy$ = new Subject<void>();

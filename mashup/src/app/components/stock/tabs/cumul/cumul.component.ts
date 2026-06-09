@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChanges } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -13,8 +13,9 @@ import { formatM3Num } from '../../../../shared/utils/m3-date.util';
 })
 export class CumulComponent implements OnChanges, OnDestroy {
 
-  @Input() itno = '';
-  @Input() unms = '';
+  @Input()  itno = '';
+  @Input()  unms = '';
+  @Output() ventesLoaded = new EventEmitter<number>();
 
   loading  = false;
   erreur:  string | null = null;
@@ -54,6 +55,7 @@ export class CumulComponent implements OnChanges, OnDestroy {
         next: ventes => {
           this.ventes  = ventes;
           this.loading = false;
+          this.ventesLoaded.emit(ventes.length);
         },
         error: () => {
           this.erreur  = 'Erreur lors du chargement des ventes facturées.';
@@ -67,17 +69,17 @@ export class CumulComponent implements OnChanges, OnDestroy {
     this.colonnes = [
       {
         id: 'moisLabel', name: 'Mois', field: 'moisLabel',
-        width: 200, sortable: true, filterType: 'text',
+        width: 250, sortable: true, filterType: 'text',"align": 'center',
       },
       {
         id: 'quantite', name: `Qté facturée${unms}`, field: 'quantite',
-        width: 220, sortable: true, align: 'right', filterType: 'integer',
+        width: 250, sortable: true, align: 'center', filterType: 'text',
         formatter: (_r: number, _c: number, v: number) =>
           `<strong style="color:#1e293b">${formatM3Num(v)}</strong>`,
       },
       {
         id: 'nbLignes', name: 'Nb de lignes', field: 'nbLignes',
-        width: 140, sortable: true, align: 'center', filterType: 'integer',
+        width: 140, sortable: true, align: 'center', filterType: 'text',
       },
     ];
   }
