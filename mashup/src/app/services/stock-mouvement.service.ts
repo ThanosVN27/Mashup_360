@@ -35,8 +35,7 @@ export class StockMouvementService {
             rftx: item['RFTX'] ?? '',
             stat: item['STAT'] ?? '',
             agno: item['AGNO']?.trim() || '--',
-            pono: '',
-            town: '',
+            cua3: '',
             ori1: item['ORI1'] ?? '',
             whlo: item['WHLO'] ?? '',
           }))

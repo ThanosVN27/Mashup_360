@@ -54,67 +54,67 @@ export class ActionsComponent implements OnInit, OnChanges {
     this.colonnesContrat = [
       {
         id: 'commandes', name: '', field: 'openOrderNumber',
-        width: 130, align: 'center',
+        width: 120, align: 'center',
         formatter: () => this.btnCommandes(),
       },
       {
         id: 'customerCode', name: 'Client', field: 'customerCode',
-        width: 120, sortable: true, align: 'center', filterType: 'text',
+        width: 95, sortable: true, align: 'center', filterType: 'text',
       },
       {
         id: 'openOrderNumber', name: 'N°Cde ouverte', field: 'openOrderNumber',
-        width: 120, sortable: true, align: 'center', filterType: 'text',
+        width: 95, sortable: true, align: 'center', filterType: 'text',
       },
       {
         id: 'description', name: 'Désignation', field: 'description',
-        width: 350, sortable: true, align: 'center', filterType: 'text',
+        width: 325, sortable: true, align: 'center', filterType: 'text',
       },
       {
         id: 'status', name: 'Statut', field: 'status',
-        width: 120, sortable: true, align: 'center', filterType: 'text',
+        width: 105, sortable: true, align: 'center', filterType: 'text',
         formatter: (_r: number, _c: number, v: string) => this.fmtStatus(v),
       },
       {
         id: 'lineStatus', name: 'Statut ligne', field: 'lineStatus',
-        width: 120, sortable: true, align: 'center', filterType: 'text',
+        width: 105, sortable: true, align: 'center', filterType: 'text',
         formatter: (_r: number, _c: number, v: string) => this.fmtStatus(v),
       },
       {
         id: 'startDate', name: 'Date début', field: 'startDate',
-        width: 120, sortable: true, align: 'center', filterType: 'text',
+        width: 100, sortable: true, align: 'center', filterType: 'text',
       },
       {
         id: 'endValidityDate', name: 'Fin validité', field: 'endValidityDate',
-        width: 120, sortable: true, align: 'center', filterType: 'text',
+        width: 100, sortable: true, align: 'center', filterType: 'text',
       },
       {
         id: 'contractQuantity', name: 'Qté contrat', field: 'contractQuantity',
-        width: 120, sortable: true, align: 'center', filterType: 'text',
+        width: 100, sortable: true, align: 'center', filterType: 'text',
         formatter: (_r: number, _c: number, v: string) => this.fmtQty(v),
       },
       {
         id: 'reservedQuantity', name: 'Qté réservée', field: 'reservedQuantity',
-        width: 120, sortable: true, align: 'center', filterType: 'text',
+        width: 100, sortable: true, align: 'center', filterType: 'text',
         formatter: (_r: number, _c: number, v: string) => this.fmtQty(v),
       },
       {
         id: 'deliveredQuantity', name: 'Qté livrée', field: 'deliveredQuantity',
-        width: 120, sortable: true, align: 'center', filterType: 'text',
+        width: 100, sortable: true, align: 'center', filterType: 'text',
         formatter: (_r: number, _c: number, v: string) => this.fmtQty(v),
       },
       {
         id: 'facturedQuantity', name: 'Qté facturée', field: 'facturedQuantity',
-        width: 120, sortable: true, align: 'center', filterType: 'text',
+        width: 100, sortable: true, align: 'center', filterType: 'text',
         formatter: (_r: number, _c: number, v: string) => this.fmtQty(v),
       },
       {
         id: 'differenceQty', name: 'Reste à commander', field: 'resteACommander',
-        width: 150, sortable: true, align: 'center', filterType: 'text',
+        width: 127, sortable: true, align: 'center', filterType: 'text',
         formatter: (_r: number, _c: number, v: string) => this.fmtQty(v),
       },
       {
         id: 'qtDefinitive', name: 'Qté définitive', field: 'qtDefinitiveLabel',
-        width: 150, sortable: true, align: 'center', filterType: 'text',
+        width: 110, sortable: true, align: 'center', filterType: 'text',
         formatter: (_r: number, _c: number, v: string) =>
           v === 'Qté Définitive'
             ? this.badge('#dcfce7', '#166534', '#86efac', 'Qté Définitive')
@@ -122,7 +122,7 @@ export class ActionsComponent implements OnInit, OnChanges {
       },
       {
         id: 'aktionTerminee', name: 'Aktion terminée', field: 'aktionTermineeLabel',
-        width: 150, sortable: true, align: 'center', filterType: 'text',
+        width: 110, sortable: true, align: 'center', filterType: 'text',
         formatter: (_r: number, _c: number, v: string) =>
           v === 'Oui'
             ? this.badge('#dcfce7', '#166534', '#86efac', 'Oui')

@@ -9,8 +9,7 @@ export interface StockMouvement {
   stat: string;   // Statut (ORCA 100 stat=10 exclu des POF confirmées)
   rids: string;   // N ligne  (Achats Reservations et aktions)
   agno: string;   // Numéro contrat (pour réservations)
-  pono: string;   // Code postal livraison (réservations)
-  town: string;   // Ville de livraison (réservations)
+  cua3: string;   // Adresse livraison ligne 3 (réservations)
   ori1: string;   // Origine du mouvement (ex: "RES" ou "BLK")
   whlo: string;   // Entrepôt
 }

@@ -45,30 +45,26 @@ export class ReservationsComponent implements OnChanges {
         width: 150, sortable: true, align: 'center', filterType: 'text',
       },
       {
-        id: 'pono', name: 'CP livraison', field: 'pono',
-        width: 200, sortable: true, align: 'center', filterType: 'text',
-      },
-      {
-        id: 'town', name: 'Ville livraison', field: 'town',
-        width: 200, sortable: true, align: 'center', filterType: 'text',
+        id: 'cua3', name: 'Adresse', field: 'cua3',
+        width: 300, sortable: true, align: 'center', filterType: 'text',
       },
       {
         id: 'agno', name: 'Contrat', field: 'agno',
-        width: 200, sortable: true, align: 'center', filterType: 'text',
+        width: 150, sortable: true, align: 'center', filterType: 'text',
       },
       {
         id: 'trqt', name: 'Total réservé', field: 'trqt',
-        width: 200, sortable: true, align: 'center', filterType: 'text',
+        width: 150, sortable: true, align: 'center', filterType: 'text',
         formatter: (_r: number, _c: number, v: string) => this.fmtQty(v),
       },
       {
         id: 'pldt', name: 'Date planifiée', field: 'pldt',
-        width: 200, sortable: true, align: 'center', filterType: 'text',
+        width: 150, sortable: true, align: 'center', filterType: 'text',
         formatter: (_r: number, _c: number, v: string) => formatM3Date(v),
       },
       {
         id: 'stat', name: 'Statut de vente', field: 'stat',
-        width: 150, align: 'center', filterType: 'text',
+        width: 150, sortable: true, align: 'center', filterType: 'text',
         formatter: (_r: number, _c: number, v: string) => formatM3VenteStatus(v),
       },
     ];

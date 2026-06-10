@@ -27,7 +27,7 @@ export class StockClientService {
               this.fetchAgno(line.ridn, line.ridl),
               this.fetchLineAddress(line.ridn, line.ridl),
             ]).pipe(
-              map(([agno, addr]) => ({ ...line, agno, pono: addr.pono, town: addr.town })),
+              map(([agno, addr]) => ({ ...line, agno, cua3: addr.cua3 })),
             )
           )
         );
@@ -89,19 +89,18 @@ export class StockClientService {
     };
   }
 
-  private fetchLineAddress(orno: string, ponr: string): Observable<{ pono: string; town: string }> {
+  private fetchLineAddress(orno: string, ponr: string): Observable<{ cua3: string }> {
     const req: IMIRequest = {
       program:      'OIS100MI',
       transaction:  'GetLineAddress',
       record:       { CONO: 100, ORNO: orno, PONR: ponr },
-      outputFields: ['PONO', 'TOWN'],
+      outputFields: ['CUA3'],
     };
     return this.mi.execute(req).pipe(
       map((res: IMIResponse) => ({
-        pono: (res.item?.['PONO'] ?? '').trim(),
-        town: (res.item?.['TOWN'] ?? '').trim(),
+        cua3: (res.item?.['CUA3'] ?? '').trim(),
       })),
-      catchError(() => of({ pono: '', town: '' }))
+      catchError(() => of({ cua3: '' }))
     );
   }
 
