@@ -28,7 +28,7 @@
 
 /* En-tête de colonne — le trait bleu rappelle la couleur primaire */
 .synth-head {
-  padding:        14px 22px;
+  padding:        12px 22px;
   font-size:      16px;
   font-weight:    700;
   color:          #111827;
@@ -67,7 +67,7 @@
   display:         flex;
   justify-content: space-between;
   align-items:     center;
-  padding:         22px 26px;
+  padding:         20px 26px;
   border-bottom:   1px solid #f1f5f9;
   background:      #ffffff;
   position:        relative;
@@ -175,7 +175,7 @@
   display:     flex;
   align-items: center;
   gap:         12px;
-  padding:     18px 22px;
+  padding:     10px 22px;
   background:  #f8fafc;
   cursor:      pointer;
   transition:  background 0.18s, transform 0.18s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.18s;
@@ -226,7 +226,7 @@
   display:       flex;
   align-items:   center;
   gap:           10px;
-  padding:       19px 28px;
+  padding:       17px 28px;
   border-bottom: 1px solid #f1f5f9;
   cursor:        pointer;
 }
