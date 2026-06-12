@@ -117,8 +117,8 @@ export class ActionsComponent implements OnInit, OnChanges {
         width: 110, sortable: true, align: 'center', filterType: 'text',
         formatter: (_r: number, _c: number, v: string) =>
           v === 'Qté Définitive'
-            ? this.badge('#dcfce7', '#166534', '#86efac', 'Qté Définitive')
-            : this.badge('#fef9c3', '#854d0e', '#fde68a', 'Qté Préliminaire'),
+            ? this.badge('#dcfce7', '#166534', '#86efac', 'Qté Définitive', true)
+            : this.badge('#fef9c3', '#854d0e', '#fde68a', 'Qté Préliminaire', true),
       },
       {
         id: 'aktionTerminee', name: 'Aktion terminée', field: 'aktionTermineeLabel',
@@ -262,8 +262,9 @@ export class ActionsComponent implements OnInit, OnChanges {
     );
   }
 
-  private badge(bg: string, color: string, border: string, text: string): string {
-    return `<span style="display:inline-block;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600;background:${bg};color:${color};border:1px solid ${border};">${text}</span>`;
+  private badge(bg: string, color: string, border: string, text: string, fixedWidth = false): string {
+    const w = fixedWidth ? 'min-width:105px;text-align:center;' : '';
+    return `<span style="display:inline-block;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600;${w}background:${bg};color:${color};border:1px solid ${border};">${text}</span>`;
   }
 
   private fmtStatus(v: string): string {

@@ -28,7 +28,7 @@
 
 /* En-tête de colonne — le trait bleu rappelle la couleur primaire */
 .synth-head {
-  padding:        12px 22px;
+  padding:        13px 22px;
   font-size:      16px;
   font-weight:    700;
   color:          #111827;
@@ -67,7 +67,7 @@
   display:         flex;
   justify-content: space-between;
   align-items:     center;
-  padding:         20px 26px;
+  padding:         21px 26px;
   border-bottom:   1px solid #f1f5f9;
   background:      #ffffff;
   position:        relative;
