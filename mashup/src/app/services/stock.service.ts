@@ -12,18 +12,19 @@ export class StockService {
   constructor(private readonly mi: MIService) {}
 
 
-  getArticleInfo(itno: string): Observable<{ itds: string; unms: string }> {
+  getArticleInfo(itno: string): Observable<{ itds: string; unms: string; cfi1: string }> {
     const req: IMIRequest = {
       program:      'MMS200MI',
       transaction:  'Get',
       record:       { ITNO: itno },
-      outputFields: ['ITDS', 'UNMS'],
+      outputFields: ['ITDS', 'UNMS', 'CFI1'],
     };
 
     return this.mi.execute(req).pipe(
       map((res: IMIResponse) => ({
         itds: res.item?.['ITDS'] ?? '',
         unms: res.item?.['UNMS'] ?? '',
+        cfi1: res.item?.['CFI1'] ?? '',
       }))
     );
   }

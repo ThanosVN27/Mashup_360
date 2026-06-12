@@ -1,8 +1,9 @@
 export interface StockArticle {
-  itno:     string;
-  itds:     string;
-  unms:     string;
-  poidsNet: string;
+  itno:     string; // Numéro article
+  itds:     string; // Description article
+  unms:     string; // Unité de mesure stock
+  poidsNet: string; // Poids net (N496 ou NEWE)
+  cfi1:     string;  // Code famille article (MMS200MI Get)
   // Stocks agrégés (MMS200MI GetAggWhsGrp)
   aval:      number;  // Stock disponible       = AVAL
   effec:     number;  // Stock affectable       = AVAL - ALQT
@@ -18,7 +19,7 @@ export interface StockArticle {
   totalReservations: number;
   totalActions:      number;
   // Totaux contrats Aktions (CMS100MI LstBulkLineArt)
-  totalContrat: number;  // Σ UWAGQT
-  totalLivree:  number;  // Σ UXDLQT
-  totalReste:   number;  // Σ max(0, UWAGQT - UXDLQT)
+  totalContrat: number;  //UWAGQT
+  totalLivree:  number;  //UXDLQT
+  totalReste:   number;  //max(0, UWAGQT - UXDLQT)
 }

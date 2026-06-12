@@ -126,7 +126,7 @@ export class StockComponent implements OnDestroy {
       takeUntil(this.destroy$),
     ).subscribe({
       next: ({ info, poids, stocks, conditionnement, movsEntrant, movsSortant, contract, aktions }) => {
-        const { itds, unms }              = info;
+        const { itds, unms, cfi1 }        = info;
         const { aval, alqt, quqt, rjqt } = stocks;
         const { cofa, alun }              = conditionnement;
         const { totaux, badges, filtres } = this.traiterMouvements(movsEntrant, movsSortant, contract);
@@ -148,7 +148,7 @@ export class StockComponent implements OnDestroy {
         this.movsActions = filtres.actions;
 
         this.article = {
-          itno: code, itds, unms, poidsNet: poids,
+          itno: code, itds, unms, cfi1, poidsNet: poids,
           aval, effec: aval - alqt, quqt, rjqt, resaVente: alqt,
           cofa, alun,
           totalContrat, totalLivree, totalReste,

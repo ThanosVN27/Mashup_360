@@ -33,6 +33,10 @@
         </div>
         <div class="article-divider"></div>
         <div class="article-libelle">{{ article.itds }}</div>
+        <ng-container *ngIf="article.cfi1">
+          <div class="article-divider"></div>
+          <span class="article-marque">{{ article.cfi1 }}</span>
+        </ng-container>
       </div>
       <div class="article-meta">
         <span class="article-tag" *ngIf="article.cofa">{{ article.cofa }} {{ article.alun }}</span>
