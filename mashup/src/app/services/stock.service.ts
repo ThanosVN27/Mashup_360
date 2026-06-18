@@ -12,6 +12,7 @@ export class StockService {
   constructor(private readonly mi: MIService) {}
 
 
+  // Désignation, unité et marque (CFI1) via MMS200MI/Get
   getArticleInfo(itno: string): Observable<{ itds: string; unms: string; cfi1: string }> {
     const req: IMIRequest = {
       program:      'MMS200MI',
@@ -24,8 +25,9 @@ export class StockService {
       map((res: IMIResponse) => ({
         itds: res.item?.['ITDS'] ?? '',
         unms: res.item?.['UNMS'] ?? '',
-        cfi1: res.item?.['CFI1'] ?? '',
-      }))
+        cfi1: (res.item?.['CFI1'] ?? '').trim(),
+      })),
+      catchError(() => of({ itds: '', unms: '', cfi1: '' }))
     );
   }
 

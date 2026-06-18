@@ -21,11 +21,12 @@ export interface ContractLine {
   aktionTermineeLabel: string;   // 'Oui' | 'Non' — champ texte pour le filtre SoHo
 }
 
-export interface VenteMois {
-  moisKey:   string;   // YYYYMM — clé de tri
-  moisLabel: string;   // "Janvier 2026"
-  quantite:  number;   // Qté facturée cumulée (OBIVQT)
-  nbLignes:  number;   // Nb de lignes OOLINE
+
+export interface CumulLigne {
+  moisKey:   string;  // YYYYMM — clé de tri / filtrage par date
+  moisLabel: string;  // "Janvier 2026" dérivé de OBDWDZ
+  oborst:    string;  // OBORST — Statut de ligne commande
+  oborqt:    number;  // Qté commandée cumulée (somme OBORQT pour ce mois × statut)
 }
 
 

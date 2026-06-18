@@ -147,6 +147,23 @@
   backdrop-filter: blur(4px);
 }
 
+.article-site {
+  display:     flex;
+  align-items: center;
+  gap:         6px;
+  font-size:   13px;
+  font-weight: 600;
+  color:       rgba(255, 255, 255, 0.85);
+  white-space: nowrap;
+}
+
+.article-site svg {
+  width:       14px;
+  height:      14px;
+  flex-shrink: 0;
+  opacity:     0.75;
+}
+
 .article-poids {
   font-size:   15px;
   color:       rgba(255, 255, 255, 0.7);

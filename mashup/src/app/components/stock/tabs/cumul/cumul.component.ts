@@ -1,86 +1,84 @@
-import { Component, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChanges } from '@angular/core';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { SohoDatePickerComponent } from 'ids-enterprise-ng';
 
-import { StockClientService } from '../../../../services/stock-client.service';
-import { VenteMois } from '../../../../models/stock-aktions.model';
-import { formatM3Num } from '../../../../shared/utils/m3-date.util';
+import { CumulLigne } from '../../../../models/stock-aktions.model';
 
 @Component({
   selector:    'app-tab-cumul',
   templateUrl: './cumul.component.html',
   styleUrls:   ['./cumul.component.css'],
 })
-export class CumulComponent implements OnChanges, OnDestroy {
+export class CumulComponent implements OnChanges {
 
-  @Input()  itno = '';
-  @Input()  unms = '';
-  @Output() ventesLoaded = new EventEmitter<number>();
+  /** Donnée déjà chargée par le composant parent (forkJoin) — aucun appel M3 ici. */
+  @Input() cumul: CumulLigne[] = [];
+  @Input() unms = '';
 
-  loading  = false;
-  erreur:  string | null = null;
-  ventes:  VenteMois[]         = [];
-  colonnes: SohoDataGridColumn[] = [];
+  @ViewChild(SohoDatePickerComponent) private datePicker?: SohoDatePickerComponent;
 
-  readonly fmt = formatM3Num;
+  lignes:   CumulLigne[]          = [];   // vue filtrée affichée
+  colonnes: SohoDataGridColumn[]  = [];
+  allLignes: CumulLigne[]         = [];   // jeu complet reçu en entrée
 
-  get totalQuantite(): number { return this.ventes.reduce((s, v) => s + v.quantite, 0); }
-  get totalLignes():   number { return this.ventes.reduce((s, v) => s + v.nbLignes,  0); }
+  /** Seuil de filtrage au format "YYYYMM" — vide = aucun filtre. */
+  seuilMois = '';
 
-  private readonly destroy$ = new Subject<void>();
-
-  constructor(private readonly clientService: StockClientService) {}
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
+  get nbMois():   number { return this.lignes.length; }
+  get totalQte(): number { return this.lignes.reduce((s, l) => s + l.oborqt, 0); }
+  /** Total formaté comme les cellules de la grille (séparateur espace, sans virgule). */
+  get totalQteLabel(): string { return this.totalQte.toLocaleString('fr-FR'); }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['unms'] || changes['itno']) {
+    if (changes['unms']) {
       this.buildColonnes();
     }
-    if (changes['itno'] && this.itno) {
-      this.charger();
+    if (changes['cumul']) {
+      this.allLignes = this.cumul ?? [];
+      this.seuilMois = '';
+      this.datePicker?.setValue('', false, false);
+      this.appliquerFiltre();
     }
   }
 
-  private charger(): void {
-    this.loading = true;
-    this.erreur  = null;
-    this.ventes  = [];
-    this.clientService.getVentesStatut77(this.itno)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: ventes => {
-          this.ventes  = ventes;
-          this.loading = false;
-          this.ventesLoaded.emit(ventes.length);
-        },
-        error: () => {
-          this.erreur  = 'Erreur lors du chargement des ventes facturées.';
-          this.loading = false;
-        },
-      });
+  /** Lit la date choisie dans le datepicker SoHo et recalcule la vue. */
+  onDateChange(): void {
+    const date = this.datePicker?.getValue(true);
+    if (date instanceof Date && !isNaN(date.getTime())) {
+      const mm = `${date.getMonth() + 1}`.padStart(2, '0');
+      this.seuilMois = `${date.getFullYear()}${mm}`;   // "YYYYMM"
+    } else {
+      this.seuilMois = '';
+    }
+    this.appliquerFiltre();
+  }
+
+  /** Réinitialise le filtre de date. */
+  reinitialiserFiltre(): void {
+    this.seuilMois = '';
+    this.datePicker?.setValue('', false, false);
+    this.appliquerFiltre();
+  }
+
+  /** Recalcule la vue à partir du seuil de mois (YYYYMM). */
+  private appliquerFiltre(): void {
+    this.lignes = this.seuilMois
+      ? this.allLignes.filter(l => l.moisKey >= this.seuilMois)
+      : [...this.allLignes];
   }
 
   private buildColonnes(): void {
-    const unms = this.unms ? ` (${this.unms})` : '';
+    const unms = this.unms || 'U/M bs';
     this.colonnes = [
-      {
-        id: 'moisLabel', name: 'Mois', field: 'moisLabel',
-        width: 250, sortable: true, filterType: 'text',"align": 'center',
-      },
-      {
-        id: 'quantite', name: `Qté facturée${unms}`, field: 'quantite',
-        width: 250, sortable: true, align: 'center', filterType: 'text',
+      { id: 'moisLabel', name: 'Mois', field: 'moisLabel',
+        sortable: true, align: 'center', filterType: 'text' },
+      { id: 'oborqt', name: 'Qté cdée', field: 'oborqt',
+        sortable: true, align: 'center', filterType: 'integer',
         formatter: (_r: number, _c: number, v: number) =>
-          `<strong style="color:#1e293b">${formatM3Num(v)}</strong>`,
-      },
-      {
-        id: 'nbLignes', name: 'Nb de lignes', field: 'nbLignes',
-        width: 140, sortable: true, align: 'center', filterType: 'text',
-      },
+          `<strong>${(v ?? 0).toLocaleString('fr-FR')}</strong><span style="margin-left:6px;font-size:13px;color:#94a3b8">${unms}</span>` },
+      { id: 'oborst', name: 'Statut', field: 'oborst',
+        sortable: true, align: 'center', filterType: 'text',
+        formatter: (_r: number, _c: number, v: string) =>
+          `<span style="display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:600;color:#065f46;background:#ecfdf5;border:1px solid #6ee7b7">${v} – Facturé</span>` },
     ];
   }
 }

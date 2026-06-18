@@ -34,7 +34,7 @@ export class ReservationsComponent implements OnChanges {
     this.colonnes = [
       {
         id: 'ridn', name: 'N° Commande', field: 'ridn',
-        width: 200, sortable: true, align: 'center', filterType: 'text',
+        width: 150, sortable: true, align: 'center', filterType: 'text',
       },
       {
         id: 'ridl', name: 'N° Ligne', field: 'ridl',
@@ -46,7 +46,7 @@ export class ReservationsComponent implements OnChanges {
       },
       {
         id: 'cua3', name: 'Adresse', field: 'cua3',
-        width: 300, sortable: true, align: 'center', filterType: 'text',
+        width: 400, sortable: true, align: 'center', filterType: 'text',
       },
       {
         id: 'agno', name: 'Contrat', field: 'agno',

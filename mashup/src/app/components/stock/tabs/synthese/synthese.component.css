@@ -199,8 +199,9 @@
 }
 .flux-icon svg { width: 18px; height: 18px; }
 
-.flux-icon--in  { color: #16a34a; background: #dcfce7; }
-.flux-icon--out { color: #dc2626; background: #fee2e2; }
+.flux-icon--in    { color: #16a34a; background: #dcfce7; }
+.flux-icon--out   { color: #dc2626; background: #fee2e2; }
+.flux-icon--cumul { color: #7c3aed; background: #ede9fe; }
 
 .flux-group-title {
   flex:           1;

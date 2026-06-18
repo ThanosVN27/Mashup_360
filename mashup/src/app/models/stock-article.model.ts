@@ -3,7 +3,7 @@ export interface StockArticle {
   itds:     string; // Description article
   unms:     string; // Unité de mesure stock
   poidsNet: string; // Poids net (N496 ou NEWE)
-  cfi1:     string;  // Code famille article (MMS200MI Get)
+  cfi1:     string;  // Marque (MMS200MI Get CFI1)
   // Stocks agrégés (MMS200MI GetAggWhsGrp)
   aval:      number;  // Stock disponible       = AVAL
   effec:     number;  // Stock affectable       = AVAL - ALQT
@@ -22,4 +22,6 @@ export interface StockArticle {
   totalContrat: number;  //UWAGQT
   totalLivree:  number;  //UXDLQT
   totalReste:   number;  //max(0, UWAGQT - UXDLQT)
+  // Cumul ventes facturées (EXPORTMI SelectPad OOLINE statut 77)
+  totalVentesCumul: number;
 }

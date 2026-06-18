@@ -14,6 +14,7 @@ export class SyntheseComponent {
   @Output() whgrSortantChange = new EventEmitter<string>();
 
   fluxEntrantOpen = true;
+  fluxCumulOpen   = true;
   fluxSortantOpen = true;
 
   readonly fmt = formatM3Num;

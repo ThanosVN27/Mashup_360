@@ -1,50 +1,53 @@
 <div class="tab-content">
 
-  <div *ngIf="loading" class="cumul-loading">
-    <span soho-busy-indicator displayDelay="0"></span>
+  <!-- Filtre : cumul à partir d'une date -->
+  <div class="cumul-filtre" *ngIf="allLignes.length > 0">
+    <label class="cumul-filtre-label" for="cumul-date-debut">Cumul à partir de</label>
+    <div class="field cumul-filtre-field">
+      <input
+        soho-datepicker
+        id="cumul-date-debut"
+        [showMonthYearPicker]="true"
+        [hideDays]="true"
+        dateFormat="MMMM yyyy"
+        placeholder="Tous les mois"
+        (change)="onDateChange()">
+    </div>
+    <button
+      soho-button="tertiary"
+      type="button"
+      *ngIf="seuilMois"
+      (click)="reinitialiserFiltre()">
+      Réinitialiser
+    </button>
   </div>
 
-  <div *ngIf="erreur" class="error-msg">
-    <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
-      <path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm.75 10.5h-1.5v-1.5h1.5v1.5zm0-3h-1.5v-4h1.5v4z"/>
-    </svg>
-    {{ erreur }}
+  <!-- État vide -->
+  <div *ngIf="lignes.length === 0" class="empty-msg">
+    {{ allLignes.length > 0 ? 'Aucune vente facturée à partir de cette date.' : 'Aucune vente facturée pour cet article.' }}
   </div>
 
-  <ng-container *ngIf="!loading && !erreur">
+  <ng-container *ngIf="lignes.length > 0">
 
-    <div *ngIf="ventes.length === 0" class="empty-msg">
-      Aucune vente en statut 77 pour cet article.
+    <div
+      soho-datagrid="auto"
+      [dataset]="lignes"
+      [columns]="colonnes"
+      [selectable]="false"
+      [filterable]="true"
+      [sizeColumnsEqually]="true"
+      [rowHeight]="'short'"
+      [paging]="true"
+      [pagesize]="25"
+      [pagesizes]="[25, 50, 100]"
+      style="width: 100%">
     </div>
 
-    <ng-container *ngIf="ventes.length > 0">
-
-      <div
-        soho-datagrid
-        [dataset]="ventes"
-        [columns]="colonnes"
-        [filterable]="true"
-        [rowHeight]="'short'"
-        [pagesize]="24"
-        [pagesizes]="[12, 24, 48]"
-        selectionMode="none">
-      </div>
-
-      <div class="cumul-totaux">
-        <span class="cumul-total-item">
-          Nb de mois&nbsp;: <strong>{{ ventes.length }}</strong>
-        </span>
-        <span class="cumul-sep">|</span>
-        <span class="cumul-total-item">
-          Qté totale facturée&nbsp;: <strong>{{ fmt(totalQuantite) }}</strong><em *ngIf="unms">&nbsp;{{ unms }}</em>
-        </span>
-        <span class="cumul-sep">|</span>
-        <span class="cumul-total-item">
-          Nb de lignes&nbsp;: <strong>{{ fmt(totalLignes) }}</strong>
-        </span>
-      </div>
-
-    </ng-container>
+    <div class="cumul-totaux">
+      <span>Nb de mois&nbsp;: <strong>{{ nbMois }}</strong></span>
+      <span class="cumul-sep">|</span>
+      <span>Qté cdée totale&nbsp;: <strong>{{ totalQteLabel }}</strong> {{ unms || 'U/M bs' }}</span>
+    </div>
 
   </ng-container>
 
