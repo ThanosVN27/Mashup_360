@@ -31,17 +31,17 @@
 
   <div
     *ngIf="!isLoading && lignesFiltrees.length > 0"
-    soho-datagrid
+    soho-datagrid="auto"
     [dataset]="lignesFiltrees"
     [columns]="colonnes"
     [selectable]="false"
     [filterable]="true"
+    [sizeColumnsEqually]="true"
     [rowHeight]="'short'"
     [paging]="true"
     [pagesize]="10"
     [pagesizes]="[5, 10, 25, 50, 100]"
     [enableTooltips]="true"
-    [initialSort]="{ sortId: 'pldt', ascending: true }"
     style="width: 100%">
   </div>
 

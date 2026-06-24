@@ -58,7 +58,7 @@ export class OfPofComponent implements OnChanges {
     this.colonnes = [
       {
         id: 'type', name: 'Type', field: 'orca',
-        width: 150, align: 'center', filterType: 'text',
+        width: 100, align: 'center', filterType: 'text',
         formatter: (_row: number, _cell: number, value: string) => {
           const label    = value === '100' ? 'POF' : 'OF';
           const cssClass = value === '100' ? 'badge-pof' : 'badge-of';
@@ -81,7 +81,7 @@ export class OfPofComponent implements OnChanges {
       },
       {
         id: 'stat', name: 'Statut', field: 'stat',
-        width: 150, align: 'center', filterType: 'text',
+        width: 100, align: 'center', filterType: 'text',
         formatter: (_r: number, _c: number, v: string) => formatM3Status(v),
       },
     ];

@@ -6,17 +6,17 @@
 
   <div
     *ngIf="lignes.length > 0"
-    soho-datagrid
+    soho-datagrid="auto"
     [dataset]="lignes"
     [columns]="colonnes"
     [selectable]="false"
     [filterable]="true"
+    [sizeColumnsEqually]="true"
     [rowHeight]="'short'"
     [paging]="true"
     [pagesize]="10"
     [pagesizes]="[5, 10, 25, 50, 100]"
     [enableTooltips]="true"
-    [initialSort]="sortDate"
     style="width: 100%">
   </div>
 

@@ -15,7 +15,6 @@ export class ReservationsComponent implements OnChanges {
   @Input() lignes: StockMouvement[] = [];
   @Input() unms   = '';
 
-  readonly sortDate = { sortId: 'pldt', ascending: true };
   colonnes: SohoDataGridColumn[] = [];
 
   get totalQty(): number {
@@ -34,19 +33,19 @@ export class ReservationsComponent implements OnChanges {
     this.colonnes = [
       {
         id: 'ridn', name: 'N° Commande', field: 'ridn',
-        width: 150, sortable: true, align: 'center', filterType: 'text',
+        width: 140, sortable: true, align: 'center', filterType: 'text',
       },
       {
         id: 'ridl', name: 'N°L', field: 'ridl',
-        width: 50, sortable: true, align: 'center', filterType: 'text',
+        width: 50, sortable: true, align: 'center',
       },
       {
         id: 'rftx', name: 'Client', field: 'rftx',
-        width: 150, sortable: true, align: 'center', filterType: 'text',
+        width: 120, sortable: true, align: 'center', filterType: 'text',
       },
       {
         id: 'cua3', name: 'Adresse', field: 'cua3',
-        width: 350, sortable: true, align: 'center', filterType: 'text',
+        width: 325, sortable: true, align: 'center', filterType: 'text',
       },
       {
         id: 'agno', name: 'Contrat', field: 'agno',
@@ -54,12 +53,12 @@ export class ReservationsComponent implements OnChanges {
       },
       {
         id: 'trqt', name: 'Total réservé', field: 'trqt',
-        width: 150, sortable: true, align: 'center', filterType: 'text',
+        width: 120, sortable: true, align: 'center', filterType: 'text',
         formatter: (_r: number, _c: number, v: string) => this.fmtQty(v),
       },
       {
         id: 'pldt', name: 'Date planifiée', field: 'pldt',
-        width: 150, sortable: true, align: 'center', filterType: 'text',
+        width: 100, sortable: true, align: 'center', filterType: 'text',
         formatter: (_r: number, _c: number, v: string) => formatM3Date(v),
       },
       {

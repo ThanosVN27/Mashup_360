@@ -21,6 +21,19 @@
   gap:                   0 20px;
 }
 
+/* Portables ~14" : on compacte les cellules pour que les deux colonnes tiennent à l'aise */
+@media (max-width: 1366px) {
+  .synth-head      { padding: 11px 18px; font-size: 15px; }
+  .synth-cell      { padding: 16px 18px; }
+  .synth-cell-left { gap: 10px; }
+  .synth-val       { font-size: 17px; }
+  .synth-label     { font-size: 12px; }
+  .flux-group-hd   { padding: 9px 18px; }
+  .flux-line       { padding: 13px 18px; }
+  .flux-line-val   { font-size: 16px; }
+  .flux-icon       { width: 32px; height: 32px; }
+}
+
 /* Sur mobile on empile les colonnes */
 @media (max-width: 800px) {
   .synth-grid { grid-template-columns: 1fr; gap: 16px 0; }

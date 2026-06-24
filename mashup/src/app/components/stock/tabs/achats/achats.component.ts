@@ -55,7 +55,7 @@ export class AchatsComponent implements OnChanges {
       },
       {
         id: 'whlo', name: 'Entrepôt', field: 'whlo',
-        width: 250, sortable: true, align: 'center', filterType: 'text',
+        width: 150, sortable: true, align: 'center', filterType: 'text',
       },
       {
         id: 'trqt', name: 'Quantité achetée', field: 'trqt',
@@ -69,7 +69,7 @@ export class AchatsComponent implements OnChanges {
       },
       {
         id: 'stat', name: 'Statut', field: 'stat',
-        width: 250, align: 'center', filterType: 'text',
+        width: 100, align: 'center', filterType: 'text',
         formatter: (_r: number, _c: number, v: string) => formatM3Status(v),
       },
     ];

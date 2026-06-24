@@ -309,6 +309,29 @@
 }
 
 /* ── Responsive ── */
+
+/* Portables ~14" (≈ 1280–1366 px CSS selon la mise à l'échelle) : on compacte
+   l'en-tête dense (code · libellé · marque · site · UVC · poids) et les onglets
+   pour que tout tienne sans débordement horizontal. */
+@media (max-width: 1366px) {
+  .stock-container { padding: 0 12px 32px; }
+
+  .article-header-main { padding: 14px 18px; }
+  .article-meta        { padding: 14px 18px 14px 0; gap: 8px; }
+  .article-divider     { margin: 0 14px; height: 34px; }
+
+  .article-code__value { font-size: 22px; }
+  .article-libelle     { font-size: 16px; }
+  .article-marque,
+  .article-site,
+  .article-poids       { font-size: 13px; }
+
+  .tab-btn {
+    padding:        13px 16px;
+    letter-spacing: 0.4px;
+  }
+}
+
 @media (max-width: 768px) {
   .stock-container {
     margin:  12px auto;
