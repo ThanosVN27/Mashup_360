@@ -34,7 +34,7 @@
         </svg>
         <span class="synth-label">Stock disponible net de commande</span>
       </div>
-      <span class="synth-val">{{ fmt(stockNetCommande) }} <em>{{ article.unms }}</em></span>
+      <span class="synth-val" [class.synth-val--danger]="stockNetCommande < 0">{{ fmt(stockNetCommande) }} <em>{{ article.unms }}</em></span>
     </div>
 
     <div class="synth-cell synth-warning">

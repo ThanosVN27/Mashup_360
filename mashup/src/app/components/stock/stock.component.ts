@@ -119,6 +119,7 @@ export class StockComponent implements OnDestroy {
 
     forkJoin({
       info:            this.stockService.getArticleInfo(code),
+      itemInfos:       this.stockService.getItemInfos(code),
       poids:           this.stockService.getPoidsNet(code),
       stocks:          this.stockService.getStocksAgreges(code, whgr),
       conditionnement: this.stockService.getConversionFactor(code),
@@ -130,8 +131,9 @@ export class StockComponent implements OnDestroy {
     }).pipe(
       takeUntil(this.destroy$),
     ).subscribe({
-      next: ({ info, poids, stocks, conditionnement, movsEntrant, movsSortant, contract, aktions, cumulVentes }) => {
-        const { itds, unms, cfi1 }        = info;
+      next: ({ info, itemInfos, poids, stocks, conditionnement, movsEntrant, movsSortant, contract, aktions, cumulVentes }) => {
+        const { itds, unms }              = info;
+        const { cfi1, siteProd }          = itemInfos;
         const { aval, alqt, quqt, rjqt } = stocks;
         const { cofa, alun }              = conditionnement;
         const { totaux, badges, filtres } = this.traiterMouvements(movsEntrant, movsSortant, contract);
@@ -156,7 +158,7 @@ export class StockComponent implements OnDestroy {
         this.movsCumul   = cumulVentes;
 
         this.article = {
-          itno: code, itds, unms, cfi1, poidsNet: poids,
+          itno: code, itds, unms, cfi1, siteProd, poidsNet: poids,
           aval, effec: aval - alqt, quqt, rjqt, resaVente: alqt,
           cofa, alun,
           totalContrat, totalLivree, totalReste,

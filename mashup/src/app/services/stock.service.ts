@@ -12,22 +12,46 @@ export class StockService {
   constructor(private readonly mi: MIService) {}
 
 
-  // Désignation, unité et marque (CFI1) via MMS200MI/Get
-  getArticleInfo(itno: string): Observable<{ itds: string; unms: string; cfi1: string }> {
+  // Désignation et unité via MMS200MI/Get
+  getArticleInfo(itno: string): Observable<{ itds: string; unms: string }> {
     const req: IMIRequest = {
       program:      'MMS200MI',
       transaction:  'Get',
       record:       { ITNO: itno },
-      outputFields: ['ITDS', 'UNMS', 'CFI1'],
+      outputFields: ['ITDS', 'UNMS'],
     };
 
     return this.mi.execute(req).pipe(
       map((res: IMIResponse) => ({
         itds: res.item?.['ITDS'] ?? '',
         unms: res.item?.['UNMS'] ?? '',
-        cfi1: (res.item?.['CFI1'] ?? '').trim(),
       })),
-      catchError(() => of({ itds: '', unms: '', cfi1: '' }))
+      catchError(() => of({ itds: '', unms: '' }))
+    );
+  }
+
+  // Marque (V_CFI1) et site de production (V_SPRO) via CMS100MI/LstItemInfos (plage F_ITNO / T_ITNO)
+  getItemInfos(itno: string): Observable<{ cfi1: string; siteProd: string }> {
+    const code = itno.trim().toUpperCase();
+    const req: IMIRequest = {
+      program:            'CMS100MI',
+      transaction:        'LstItemInfos',
+      record:             { F_ITNO: code, T_ITNO: code },
+      outputFields:       ['V_CFI1', 'V_SPRO'],
+      maxReturnedRecords: 1,
+    };
+
+    return this.mi.execute(req).pipe(
+      map((res: IMIResponse) => {
+        const item = ((res.items ?? []) as Array<Record<string, string | undefined>>)[0]
+                     ?? (res.item as Record<string, string | undefined> | undefined)
+                     ?? {};
+        return {
+          cfi1:     (item['V_CFI1'] ?? '').replace(/\s*\(\*\)\s*/g, ' ').trim(),
+          siteProd: (item['V_SPRO'] ?? '').trim(),
+        };
+      }),
+      catchError(() => of({ cfi1: '', siteProd: '' }))
     );
   }
 

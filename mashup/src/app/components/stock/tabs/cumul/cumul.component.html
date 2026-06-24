@@ -1,7 +1,7 @@
 <div class="tab-content">
 
   <!-- Filtre : cumul à partir d'une date -->
-  <div class="cumul-filtre" *ngIf="allLignes.length > 0">
+  <div class="cumul-filtre" *ngIf="nbLignesData > 0">
     <label class="cumul-filtre-label" for="cumul-date-debut">Cumul à partir de</label>
     <div class="field cumul-filtre-field">
       <input
@@ -23,32 +23,23 @@
   </div>
 
   <!-- État vide -->
-  <div *ngIf="lignes.length === 0" class="empty-msg">
-    {{ allLignes.length > 0 ? 'Aucune vente facturée à partir de cette date.' : 'Aucune vente facturée pour cet article.' }}
+  <div *ngIf="annees.length === 0" class="empty-msg">
+    {{ nbLignesData > 0 ? 'Aucune vente facturée à partir de cette date.' : 'Aucune vente facturée pour cet article.' }}
   </div>
 
-  <ng-container *ngIf="lignes.length > 0">
-
+  <!-- Tableau croisé : mois en lignes, années en colonnes, + ligne Total -->
+  <div class="cumul-grid-wrap" *ngIf="annees.length > 0">
     <div
       soho-datagrid="auto"
-      [dataset]="lignes"
+      [dataset]="pivotRows"
       [columns]="colonnes"
       [selectable]="false"
-      [filterable]="true"
+      [filterable]="false"
+      [paging]="false"
       [sizeColumnsEqually]="true"
-      [rowHeight]="'short'"
-      [paging]="true"
-      [pagesize]="25"
-      [pagesizes]="[25, 50, 100]"
+      [rowHeight]="'normal'"
       style="width: 100%">
     </div>
-
-    <div class="cumul-totaux">
-      <span>Nb de mois&nbsp;: <strong>{{ nbMois }}</strong></span>
-      <span class="cumul-sep">|</span>
-      <span>Qté cdée totale&nbsp;: <strong>{{ totalQteLabel }}</strong> {{ unms || 'U/M bs' }}</span>
-    </div>
-
-  </ng-container>
+  </div>
 
 </div>

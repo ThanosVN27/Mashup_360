@@ -35,10 +35,17 @@
         <div class="article-libelle">{{ article.itds }}</div>
         <ng-container *ngIf="article.cfi1">
           <div class="article-divider"></div>
-          <span class="article-marque">{{ article.cfi1 }}</span>
+          <span class="article-marque">Marque : {{ article.cfi1 }}</span>
         </ng-container>
       </div>
       <div class="article-meta">
+        <div class="article-site" *ngIf="article.siteProd">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
+          </svg>
+          Site de production&nbsp;: <strong>{{ article.siteProd }}</strong>
+        </div>
+        <div class="article-divider" *ngIf="article.siteProd"></div>
         <span class="article-tag" *ngIf="article.cofa">{{ article.cofa }} {{ article.alun }}</span>
         <div class="article-poids">Poids net&nbsp;: <strong>{{ article.poidsNet }} kg</strong></div>
       </div>

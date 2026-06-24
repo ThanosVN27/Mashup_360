@@ -3,10 +3,13 @@
   background: #ffffff;
 }
 
-.tab-content > div[soho-datagrid] {
+/* Conteneur du tableau croisé : largeur contrainte (SoHo se dimensionne sur le parent),
+   responsive — se rétrécit sous 900px sur les écrans plus petits (PC 14"). */
+.cumul-grid-wrap {
+  width:                      100%;
+  max-width:                  900px;
   overflow-x:                 auto;
   -webkit-overflow-scrolling: touch;
-  max-width:                  100vw;
 }
 
 .cumul-loading {
@@ -63,26 +66,9 @@
   font-size:     14px;
 }
 
-/* Barre de totaux */
-.cumul-totaux {
-  display:     flex;
-  align-items: center;
-  gap:         16px;
-  padding:     12px 20px;
-  background:  #f8fafc;
-  border-top:  1px solid #e2e8f0;
-  font-size:   13px;
-  color:       #64748b;
-  flex-wrap:   wrap;
-}
-
-.cumul-totaux strong {
-  font-size:   15px;
-  font-weight: 700;
-  color:       #1e293b;
-}
-
-.cumul-sep {
-  color:       #cbd5e1;
-  user-select: none;
+/* Ligne Total = dernière ligne du tableau croisé (markup SoHo, d'où ::ng-deep).
+   :host limite la règle à l'onglet cumul pour ne pas toucher les autres datagrids. */
+:host ::ng-deep .datagrid-row:last-child > td {
+  background-color: #eef4fb;
+  border-top:       2px solid #cbd5e1;
 }

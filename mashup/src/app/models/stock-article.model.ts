@@ -3,7 +3,8 @@ export interface StockArticle {
   itds:     string; // Description article
   unms:     string; // Unité de mesure stock
   poidsNet: string; // Poids net (N496 ou NEWE)
-  cfi1:     string;  // Marque (MMS200MI Get CFI1)
+  cfi1:     string;  // Marque (CMS100MI LstItemInfos V_CFI1)
+  siteProd: string;  // Site de production (CMS100MI LstItemInfos V_SPRO)
   // Stocks agrégés (MMS200MI GetAggWhsGrp)
   aval:      number;  // Stock disponible       = AVAL
   effec:     number;  // Stock affectable       = AVAL - ALQT

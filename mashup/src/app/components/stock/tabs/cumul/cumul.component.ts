@@ -3,6 +3,8 @@ import { SohoDatePickerComponent } from 'ids-enterprise-ng';
 
 import { CumulLigne } from '../../../../models/stock-aktions.model';
 
+type PivotRow = Record<string, string | number>;
+
 @Component({
   selector:    'app-tab-cumul',
   templateUrl: './cumul.component.html',
@@ -16,28 +18,28 @@ export class CumulComponent implements OnChanges {
 
   @ViewChild(SohoDatePickerComponent) private datePicker?: SohoDatePickerComponent;
 
-  lignes:   CumulLigne[]          = [];   // vue filtrée affichée
-  colonnes: SohoDataGridColumn[]  = [];
+  colonnes:  SohoDataGridColumn[] = [];
+  pivotRows: PivotRow[]           = [];   // 12 mois + ligne Total
+  annees:    string[]             = [];   // années présentes (colonnes)
   allLignes: CumulLigne[]         = [];   // jeu complet reçu en entrée
 
   /** Seuil de filtrage au format "YYYYMM" — vide = aucun filtre. */
   seuilMois = '';
 
-  get nbMois():   number { return this.lignes.length; }
-  get totalQte(): number { return this.lignes.reduce((s, l) => s + l.oborqt, 0); }
-  /** Total formaté comme les cellules de la grille (séparateur espace, sans virgule). */
-  get totalQteLabel(): string { return this.totalQte.toLocaleString('fr-FR'); }
+  get nbLignesData(): number { return this.allLignes.length; }
+
+  private readonly MOIS = [
+    'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',
+    'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre',
+  ];
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['unms']) {
-      this.buildColonnes();
-    }
     if (changes['cumul']) {
       this.allLignes = this.cumul ?? [];
       this.seuilMois = '';
       this.datePicker?.setValue('', false, false);
-      this.appliquerFiltre();
     }
+    this.construirePivot();
   }
 
   /** Lit la date choisie dans le datepicker SoHo et recalcule la vue. */
@@ -49,36 +51,88 @@ export class CumulComponent implements OnChanges {
     } else {
       this.seuilMois = '';
     }
-    this.appliquerFiltre();
+    this.construirePivot();
   }
 
   /** Réinitialise le filtre de date. */
   reinitialiserFiltre(): void {
     this.seuilMois = '';
     this.datePicker?.setValue('', false, false);
-    this.appliquerFiltre();
+    this.construirePivot();
   }
 
-  /** Recalcule la vue à partir du seuil de mois (YYYYMM). */
-  private appliquerFiltre(): void {
-    this.lignes = this.seuilMois
+  /** Construit le tableau croisé : mois en lignes, années en colonnes, + ligne Total. */
+  private construirePivot(): void {
+    const lignes = this.seuilMois
       ? this.allLignes.filter(l => l.moisKey >= this.seuilMois)
-      : [...this.allLignes];
+      : this.allLignes;
+
+    this.annees = [...new Set(lignes.map(l => l.moisKey.slice(0, 4)))].sort();
+
+    // Quantité par (mois 1-12, année)
+    const parCase = new Map<string, number>();
+    for (const l of lignes) {
+      const annee = l.moisKey.slice(0, 4);
+      const mois  = parseInt(l.moisKey.slice(4, 6), 10);
+      const key   = `${mois}-${annee}`;
+      parCase.set(key, (parCase.get(key) ?? 0) + l.oborqt);
+    }
+
+    const totaux: Record<string, number> = {};
+    const rows: PivotRow[] = [];
+
+    for (let m = 1; m <= 12; m++) {
+      const row: PivotRow = { mois: this.MOIS[m - 1] };
+      for (const a of this.annees) {
+        const v = parCase.get(`${m}-${a}`) ?? 0;
+        row[a]    = v;
+        totaux[a] = (totaux[a] ?? 0) + v;
+      }
+      rows.push(row);
+    }
+
+    // Ligne Total (drapeau _total pour la mise en forme)
+    const totalRow: PivotRow = { mois: 'Total', _total: 1 };
+    for (const a of this.annees) totalRow[a] = totaux[a] ?? 0;
+    rows.push(totalRow);
+
+    this.pivotRows = rows;
+    this.buildColonnes();
   }
 
   private buildColonnes(): void {
-    const unms = this.unms || 'U/M bs';
-    this.colonnes = [
-      { id: 'moisLabel', name: 'Mois', field: 'moisLabel',
-        sortable: true, align: 'center', filterType: 'text' },
-      { id: 'oborqt', name: 'Qté cdée', field: 'oborqt',
-        sortable: true, align: 'center', filterType: 'integer',
-        formatter: (_r: number, _c: number, v: number) =>
-          `<strong>${(v ?? 0).toLocaleString('fr-FR')}</strong><span style="margin-left:6px;font-size:13px;color:#94a3b8">${unms}</span>` },
-      { id: 'oborst', name: 'Statut', field: 'oborst',
-        sortable: true, align: 'center', filterType: 'text',
-        formatter: (_r: number, _c: number, v: string) =>
-          `<span style="display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:600;color:#065f46;background:#ecfdf5;border:1px solid #6ee7b7">${v} – Facturé</span>` },
+    const unite = this.unms || 'U/M bs';
+
+    const cols: SohoDataGridColumn[] = [
+      {
+        id: 'mois', name: 'Mois', field: 'mois',
+        sortable: false, align: 'left',
+        formatter: (_r: number, _c: number, v: any, _col: any, item: any) =>
+          item?.['_total'] ? `<strong>${v}</strong>` : v,
+      },
     ];
+
+    for (const annee of this.annees) {
+      cols.push({
+        id: annee, name: annee, field: annee,
+        sortable: false, align: 'right',
+        formatter: (_r: number, _c: number, v: any, _col: any, item: any) =>
+          this.fmtCellule(Number(v) || 0, unite, !!item?.['_total']),
+      });
+    }
+
+    this.colonnes = cols;
+  }
+
+  /** Rendu d'une cellule chiffrée : quantité + unité, négatif en rouge, total en gras. */
+  private fmtCellule(n: number, unite: string, total: boolean): string {
+    if (!n && !total) return '<span style="color:#cbd5e1">—</span>';
+
+    const couleur = n < 0 ? '#dc2626' : (total ? '#0f172a' : '#1e293b');
+    const poids   = total ? '700' : '400';
+    const valeur  = n.toLocaleString('fr-FR');
+
+    return `<span style="color:${couleur};font-weight:${poids};font-variant-numeric:tabular-nums">${valeur}</span>`
+         + `<span style="margin-left:5px;font-size:12px;color:#94a3b8">${unite}</span>`;
   }
 }
