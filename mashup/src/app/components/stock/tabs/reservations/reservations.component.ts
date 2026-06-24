@@ -34,11 +34,11 @@ export class ReservationsComponent implements OnChanges {
     this.colonnes = [
       {
         id: 'ridn', name: 'N° Commande', field: 'ridn',
-        width: 175, sortable: true, align: 'center', filterType: 'text',
+        width: 150, sortable: true, align: 'center', filterType: 'text',
       },
       {
-        id: 'ridl', name: 'N° Ligne', field: 'ridl',
-        width: 100, sortable: true, align: 'center', filterType: 'text',
+        id: 'ridl', name: 'N°L', field: 'ridl',
+        width: 50, sortable: true, align: 'center', filterType: 'text',
       },
       {
         id: 'rftx', name: 'Client', field: 'rftx',
@@ -46,11 +46,11 @@ export class ReservationsComponent implements OnChanges {
       },
       {
         id: 'cua3', name: 'Adresse', field: 'cua3',
-        width: 400, sortable: true, align: 'center', filterType: 'text',
+        width: 350, sortable: true, align: 'center', filterType: 'text',
       },
       {
         id: 'agno', name: 'Contrat', field: 'agno',
-        width: 150, sortable: true, align: 'center', filterType: 'text',
+        width: 100, sortable: true, align: 'center', filterType: 'text',
       },
       {
         id: 'trqt', name: 'Total réservé', field: 'trqt',

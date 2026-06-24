@@ -101,7 +101,6 @@
         <app-tab-achats       *ngIf="activeTab === 'achats'"  [lignes]="movsAchats"  [unms]="article.unms"></app-tab-achats>
         <app-tab-reservations *ngIf="activeTab === 'ventes'"  [lignes]="movsVentes"  [unms]="article.unms"></app-tab-reservations>
         <app-tab-actions      *ngIf="activeTab === 'actions'" [itno]="article.itno" [unms]="article.unms" (contractsLoaded)="updateActionsBadge($event)"></app-tab-actions>
-        <app-tab-cumul        *ngIf="activeTab === 'cumul'"   [cumul]="movsCumul" [unms]="article.unms"></app-tab-cumul>
       </div>
     </div>
   </div>

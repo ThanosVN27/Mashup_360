@@ -7,7 +7,6 @@ import { StockMouvementService } from '../../services/stock-mouvement.service';
 import { StockClientService } from '../../services/stock-client.service';
 import { StockArticle } from '../../models/stock-article.model';
 import { StockMouvement } from '../../models/stock-mouvement.model';
-import { CumulLigne } from '../../models/stock-aktions.model';
 import { RechercheEvent } from '../search/search.component';
 
 
@@ -35,7 +34,6 @@ export class StockComponent implements OnDestroy {
   movsAchats:  StockMouvement[] = [];
   movsVentes:  StockMouvement[] = [];
   movsActions: StockMouvement[] = [];
-  movsCumul:   CumulLigne[]     = [];
 
   readonly tabs = [
     { id: 'synthese', label: 'Synthèse',           badge: false },
@@ -43,8 +41,7 @@ export class StockComponent implements OnDestroy {
     { id: 'achats',  label: 'Achats',              badge: true  },
     { id: 'ventes',  label: 'Commandes clients', badge: true  },
     { id: 'actions', label: 'Aktions',             badge: true  },
-    { id: 'cumul',   label: 'Cumul ventes',        badge: true  },
-
+    // { id: 'cumul', label: 'Cumul ventes', badge: true }, // désactivé pour l'instant
   ];
 
   private readonly destroy$ = new Subject<void>();
@@ -115,7 +112,6 @@ export class StockComponent implements OnDestroy {
     this.movsAchats  = [];
     this.movsVentes  = [];
     this.movsActions = [];
-    this.movsCumul   = [];
 
     forkJoin({
       info:            this.stockService.getArticleInfo(code),
@@ -127,11 +123,10 @@ export class StockComponent implements OnDestroy {
       movsSortant:     this.mouvementService.getAll(code, this.whgrSortant),
       contract:        this.clientService.getReservations(code, this.whgrSortant),
       aktions:         this.clientService.getContractsByArticle(code),
-      cumulVentes:     this.clientService.getCumulLignes(code),
     }).pipe(
       takeUntil(this.destroy$),
     ).subscribe({
-      next: ({ info, itemInfos, poids, stocks, conditionnement, movsEntrant, movsSortant, contract, aktions, cumulVentes }) => {
+      next: ({ info, itemInfos, poids, stocks, conditionnement, movsEntrant, movsSortant, contract, aktions }) => {
         const { itds, unms }              = info;
         const { cfi1, siteProd }          = itemInfos;
         const { aval, alqt, quqt, rjqt } = stocks;
@@ -148,21 +143,18 @@ export class StockComponent implements OnDestroy {
           }
         }
 
-        const totalVentesCumul = cumulVentes.reduce((sum, m) => sum + m.oborqt, 0);
-
-        this.badges      = { ...badges, actions: aktions.length, cumul: cumulVentes.length };
+        this.badges      = { ...badges, actions: aktions.length };
         this.movsOfPof   = filtres.ofpof;
         this.movsAchats  = filtres.achats;
         this.movsVentes  = contract;
         this.movsActions = filtres.actions;
-        this.movsCumul   = cumulVentes;
 
         this.article = {
           itno: code, itds, unms, cfi1, siteProd, poidsNet: poids,
           aval, effec: aval - alqt, quqt, rjqt, resaVente: alqt,
           cofa, alun,
           totalContrat, totalLivree, totalReste,
-          totalVentesCumul,
+          totalVentesCumul: 0,
           ...totaux,
         };
 
