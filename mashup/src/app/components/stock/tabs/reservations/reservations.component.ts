@@ -19,7 +19,7 @@ export class ReservationsComponent implements OnChanges {
   colonnes: SohoDataGridColumn[] = [];
 
   get totalQty(): number {
-    return this.lignes.reduce((s, l) => s + l.trqt, 0);
+    return Math.abs(this.lignes.reduce((s, l) => s + l.trqt, 0));
   }
 
   readonly fmt = formatM3Num;
@@ -34,7 +34,7 @@ export class ReservationsComponent implements OnChanges {
     this.colonnes = [
       {
         id: 'ridn', name: 'N° Commande', field: 'ridn',
-        width: 150, sortable: true, align: 'center', filterType: 'text',
+        width: 200, sortable: true, align: 'center', filterType: 'text',
       },
       {
         id: 'ridl', name: 'N° Ligne', field: 'ridl',

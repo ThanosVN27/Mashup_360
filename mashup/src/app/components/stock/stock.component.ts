@@ -41,7 +41,7 @@ export class StockComponent implements OnDestroy {
     { id: 'synthese', label: 'Synthèse',           badge: false },
     { id: 'ofpof',   label: 'OF / POF',            badge: true  },
     { id: 'achats',  label: 'Achats',              badge: true  },
-    { id: 'ventes',  label: 'Réservations client', badge: true  },
+    { id: 'ventes',  label: 'Commandes clients', badge: true  },
     { id: 'actions', label: 'Aktions',             badge: true  },
     { id: 'cumul',   label: 'Cumul ventes',        badge: true  },
 

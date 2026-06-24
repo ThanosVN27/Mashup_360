@@ -18,4 +18,14 @@ export class SyntheseComponent {
   fluxSortantOpen = true;
 
   readonly fmt = formatM3Num;
+
+  /** Commandes clients (valeur positive). */
+  get commandesClients(): number {
+    return Math.abs(this.article.totalReservations);
+  }
+
+  /** Stock disponible net de commande = stock affectable − commandes clients. */
+  get stockNetCommande(): number {
+    return this.article.effec - this.commandesClients;
+  }
 }

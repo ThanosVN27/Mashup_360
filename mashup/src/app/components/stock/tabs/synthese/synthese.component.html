@@ -27,14 +27,14 @@
       <span class="synth-val">{{ fmt(article.effec) }} <em>{{ article.unms }}</em></span>
     </div>
 
-    <div class="synth-cell synth-cell--purple" *ngIf="article.cofa">
+    <div class="synth-cell synth-cell--purple">
       <div class="synth-cell-left">
         <svg class="synth-icon synth-icon--purple" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/>
+          <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
         </svg>
-        <span class="synth-label">Conditionnement</span>
+        <span class="synth-label">Stock disponible net de commande</span>
       </div>
-      <span class="synth-val">{{ article.cofa }} <em>{{ article.alun }}</em></span>
+      <span class="synth-val">{{ fmt(stockNetCommande) }} <em>{{ article.unms }}</em></span>
     </div>
 
     <div class="synth-cell synth-warning">
@@ -136,8 +136,8 @@
           <svg class="flux-line-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
         </div>
         <div class="flux-line synth-link" (click)="tabChange.emit('ventes')">
-          <span class="flux-line-label">Réservations clients</span>
-          <span class="flux-line-val">{{ fmt(article.totalReservations) }} <em>{{ article.unms }}</em></span>
+          <span class="flux-line-label">Commandes clients</span>
+          <span class="flux-line-val">{{ fmt(commandesClients) }} <em>{{ article.unms }}</em></span>
           <svg class="flux-line-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
         </div>
       </div>
